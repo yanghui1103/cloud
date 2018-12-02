@@ -111,7 +111,7 @@ public class OrganizationController extends BaseController {
 		Organization  o = organizationDao.get(id);
 		if(o==null){
 			json = new JSONObject();
-			returnFailJson(json, "该组织不存在!");
+			returnFailJson(json, "该组织不存在");
 			return json ;
 		}
 		json = new JSONObject();
