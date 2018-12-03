@@ -9,8 +9,6 @@ server:
   servlet:
     context-path: /sys
 
-
-
 spring:
   application:
     name: sys
