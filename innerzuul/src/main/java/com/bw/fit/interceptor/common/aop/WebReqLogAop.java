@@ -1,4 +1,4 @@
-package com.bw.fit.innerzuul.common.aop;
+package com.bw.fit.interceptor.common.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

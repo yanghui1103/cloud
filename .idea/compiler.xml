@@ -7,7 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ai" />
+        <module name="api" />
         <module name="base" />
+        <module name="cache" />
         <module name="cloud" />
         <module name="eureka" />
         <module name="flow" />
@@ -19,6 +21,8 @@
         <module name="sys" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="innerzuul (1)" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

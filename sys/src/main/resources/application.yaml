@@ -11,7 +11,7 @@ server:
 
 spring:
   application:
-    name: sys
+    name: sys-proj
   datasource:
     name: sys_db
     type: com.alibaba.druid.pool.DruidDataSource

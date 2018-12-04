@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -30,7 +31,7 @@ import com.bw.fit.system.organization.service.OrganizationService;
  *
  */
 @RequestMapping("org")
-@EnableDiscoveryClient
+@EnableEurekaClient
 @Controller
 public class OrganizationController extends BaseController {
 
@@ -147,4 +148,11 @@ public class OrganizationController extends BaseController {
 			js.put("list", array);
 			return js ;
 		}
+
+	@RequestMapping("get")
+	@ResponseBody
+	public String get(){
+			return "test test";
+	}
+
 }

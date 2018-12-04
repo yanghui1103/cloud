@@ -1,4 +1,4 @@
-package com.bw.fit.innerzuul;
+package com.bw.fit.interceptor;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
