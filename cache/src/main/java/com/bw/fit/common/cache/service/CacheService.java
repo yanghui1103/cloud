@@ -20,4 +20,12 @@ public interface CacheService {
      * @param key
      */
     void delete(String key);
+    /**
+     * 功能描述: 设置key在缓存库的里有效期；单位：秒
+     * @param:
+     * @return:
+     * @auther: yangh
+     * @date: 2018-12-9 19:25
+     */
+    boolean expire(String key,int seconds);
 }

@@ -5,6 +5,7 @@ import  static com.bw.fit.pc.sys.util.PubFun.*;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.Account;
 import com.bw.fit.pc.sys.service.CommonService;
+import com.bw.fit.pc.sys.util.PropertiesUtil;
 import com.bw.fit.pc.sys.util.PubFun;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -38,7 +39,6 @@ import java.util.Map;
 @EnableEurekaClient
 public class LoginController {
     private  static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
@@ -84,7 +84,6 @@ public class LoginController {
                     account.getLogName(), account.getLogPwd());
             Subject currentUser = SecurityUtils.getSubject();
             token.setRememberMe(true);
-
             currentUser.login(token);
             session = currentUser.getSession();
         } catch (AuthenticationException e) {
@@ -92,23 +91,23 @@ public class LoginController {
             model.addAttribute("errorMsg", "登录失败,认证拦截");
             return loginPage;
         }
+        if (session == null) {
+            model.addAttribute("errorMsg", "无效登录");
+            return loginPage;
+        }
+        // 手动设置session 过期时间
+        session.setTimeout(Integer.valueOf(PropertiesUtil.getValueByKey("api.session.timeout").toString()));
         String sessionId = session.getId().toString();
-
-        SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", sessionId);
-        //commonService.setCacheValue(sessionId,new JSONObject());
-
-//        Account currentAccount  = accountService.getAccountByLogName(logAccount.getLogName()) ;
-//        session.setAttribute("CurrentUser", currentAccount);
-//        /***将这个账户所拥有的所有数据级权限下所有的组织IDS=>session***/
-//        List<Organization> orgs = accountService.getDataAuthOrgsOfAccount(currentAccount.getId());
-//        session.setAttribute("OrgIdsOfDataAuth", orgs.stream().map(Organization::getId).collect(Collectors.toList()));
-//        return "system/common/indexPage";
-        //String result = restTemplate.getForObject(env.getProperty("zuul.routes.api-sys.url")+"org/get/",
-        //        String.class );
-        //return  result  ;
+        /****
+         * 根据账号获取账户详情
+         */
+        JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account.getLogName());
+        accountJSON.put("sessionId",sessionId);
+        commonService.setCacheValue(sessionId,accountJSON);
+        SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
+        logger.info(sessionId);
+        logger.info(accountJSON.toJSONString());
         return "redirect:"+ indexPage+"system/gotoIframePage/"+sessionId+"/common/base/home/-9" ;
     }
-
-
 
 }

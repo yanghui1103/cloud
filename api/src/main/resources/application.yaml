@@ -47,3 +47,4 @@ zuul:
     api-cache:
       path: /api-cache/**
       serviceId: cache-proj
+      url: http://localhost:9001/cache/

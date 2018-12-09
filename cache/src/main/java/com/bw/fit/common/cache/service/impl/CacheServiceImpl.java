@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class CacheServiceImpl implements CacheService {
 
@@ -24,5 +26,10 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void delete(String key) {
         redisTemplate.delete(key);
+    }
+
+    @Override
+    public boolean expire(String key,int seconds) {
+        return redisTemplate.expire(key,seconds, TimeUnit.SECONDS);
     }
 }

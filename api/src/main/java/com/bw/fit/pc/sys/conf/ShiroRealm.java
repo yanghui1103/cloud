@@ -72,6 +72,9 @@ public class ShiroRealm extends AuthorizingRealm {
         if(Strings.isNullOrEmpty(account)){
             return null;
         }
+        /****
+         * 根据账号获取账户详情
+         */
         JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account);
 
         //User user = userService.selectByAccount(account);//根据登陆名account从库中查询user对象

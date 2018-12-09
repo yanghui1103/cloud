@@ -408,7 +408,7 @@ public class PubFun {
      */
     public static void returnSuccessJson(JSONObject j) {
         j.put("res", "2");
-        j.put("msg", "执行成功");
+        j.put("msg", "操作成功");
     }
 
     /****
