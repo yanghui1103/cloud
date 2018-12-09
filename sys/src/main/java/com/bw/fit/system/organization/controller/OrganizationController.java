@@ -150,9 +150,7 @@ public class OrganizationController extends BaseController {
 		}
 
 	@RequestMapping("get")
-	@ResponseBody
 	public String get(){
-			return "test test";
+		return "system/organization/organizationList";
 	}
-
 }

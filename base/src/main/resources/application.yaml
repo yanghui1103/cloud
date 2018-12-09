@@ -1,6 +1,9 @@
 server:
   port: 8002
-
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /base
 
 spring:
   datasource:

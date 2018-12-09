@@ -46,4 +46,5 @@ public interface OrganizationService {
 	 * @return
 	 */
 	public List<Organization> getParentsAndCurt(String cuurentOrgId);
+
 }

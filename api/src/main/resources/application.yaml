@@ -13,10 +13,12 @@ zuul:
     api-sys:
       path: /api-sys/**
       serviceId: sys-proj
+      url: http://localhost:8001/sys/
 
     api-base:
       path: /api-base/**
       serviceId: base-proj
+      url: http://localhost:8002/base/
 
     api-ai:
       path: /api-ai/**
@@ -41,3 +43,7 @@ zuul:
     api-report:
       path: /api-report/**
       serviceId: report-proj
+
+    api-cache:
+      path: /api-cache/**
+      serviceId: cache-proj

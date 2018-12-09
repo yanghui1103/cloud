@@ -35,7 +35,6 @@ public abstract class BaseController {
 	public void initControlKReq(HttpServletResponse response){
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	}
-	
-	
+
 	
 }

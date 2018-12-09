@@ -13,7 +13,6 @@
         <module name="cloud" />
         <module name="eureka" />
         <module name="flow" />
-        <module name="innerzuul" />
         <module name="job" />
         <module name="link" />
         <module name="log" />
@@ -22,6 +21,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
+      <module name="innerzuul" target="1.8" />
       <module name="innerzuul (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>

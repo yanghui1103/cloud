@@ -24,6 +24,7 @@ public class CosFilter extends ZuulFilter {
         return true;
     }
 
+    
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
