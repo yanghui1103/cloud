@@ -2,6 +2,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: flowApp
+    prefer-ip-address: true
 server:
   port: 8004
 spring:

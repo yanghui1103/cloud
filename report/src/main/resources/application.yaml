@@ -2,6 +2,10 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: reportApp
+    prefer-ip-address: true
+
 server:
   port: 8008
 spring:

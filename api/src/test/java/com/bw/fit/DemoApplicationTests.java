@@ -25,7 +25,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest
 public class DemoApplicationTests {
     private  static Logger logger = LoggerFactory.getLogger(DemoApplicationTests.class);
-    @Autowired
 
     @Test
     public void contextLoads() {
@@ -42,8 +41,7 @@ public class DemoApplicationTests {
     @Test
     public void tesf(){
         String key = "1001";
-        restTemplate.delete("http://localhost:9001/cache/cache/cache/"+key);
-
+        restTemplate.delete("http://cacheApp/cache/cache/"+key);
         // System.out.println(js.toString());
     }
 
