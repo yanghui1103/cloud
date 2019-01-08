@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableEurekaClient
 public class SysApplication {
+    //
     public static void main(String[] args) {
         SpringApplication.run(SysApplication.class, args);
     }
