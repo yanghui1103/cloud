@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.winterchen</groupId>
-    <artifactId>springboot2-mybatis-demo</artifactId>
+    <artifactId>base</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>springboot2-mybatis-demo</name>
+    <name>base</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <spring-cloud.version>Finchley.M7</spring-cloud.version>
     </properties>
 
     <dependencies>
