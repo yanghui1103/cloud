@@ -5,4 +5,5 @@
     <select id="getByLogName"  parameterType="TAccount" resultType="TAccount">
 		select * from t_account where isdeleted='0' and logname = #{logName,jdbcType=VARCHAR}
 	</select>
+
 </mapper>
