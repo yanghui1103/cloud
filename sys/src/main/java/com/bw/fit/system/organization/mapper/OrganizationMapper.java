@@ -1,4 +1,4 @@
-package com.bw.fit.system.organization.dao;
+package com.bw.fit.system.organization.mapper;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.bw.fit.system.organization.model.Organization;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface OrganizationDao {
+public interface OrganizationMapper {
 
 	/*****
 	 * 根据组织字段条件获取组织

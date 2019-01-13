@@ -16,7 +16,7 @@ public class TAccount extends BaseEntity {
     private String logPwd;
 
     public String getLogName() {
-        return logName;
+        return (logName!=null)?logName.toLowerCase():"";
     }
 
     public void setLogName(String logName) {

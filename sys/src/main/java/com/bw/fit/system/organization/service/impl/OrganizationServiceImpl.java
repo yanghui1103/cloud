@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.common.model.RbackException;
 import com.bw.fit.system.common.util.PubFun;
-import com.bw.fit.system.organization.dao.OrganizationDao;
+import com.bw.fit.system.organization.mapper.OrganizationMapper;
 import com.bw.fit.system.organization.model.Organization;
 import com.bw.fit.system.organization.service.OrganizationService;
 
@@ -17,7 +17,7 @@ import com.bw.fit.system.organization.service.OrganizationService;
 public class OrganizationServiceImpl implements OrganizationService {
 
 	@Autowired
-	private OrganizationDao organizationDao ;
+	private OrganizationMapper organizationDao ;
 	
 	
 	@Override

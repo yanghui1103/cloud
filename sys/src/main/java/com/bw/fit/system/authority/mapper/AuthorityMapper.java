@@ -1,4 +1,4 @@
-package com.bw.fit.system.authority.dao;
+package com.bw.fit.system.authority.mapper;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.bw.fit.system.authority.entity.TAuthority;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface AuthorityDao {
+public interface AuthorityMapper {
 
 	/***
 	 * 获取功能权限

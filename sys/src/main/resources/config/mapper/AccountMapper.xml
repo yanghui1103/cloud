@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bw.fit.system.account.dao.AccountDao">
+<mapper namespace="com.bw.fit.system.account.mapper.AccountMapper">
 
     <select id="getByLogName"  parameterType="TAccount" resultType="TAccount">
 		select * from t_account where isdeleted='0' and logname = #{logName,jdbcType=VARCHAR}
 	</select>
+
 
 </mapper>

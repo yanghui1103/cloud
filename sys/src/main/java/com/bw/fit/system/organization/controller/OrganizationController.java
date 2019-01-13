@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,7 +19,7 @@ import com.bw.fit.system.common.model.RbackException;
 
 import static com.bw.fit.system.common.util.PubFun.*;
 
-import com.bw.fit.system.organization.dao.OrganizationDao;
+import com.bw.fit.system.organization.mapper.OrganizationMapper;
 import com.bw.fit.system.organization.model.Organization;
 import com.bw.fit.system.organization.service.OrganizationService;
 
@@ -38,7 +36,7 @@ public class OrganizationController extends BaseController {
 	@Autowired
 	private OrganizationService organizationService;
 	@Resource
-	private OrganizationDao organizationDao;
+	private OrganizationMapper organizationDao;
 	/******
 	 * 增加组织
 	 * @param org

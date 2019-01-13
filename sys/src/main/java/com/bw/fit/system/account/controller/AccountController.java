@@ -1,11 +1,9 @@
 package com.bw.fit.system.account.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bw.fit.system.account.dao.AccountDao;
+import com.bw.fit.system.account.mapper.AccountMapper;
 import com.bw.fit.system.account.entity.TAccount;
-import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.common.controller.BaseController;
-import com.bw.fit.system.common.util.PubFun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -27,15 +25,16 @@ import javax.annotation.Resource;
 public class AccountController extends BaseController {
 
     @Resource
-    private AccountDao accountDao;
+    private AccountMapper accountMapper;
 
     @GetMapping (value="account/{logName}")
     @ResponseBody
     public JSONObject get(@PathVariable(value = "logName") String logName){
         TAccount tAccount = new TAccount();
         tAccount.setLogName(logName);
-        TAccount tAccount1 = accountDao.getByLogName(tAccount);
+        TAccount tAccount1 = accountMapper.getByLogName(tAccount);
         return (JSONObject)JSONObject.toJSON(tAccount1);
+
     }
 
 }

@@ -54,13 +54,6 @@ public class ShiroRealm extends AuthorizingRealm {
         // credentialsMatcher.setStoredCredentialsHexEncoded(true);
         return credentialsMatcher;
     }
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
-        simpleAuthorInfo.addStringPermission("test");//给当前用户授权url为hello的权限码
-        System.out.println("经试验：并不是每次调用接口就会执行，而是调用需要操作码（permission）的接口就会执行");
-        return simpleAuthorInfo;
-    }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
@@ -79,14 +72,30 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //User user = userService.selectByAccount(account);//根据登陆名account从库中查询user对象
         if("".equals(accountJSON)){throw new AuthenticationException("账户不存在");}
-        ByteSource salt = ByteSource.Util.bytes(PropertiesUtil.getValueByKey("user.pw.slogmm") + account );
-        AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(account, "123456", salt, getName());
+        ByteSource salt = ByteSource.Util.bytes( PropertiesUtil.getValueByKey("user.pw.slogmm").toString() + account );
+        AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(account, PropertiesUtil.getValueByKey("sys.default.password").toString(), salt, getName());
 
         //清之前的授权信息
         super.clearCachedAuthorizationInfo(authcInfo.getPrincipals());
         SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", null);
-        return authcInfo;//返回给安全管理器，securityManager，由securityManager比对数据库查询出的密码和页面提交的密码
         //如果有问题，向上抛异常，一直抛到控制器
+        //1,把AuthenticationToken 转化为UsernamePasswordToken
+
+        //5,最后返回的用户信息，
+        Object principal = accountJSON.get("logName") ;
+        Object credentials = accountJSON.get("logPwd").toString();
+        //6 盐值
+        SimpleAuthenticationInfo info = null ;
+        info = new SimpleAuthenticationInfo(principal,credentials,salt,getName());
+        return authcInfo ;
+    }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
+        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
+        simpleAuthorInfo.addStringPermission("test");//给当前用户授权url为hello的权限码
+        System.out.println("经试验：并不是每次调用接口就会执行，而是调用需要操作码（permission）的接口就会执行");
+        return simpleAuthorInfo;
     }
 
 }

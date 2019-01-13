@@ -11,6 +11,8 @@ server:
 spring:
   application:
     name: api-proj
+
+
 zuul:
   routes:
     api-sys:
@@ -51,3 +53,8 @@ zuul:
       path: /api-cache/**
       serviceId: cache-proj
       url: http://localhost:9001/cache/
+
+    api-bounty:
+      path: /api-bounty/**
+      serviceId: bounty-proj
+      url: http://localhost:8011/bounty/

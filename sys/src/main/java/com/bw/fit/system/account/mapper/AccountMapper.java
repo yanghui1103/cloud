@@ -1,4 +1,4 @@
-package com.bw.fit.system.account.dao;
+package com.bw.fit.system.account.mapper;
 
 import com.bw.fit.system.account.entity.TAccount;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @VERSION
  */
 @Mapper
-public interface AccountDao {
-
+public interface AccountMapper {
     TAccount getByLogName(TAccount tAccount);
 }

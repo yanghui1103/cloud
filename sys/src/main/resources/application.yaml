@@ -29,8 +29,10 @@ spring:
     max-active: 20
 
 mybatis:
-  mapper-locations: classpath:config/mapper/*.xml
+  mapper-locations: classpath:config/mapper/*Mapper.xml
   type-aliases-package: com.bw.fit
+  configuration:
+    map-underscore-to-camel-case: true
 
 #pagehelper
 pagehelper:

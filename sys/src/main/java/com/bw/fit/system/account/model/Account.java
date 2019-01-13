@@ -25,7 +25,7 @@ public class Account extends BaseModel {
     }
 
     public String getLogName() {
-        return logName;
+        return (logName!=null)?logName.toLowerCase():"";
     }
 
     public void setLogName(String logName) {

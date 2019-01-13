@@ -59,8 +59,9 @@ public class LoginController {
     @RequestMapping(value="login",method = {RequestMethod.GET,RequestMethod.POST})
     public String gotoLogin(@ModelAttribute Account account, BindingResult result,
                             HttpServletRequest request, Model model){
-        String loginPage = "pc/sys/login";
-        String indexPage = env.getProperty("zuul.routes.api-sys.url");
+        String sessionId = "";
+        String loginPage = "bounty/pc/sys/login";
+        String indexPage = "bounty/pc/common/base/home";
         Session session = null ;
         if("".equals(account.getLogName())
          ||"".equals(account.getLogPwd())){
@@ -70,6 +71,7 @@ public class LoginController {
         // 如果当前客户端有未登出用户则还是去主页
         Account us_first = getCurrentAccount();
         if(us_first!=null||(us_first!=null &&!"".equals(us_first.getId()))){
+            Session sess = PubFun.getCurrentSession();
             return indexPage;
         }
         if (result.hasErrors()) {
@@ -97,17 +99,17 @@ public class LoginController {
         }
         // 手动设置session 过期时间
         session.setTimeout(Integer.valueOf(PropertiesUtil.getValueByKey("api.session.timeout").toString()));
-        String sessionId = session.getId().toString();
+        sessionId = session.getId().toString();
         /****
          * 根据账号获取账户详情
          */
         JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account.getLogName());
         accountJSON.put("sessionId",sessionId);
-        commonService.setCacheValue(sessionId,accountJSON);
+        //commonService.setCacheValue(sessionId,accountJSON);
         SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
-        return "redirect:"+ indexPage+"system/gotoIframePage/"+sessionId+"/common/base/home/-9" ;
+        return "redirect:"+ indexPage ;
     }
 
 }
