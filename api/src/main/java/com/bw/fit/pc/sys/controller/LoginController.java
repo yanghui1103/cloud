@@ -60,7 +60,7 @@ public class LoginController {
     public String gotoLogin(@ModelAttribute Account account, BindingResult result,
                             HttpServletRequest request, Model model){
         String sessionId = "";
-        String loginPage = "bounty/pc/sys/login";
+        String loginPage = "bounty/pc/common/base/login";
         String indexPage = "bounty/pc/common/base/home";
         Session session = null ;
         if("".equals(account.getLogName())
@@ -71,7 +71,6 @@ public class LoginController {
         // 如果当前客户端有未登出用户则还是去主页
         Account us_first = getCurrentAccount();
         if(us_first!=null||(us_first!=null &&!"".equals(us_first.getId()))){
-            Session sess = PubFun.getCurrentSession();
             return indexPage;
         }
         if (result.hasErrors()) {
@@ -109,7 +108,7 @@ public class LoginController {
         SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
-        return "redirect:"+ indexPage ;
+        return  indexPage ;
     }
 
 }

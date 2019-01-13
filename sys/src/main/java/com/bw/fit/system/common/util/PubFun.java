@@ -33,6 +33,7 @@ import com.alibaba.fastjson.*;
 import com.bw.fit.system.common.entity.BaseEntity;
 import com.bw.fit.system.common.model.BaseModel;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.InputSource;
@@ -368,7 +369,16 @@ public class PubFun {
 		}
 		return rb.getString(key);
 	}
- 
+
+
+	/*****
+	 * 获取当前用户的会话 shrio 方法
+	 *
+	 * @return
+	 */
+	public static org.apache.shiro.session.Session getCurrentSession() {
+		return SecurityUtils.getSubject().getSession();
+	}
 
 
 	public static void copyProperties(Object dest, Object orig) {

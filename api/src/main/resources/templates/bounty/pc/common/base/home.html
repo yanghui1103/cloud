@@ -8,12 +8,14 @@
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
     <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}"  rel="stylesheet" >
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}"  rel="stylesheet" >
-    <link href="@{/pc/cloud/v1/static/lightblue/css/platform.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/platform.css}" rel="stylesheet">
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
     <link rel="styl@{esheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/menu.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/main.js}"></script>
 <script type="text/javascript">
         function logout(){
             $.ajax({
@@ -42,11 +44,11 @@
 <div class="container">
     <div id="pf-hd">
         <div class="pf-logo">
-            <img src="<%=basePath%>common/fit/v4/static/lightblue/images/main/main_logo.png" alt="logo">
+            <img th:src="@{/pc/cloud/v1/static/lightblue/images/main/main_logo.png}" alt="logo">
         </div>
         <div class="pf-user">
             <div class="pf-user-photo">
-                <img src="<%=basePath%>common/fit/v4/static/lightblue/images/main/user.png" alt="">
+                <img th:src="@{/pc/cloud/v1/static/lightblue/images/main/user.png}" alt="">
             </div>
             <h4 class="pf-user-name ellipsis"></h4>
             <i class="iconfont xiala">&#xe607;</i>
@@ -185,8 +187,6 @@
     <div id="mm-tabcloseother">关闭其他</div>
 </div>
 
-<script type="text/javascript" src="<%=basePath%>common/fit/v4/static/lightblue/js/menu.js"></script>
-<script type="text/javascript" src="<%=basePath%>common/fit/v4/static/lightblue/js/main.js"></script>
 <!--[if IE 7]>
 <script type="text/javascript">
     $(window).resize(function(){

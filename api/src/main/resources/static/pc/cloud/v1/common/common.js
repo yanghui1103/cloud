@@ -4,9 +4,30 @@
 *	2，通用的JS方法
 *	3，其他
 ****/
-var ctx = "http://localhost/zjk/";
+var ctx = "http://localhost/";
 var prompt_title = "系统提示框";
 var ajaxBakcErrorPrompt = "请求发生异常:";
+
+function getMicroServiceUrl(appName){
+	var val = "";
+	$.ajax({
+		type : 'GET',
+		url : ctx + "getMicroServiceUrl/"+appName,
+		data : {},
+		async:false,
+		success : function(data) {
+			val =  data ;
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			ajaxError(XMLHttpRequest, textStatus, errorThrown);
+			return "";
+		},
+		dataType : "TEXT"
+	});
+	return val ;
+
+}
+
 /****
  * 功能用来菜单打开Tab
  * 

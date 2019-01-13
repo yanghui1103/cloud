@@ -23,7 +23,7 @@
             <div class="lg-zone">
                 <div class="lg-box">
                     <div class="lg-label"><h4>用户登录</h4></div>
-                    <form id="login_form" action="<%=basePath %>system/login" method="post">
+                    <form id="login_form" action="login" method="post">
                         <div class="lg-username input-item clearfix">
                             <i class="iconfont">&#xe60d;</i>
                             <input type="text" name="logName" value="admin" placeholder="账号">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="alert alert-error">
                             <i class="iconfont">&#xe62e;</i>
-                            <span th:value="${errorMsg }"></span>
+                            <span th:value="errorMsg"></span>
                         </div>
                         <div class="enter">
                             <a href="javascript:;" class="purchaser" onClick="javascript:login();">登录</a>

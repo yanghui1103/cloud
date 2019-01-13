@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.mapper.AccountMapper;
 import com.bw.fit.system.account.entity.TAccount;
 import com.bw.fit.system.common.controller.BaseController;
+import com.bw.fit.system.common.util.PubFun;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,15 @@ public class AccountController extends BaseController {
         TAccount tAccount1 = accountMapper.getByLogName(tAccount);
         return (JSONObject)JSONObject.toJSON(tAccount1);
 
+    }
+
+    @GetMapping(value="menus")
+    @ResponseBody
+    public JSONObject menus(){
+        JSONObject jsonObject = new JSONObject();
+        Session session = PubFun.getCurrentSession();
+
+        return jsonObject;
     }
 
 }
