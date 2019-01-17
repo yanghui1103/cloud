@@ -60,8 +60,8 @@ public class LoginController {
     public String gotoLogin(@ModelAttribute Account account, BindingResult result,
                             HttpServletRequest request, Model model){
         String sessionId = "";
-        String loginPage = "bounty/pc/common/base/login";
-        String indexPage = "bounty/pc/common/base/home";
+        String loginPage = "sys/pc/common/base/login";
+        String indexPage = "sys/pc/common/base/home";
         Session session = null ;
         if("".equals(account.getLogName())
          ||"".equals(account.getLogPwd())){
@@ -104,8 +104,10 @@ public class LoginController {
          */
         JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account.getLogName());
         accountJSON.put("sessionId",sessionId);
-        //commonService.setCacheValue(sessionId,accountJSON);
-        SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
+        JSONObject jj = commonService.setCacheValue(sessionId,accountJSON);
+        //SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
+        //SecurityUtils.getSubject().getSession().setAttribute("sessionId", sessionId);
+
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
         return  indexPage ;

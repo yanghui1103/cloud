@@ -33,7 +33,7 @@ public class CommonServiceImpl implements CommonService {
         params.add("key", key);
         params.add("value", jsonObject.toJSONString());
         ResponseEntity<JSONObject> response =
-                restTemplate.postForEntity(env.getProperty("zuul.routes.api-cache.url")+"/cache/setValue", params, JSONObject.class);
+                restTemplate.postForEntity(env.getProperty("zuul.routes.api-cache.url")+"/cache/cache", params, JSONObject.class);
         JSONObject json = (JSONObject)JSONObject.parse(response.getBody().toJSONString());
         return json;
     }

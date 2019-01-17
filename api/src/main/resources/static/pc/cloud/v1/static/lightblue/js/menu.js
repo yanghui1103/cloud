@@ -1,7 +1,9 @@
 var menus = '';
 var SystemMenu ='';
 $(function(){
-	$.ajax({url:  getMicroServiceUrl("api-sys") +"account/menus",
+	var path =  getMicroServiceUrl("api-sys") ;
+
+	$.ajax({url: path +  "account/menus",
 			type:'get',
 			async:false,
 			success:function(data){

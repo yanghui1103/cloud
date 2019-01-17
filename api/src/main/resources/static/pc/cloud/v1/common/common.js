@@ -6,7 +6,6 @@
 ****/
 var ctx = "http://localhost/";
 var prompt_title = "系统提示框";
-var ajaxBakcErrorPrompt = "请求发生异常:";
 
 function getMicroServiceUrl(appName){
 	var val = "";
@@ -25,7 +24,6 @@ function getMicroServiceUrl(appName){
 		dataType : "TEXT"
 	});
 	return val ;
-
 }
 
 /****

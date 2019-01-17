@@ -1,7 +1,7 @@
 var menus = '';
 var SystemMenu ='';
 $(function(){
-	$.ajax({url: ctx +"account/menus",
+	$.ajax({url: ctx +"nnnnaccount/menus",
 			type:'get',
 			async:false,
 			success:function(data){

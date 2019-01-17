@@ -98,7 +98,8 @@ var mainPlatform = {
 	_createTopMenu: function(){
 		var menuStr = '',
 			currentIndex = 0;
-		$.ajax({url: ctx +"account/menus",
+		var path =  getMicroServiceUrl("api-sys") ;
+		$.ajax({url: path +"account/menus",
 			type:'get',
 			async:false,
 			success:function(data){

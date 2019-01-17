@@ -11,6 +11,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bw.fit.system.common.model.BaseModel;
@@ -35,6 +36,7 @@ public abstract class BaseController {
 	public void initControlKReq(HttpServletResponse response){
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	}
+
 
 	
 }

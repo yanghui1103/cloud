@@ -16,13 +16,13 @@ spring:
   application:
     name: cache-proj
   redis:
-    host: 192.168.189.12
+    host: 10.1.20.87
     port: 6379
     password: 123456
     database: 0
 
   datasource:
-    name: sys_db
+    name: cache_db
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@10.1.9.160:1521/pm
