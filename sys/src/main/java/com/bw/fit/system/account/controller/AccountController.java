@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 
@@ -26,6 +27,8 @@ import javax.annotation.Resource;
 @EnableEurekaClient
 public class AccountController extends BaseController {
 
+    @Autowired
+    RestTemplate restTemplate;
     @Resource
     private AccountMapper accountMapper;
 
@@ -43,8 +46,8 @@ public class AccountController extends BaseController {
     @ResponseBody
     public JSONObject menus(){
         JSONObject jsonObject = new JSONObject();
-        Session session = PubFun.getCurrentSession();
-
+        String s = restTemplate.getForObject("http://cache-proj/cache/cache/key/key", String.class);
+        System.out.println(s+"ssss");
         return jsonObject;
     }
 

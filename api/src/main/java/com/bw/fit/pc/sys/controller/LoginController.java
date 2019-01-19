@@ -105,8 +105,6 @@ public class LoginController {
         JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account.getLogName());
         accountJSON.put("sessionId",sessionId);
         JSONObject jj = commonService.setCacheValue(sessionId,accountJSON);
-        //SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", accountJSON);
-        //SecurityUtils.getSubject().getSession().setAttribute("sessionId", sessionId);
 
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());

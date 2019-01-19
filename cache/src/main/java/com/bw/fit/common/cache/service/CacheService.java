@@ -1,5 +1,8 @@
 package com.bw.fit.common.cache.service;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
 public interface CacheService {
     /*****
      * 获取值

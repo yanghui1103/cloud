@@ -16,7 +16,7 @@ public class DemoApplicationTests {
     private RedisTemplate<String, Object> redisTemplate;
     @Test
     public void contextLoads() {
-        redisTemplate.opsForValue().set("key","qweqwe");
+        //redisTemplate.opsForValue().set("key","qweqwe");
         System.out.println(redisTemplate.opsForValue().get("key"));
     }
 

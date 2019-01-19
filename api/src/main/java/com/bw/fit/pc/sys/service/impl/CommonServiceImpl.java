@@ -41,7 +41,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public String getCacheValue(String key) {
         String response =
-                restTemplate.getForObject(env.getProperty("zuul.routes.api-cache.url")+"/cache/getString/" + key,  String.class);
+                restTemplate.getForObject(env.getProperty("zuul.routes.api-cache.url")+"/cache/key/" + key,  String.class);
         return response;
     }
 

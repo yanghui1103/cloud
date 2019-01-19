@@ -1,5 +1,7 @@
 eureka:
   client:
+    fetchRegistry: true
+    registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
   instance:

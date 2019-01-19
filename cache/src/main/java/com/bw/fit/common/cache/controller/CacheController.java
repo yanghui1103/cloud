@@ -27,7 +27,7 @@ public class CacheController {
             return  (JSONObject)object;
     }
 
-    @GetMapping("getString/{key}")
+    @GetMapping("key/{key}")
     @ResponseBody
     public String getStr(@PathVariable String key){
         Object object = cacheService.get(key);

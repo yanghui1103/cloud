@@ -32,11 +32,11 @@ public class DemoApplicationTests {
     }
 
     @Autowired
-    private RestTemplate restTemplate;
+    RestTemplate restTemplate;
     @Autowired
-    private Environment env;
+    Environment env;
     @Autowired
-    private CommonService commonService;
+    CommonService commonService;
 
     @Test
     public void tesf(){
@@ -52,5 +52,10 @@ public class DemoApplicationTests {
         json.put("gender","1");
         JSONObject j = commonService.setCacheValue("1003",json);
         logger.info(j.get("res").toString());
+    }
+    @Test
+    public void test(){
+        String s = restTemplate.getForObject("http://cache-proj/cache/cache/key/key", String.class);
+        System.out.println(s+"ssss");
     }
 }
