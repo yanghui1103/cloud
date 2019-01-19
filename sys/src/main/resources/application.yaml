@@ -1,5 +1,7 @@
 eureka:
   client:
+    fetchRegistry: true
+    registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
   instance:
@@ -10,8 +12,7 @@ server:
   port: 8001
   tomcat:
     uri-encoding: UTF-8
-  servlet:
-    context-path: /sys
+
 
 spring:
   application:

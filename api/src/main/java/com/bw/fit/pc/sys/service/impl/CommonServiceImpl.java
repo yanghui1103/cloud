@@ -33,7 +33,7 @@ public class CommonServiceImpl implements CommonService {
         params.add("key", key);
         params.add("value", jsonObject.toJSONString());
         ResponseEntity<JSONObject> response =
-                restTemplate.postForEntity(env.getProperty("zuul.routes.api-cache.url")+"/cache/cache", params, JSONObject.class);
+                restTemplate.postForEntity("http://cache-proj/cache/cache", params, JSONObject.class);
         JSONObject json = (JSONObject)JSONObject.parse(response.getBody().toJSONString());
         return json;
     }
@@ -41,16 +41,16 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public String getCacheValue(String key) {
         String response =
-                restTemplate.getForObject(env.getProperty("zuul.routes.api-cache.url")+"/cache/key/" + key,  String.class);
+                restTemplate.getForObject("http://cache-proj/cache/key/" + key,  String.class);
         return response;
     }
 
     @Override
     public JSONObject deleteCache(String key) {
         JSONObject jsonObject = new JSONObject();
-        restTemplate.delete(env.getProperty("zuul.routes.api-cache.url")+"/cache/cache/" + key);
+        restTemplate.delete("http://cache-proj/cache/cache/" + key);
         String response =
-                restTemplate.getForObject(env.getProperty("zuul.routes.api-cache.url")+"/cache/getString/" + key,  String.class);
+                restTemplate.getForObject("http://cache-proj/cache/getString/" + key,  String.class);
         if(response == null || "".equals(response)){
             PubFun.returnFailJson(jsonObject,"缓存删除失败");
         }else{
@@ -61,7 +61,7 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void expireKey(String key, int sencods) {
-        restTemplate.postForEntity(env.getProperty("zuul.routes.api-cache.url")+"/cache/expire/"+key+"/"+sencods, null, JSONObject.class);
+        restTemplate.postForEntity("http://cache-proj/cache/expire/"+key+"/"+sencods, null, JSONObject.class);
     }
 
     @Override
@@ -71,4 +71,9 @@ public class CommonServiceImpl implements CommonService {
         return  response.getBody()  ;
     }
 
+    @Override
+    public JSONObject getAccount(String sessionId) {
+        JSONObject accountJSON =  JSONObject.parseObject(getCacheValue(sessionId));
+        return accountJSON;
+    }
 }

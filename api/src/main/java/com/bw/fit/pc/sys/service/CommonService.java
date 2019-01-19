@@ -1,5 +1,6 @@
 package com.bw.fit.pc.sys.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -62,4 +63,9 @@ public interface CommonService {
      */
     public JSONObject getOtherAppReturn(String url);
 
+    /****
+     * 根据会话id查询缓存中的账户信息
+     * @return
+     */
+    public JSONObject getAccount(String sessionId);
 }

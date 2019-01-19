@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @Description
@@ -32,6 +33,8 @@ import org.springframework.stereotype.Component;
 public class ShiroRealm extends AuthorizingRealm {
     private  static Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
 
+    @Autowired
+    RestTemplate restTemplate;
     @Autowired
     private Environment env;
     @Autowired
@@ -68,8 +71,8 @@ public class ShiroRealm extends AuthorizingRealm {
         /****
          * 根据账号获取账户详情
          */
-        JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account);
 
+        JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account, JSONObject.class);
         //User user = userService.selectByAccount(account);//根据登陆名account从库中查询user对象
         if("".equals(accountJSON)){throw new AuthenticationException("账户不存在");}
         ByteSource salt = ByteSource.Util.bytes( PropertiesUtil.getValueByKey("user.pw.slogmm").toString() + account );
@@ -77,7 +80,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //清之前的授权信息
         super.clearCachedAuthorizationInfo(authcInfo.getPrincipals());
-        SecurityUtils.getSubject().getSession().setAttribute("CurrentUser", null);
         //如果有问题，向上抛异常，一直抛到控制器
         //1,把AuthenticationToken 转化为UsernamePasswordToken
 

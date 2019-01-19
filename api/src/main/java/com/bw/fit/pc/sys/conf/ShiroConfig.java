@@ -52,14 +52,8 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置不会被拦截的链接 顺序判断
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/pc/cloud/**", "anon");
-        filterChainDefinitionMap.put("/pda/cloud/**", "anon");
-        filterChainDefinitionMap.put("/js", "anon");
-        filterChainDefinitionMap.put("/css", "anon");
-        filterChainDefinitionMap.put("/img/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/fomts/**","anon");
+        filterChainDefinitionMap.put("/sys/**", "anon");
+        filterChainDefinitionMap.put("/bounty/**", "anon");
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
         // 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边

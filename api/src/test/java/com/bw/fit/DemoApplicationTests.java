@@ -55,7 +55,7 @@ public class DemoApplicationTests {
     }
     @Test
     public void test(){
-        String s = restTemplate.getForObject("http://cache-proj/cache/cache/key/key", String.class);
-        System.out.println(s+"ssss");
+        JSONObject jsonObject = restTemplate.getForObject("http://sys-proj/account/account/admin", JSONObject.class);
+        System.out.println(jsonObject.toJSONString());
     }
 }

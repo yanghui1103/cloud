@@ -57,7 +57,7 @@
                     <li>
                         <a href="javascript:accountInfo();">
                             <i class="iconfont">&#xe60d;</i>
-                            <span class="pf-opt-name" th:text="${session.sessionId }"></span>
+                            <span class="pf-opt-name" th:text="${sessionId }"></span>
                         </a>
                     </li>
                     <!--                          <li class="pf-modify-pwd"> -->
@@ -82,9 +82,10 @@
             </div>
         </div>
     </div>
-
+    <input type="hidden" th:value="${sessionId}" id="sessionId"/>
     <div id="pf-bd">
         <div class="pf-sider-wrap">
+
         </div>
 
 

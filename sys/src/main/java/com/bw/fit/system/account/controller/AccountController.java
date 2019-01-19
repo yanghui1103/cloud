@@ -42,12 +42,13 @@ public class AccountController extends BaseController {
 
     }
 
-    @GetMapping(value="menus")
+    @GetMapping(value="menus/{sessionId}")
     @ResponseBody
-    public JSONObject menus(){
+    public JSONObject menus(@PathVariable String sessionId){
         JSONObject jsonObject = new JSONObject();
-        String s = restTemplate.getForObject("http://cache-proj/cache/cache/key/key", String.class);
-        System.out.println(s+"ssss");
+        JSONObject session = restTemplate.getForObject("http://cache-proj/cache/cache/key/"+sessionId, JSONObject.class);
+
+        System.out.println(session.get("logName")+"ssss");
         return jsonObject;
     }
 

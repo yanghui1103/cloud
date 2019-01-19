@@ -7,11 +7,11 @@
 var ctx = "http://localhost/";
 var prompt_title = "系统提示框";
 
-function getMicroServiceUrl(appName){
+function getMicroServiceResultV1(path,argNum){
 	var val = "";
 	$.ajax({
 		type : 'GET',
-		url : ctx + "getMicroServiceUrl/"+appName,
+		url : ctx + "getMicroServiceResult/v1/"+argNum+"/"+path,
 		data : {},
 		async:false,
 		success : function(data) {

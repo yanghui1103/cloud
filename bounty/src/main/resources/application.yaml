@@ -10,8 +10,6 @@ server:
   port: 8011
   tomcat:
     uri-encoding: UTF-8
-  servlet:
-    context-path: /bounty
 
 spring:
   application:

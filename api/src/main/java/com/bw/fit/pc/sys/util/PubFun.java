@@ -44,7 +44,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -430,13 +429,14 @@ public class PubFun {
     public static org.apache.shiro.session.Session getCurrentSession() {
         return SecurityUtils.getSubject().getSession();
     }
+
+
     /****
-     * 获取当前账户
-     * @return
+     * 获取当前会话Id
      */
-    public static Account getCurrentAccount() {
+    public static String getCurrentSessionId() {
         try {
-            return ((Account) SecurityUtils.getSubject().getSession().getAttribute("CurrentUser"));
+            return   SecurityUtils.getSubject().getSession().getAttribute("sessionId").toString();
         } catch (Throwable e) {
             return null;
         }
@@ -445,12 +445,6 @@ public class PubFun {
     public static void fillCommonProptities(BaseModel b, boolean isFillFdid, Session session) {
         if(isFillFdid){
             b.setId(getUUID());
-        }
-        if(getCurrentAccount() !=null){
-            b.setCreator(getCurrentAccount().getId());
-            b.setCreateOrgId(getCurrentAccount().getCurrentOrgId());
-            List<String> orgs = (List)PubFun.getCurrentSession().getAttribute("OrgIdsOfDataAuth");
-            b.setCreateOrgIds(orgs);
         }
     }
 

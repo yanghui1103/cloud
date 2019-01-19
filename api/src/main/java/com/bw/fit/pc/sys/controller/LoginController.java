@@ -68,10 +68,13 @@ public class LoginController {
             model.addAttribute("errorMsg","账号或密码不得为空");
             return loginPage;
         }
-        // 如果当前客户端有未登出用户则还是去主页
-        Account us_first = getCurrentAccount();
-        if(us_first!=null||(us_first!=null &&!"".equals(us_first.getId()))){
-            return indexPage;
+        // 如果当前客户会话仍然存在
+        sessionId = getCurrentSessionId();
+        if(!"".equals(sessionId)){
+            JSONObject us_first = commonService.getAccount(sessionId);
+            if(us_first!=null||(us_first!=null )){
+                return indexPage;
+            }
         }
         if (result.hasErrors()) {
             FieldError error = result.getFieldError();
@@ -85,6 +88,7 @@ public class LoginController {
                     account.getLogName(), account.getLogPwd());
             Subject currentUser = SecurityUtils.getSubject();
             token.setRememberMe(true);
+
             currentUser.login(token);
             session = currentUser.getSession();
         } catch (AuthenticationException e) {
@@ -96,16 +100,15 @@ public class LoginController {
             model.addAttribute("errorMsg", "无效登录");
             return loginPage;
         }
-        // 手动设置session 过期时间
-        session.setTimeout(Integer.valueOf(PropertiesUtil.getValueByKey("api.session.timeout").toString()));
         sessionId = session.getId().toString();
         /****
          * 根据账号获取账户详情
          */
-        JSONObject accountJSON = commonService.getOtherAppReturn( env.getProperty("zuul.routes.api-sys.url")+"account/account/"+account.getLogName());
+        JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account.getLogName(), JSONObject.class);
         accountJSON.put("sessionId",sessionId);
         JSONObject jj = commonService.setCacheValue(sessionId,accountJSON);
-
+        session.setAttribute("sessionId",sessionId);
+        model.addAttribute("sessionId",sessionId);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
         return  indexPage ;

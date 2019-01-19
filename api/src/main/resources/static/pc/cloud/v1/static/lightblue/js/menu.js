@@ -1,9 +1,7 @@
 var menus = '';
 var SystemMenu ='';
 $(function(){
-	var path =  getMicroServiceUrl("api-sys") ;
-
-	$.ajax({url: path +  "account/menus",
+	$.ajax({url:  getMicroServiceResultV1("sys-proj/account/menus/"+$("#sessionId").val() ,3),
 			type:'get',
 			async:false,
 			success:function(data){
