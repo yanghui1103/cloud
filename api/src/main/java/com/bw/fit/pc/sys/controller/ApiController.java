@@ -35,34 +35,23 @@ public class ApiController {
         return   url!=null?url:"";
     }
 
-    @GetMapping(value="getMicroServiceResult/v1/{argsNum}/{serviceName}/{controllerName}/{param1}/{param2}/{param3}/{param4}/{param5}/{param6}/{param7}/{param8}/{param9}")
+    @GetMapping(value="getMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
     @ResponseBody
     public JSONObject getMicroServiceResultV1(@PathVariable String serviceName,@PathVariable String controllerName,
-                                            @PathVariable String param1,@PathVariable String param2,
-                                            @PathVariable String param3,@PathVariable String param4,
-                                            @PathVariable String param5,@PathVariable String param6,
-                                            @PathVariable String param7,@PathVariable String param8,@PathVariable String param9,@PathVariable int argsNum ){
+                                            @PathVariable String params   ){
         JSONObject jsonObject = new JSONObject();
-        if(argsNum == 1){
-            jsonObject = restTemplate.getForObject("http://"+serviceName+"/"+controllerName+"/"+param1 , JSONObject.class);
-        }else if(argsNum == 2) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2, JSONObject.class);
-        }else if(argsNum == 3) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3, JSONObject.class);
-        }else if(argsNum == 4) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4, JSONObject.class);
-        }else if(argsNum == 5) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4+ "/" + param5, JSONObject.class);
-        }else if(argsNum == 6) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4+ "/" + param5+ "/" + param6, JSONObject.class);
-        }else if(argsNum == 7) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4+ "/" + param5+ "/" + param6+ "/" + param7, JSONObject.class);
-        }else if(argsNum == 8) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4+ "/" + param5+ "/" + param6+ "/" + param7+ "/" + param8, JSONObject.class);
-        }else if(argsNum == 9) {
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + controllerName + "/" + param1 + "/" + param2+ "/" + param3+ "/" + param4+ "/" + param5+ "/" + param6+ "/" + param7+ "/" + param8+ "/" + param9, JSONObject.class);
+        String[] paramArray = params.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            jsonObject = restTemplate.getForObject("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() , JSONObject.class);
         }else{
-            PubFun.returnFailJson(jsonObject,"抱歉，系统为提供9位以上参数方法");
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
         return jsonObject;
     }

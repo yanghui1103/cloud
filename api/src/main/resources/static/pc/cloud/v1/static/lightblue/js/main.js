@@ -98,7 +98,7 @@ var mainPlatform = {
 	_createTopMenu: function(){
 		var menuStr = '',
 			currentIndex = 0;
-		$.ajax({url:  getMicroServiceResultV1("sys-proj/account/menus/"+$("#sessionId").val() ,3),
+		$.ajax({url:  getMicroServiceResultV1("sys-proj","account","menus,"+$("#sessionId").val() ),
 			type:'get',
 			async:false,
 			success:function(data){

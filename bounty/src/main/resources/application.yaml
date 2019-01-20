@@ -25,6 +25,18 @@ spring:
     initial-size: 1
     min-idle: 1
     max-active: 20
+  rabbitmq:
+    host: 106.0.0.51
+    port: 5672
+    username: guest
+    password: gtuest
+    template:
+      routing-key: 123456
+      exchange: f3
+      default-receive-queue: q1
+
+
+
 
 mybatis:
   mapper-locations: classpath:config/mapper/*.xml

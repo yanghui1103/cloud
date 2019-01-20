@@ -39,16 +39,15 @@ public class AccountController extends BaseController {
         tAccount.setLogName(logName);
         TAccount tAccount1 = accountMapper.getByLogName(tAccount);
         return (JSONObject)JSONObject.toJSON(tAccount1);
-
     }
 
     @GetMapping(value="menus/{sessionId}")
     @ResponseBody
     public JSONObject menus(@PathVariable String sessionId){
         JSONObject jsonObject = new JSONObject();
-        JSONObject session = restTemplate.getForObject("http://cache-proj/cache/cache/key/"+sessionId, JSONObject.class);
-
-        System.out.println(session.get("logName")+"ssss");
+        String str = restTemplate.getForObject("http://cache-proj/cache/key/"+sessionId, String.class);
+        System.out.println(str+":ssss");
+        jsonObject = JSONObject.parseObject(str);
         return jsonObject;
     }
 

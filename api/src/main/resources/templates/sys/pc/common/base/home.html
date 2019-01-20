@@ -57,7 +57,7 @@
                     <li>
                         <a href="javascript:accountInfo();">
                             <i class="iconfont">&#xe60d;</i>
-                            <span class="pf-opt-name" th:text="${sessionId }"></span>
+                            <span class="pf-opt-name" th:text="${session.sessionId }"></span>
                         </a>
                     </li>
                     <!--                          <li class="pf-modify-pwd"> -->
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" th:value="${sessionId}" id="sessionId"/>
+    <input type="hidden" th:value="${session.sessionId}" id="sessionId"/>
     <div id="pf-bd">
         <div class="pf-sider-wrap">
 
@@ -96,7 +96,7 @@
     <div id="pf-ft">
         <div class="system-name">
             <i class="iconfont">&#xe6fe;</i>
-            <span>伊泰集团专家库管理系统&nbsp;v1.0</span>
+            <span>管理系统&nbsp;v1.0</span>
         </div>
         <div class="copyright-name">
             <span>CopyRight&nbsp;2019&nbsp;&nbsp;内蒙古伊泰集团有限公司&nbsp;版权所有</span>
