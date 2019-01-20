@@ -408,4 +408,23 @@ function addExternalTab(title, url) {
 			}
 		}
 	}
-	
+
+/*****
+ * 调用ajax方法直接返回数据
+ * @param turl
+ * @param ttype
+ * @param tdata
+ * @param tdatatype
+ * @returns {*}
+ */
+	function getAjaxReturn(turl,ttype,tdata,tdatatype){
+		var objValue = $.ajax({url:turl,
+							type:ttype,
+							data:tdata,
+							dataType:tdatatype,
+							async:false,
+							error:function(XMLHttpRequest, textStatus, errorThrown){
+								ajaxError(XMLHttpRequest, textStatus, errorThrown);
+							}});
+		return objValue ;
+	}
