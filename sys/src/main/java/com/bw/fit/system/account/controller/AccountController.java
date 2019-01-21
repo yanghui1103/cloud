@@ -1,5 +1,6 @@
 package com.bw.fit.system.account.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.mapper.AccountMapper;
 import com.bw.fit.system.account.entity.TAccount;
@@ -43,12 +44,14 @@ public class AccountController extends BaseController {
 
     @GetMapping(value="menus/{sessionId}")
     @ResponseBody
-    public JSONObject menus(@PathVariable String sessionId){
-        JSONObject jsonObject = new JSONObject();
+    public JSONArray menus(@PathVariable String sessionId){
+        JSONArray jsonArray = new JSONArray();
         String str = restTemplate.getForObject("http://cache-proj/cache/key/"+sessionId, String.class);
-        System.out.println(str+":ssss");
-        jsonObject = JSONObject.parseObject(str);
-        return jsonObject;
+        JSONObject jsonObject = JSONObject.parseObject(str);
+
+
+
+        return jsonArray;
     }
 
 }
