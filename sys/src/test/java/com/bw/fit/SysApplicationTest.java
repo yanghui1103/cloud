@@ -1,5 +1,9 @@
 package com.bw.fit;
 
+import com.bw.fit.system.account.mapper.AccountMapper;
+import com.bw.fit.system.account.model.Account;
+import com.bw.fit.system.account.service.AccountService;
+import com.bw.fit.system.common.model.BaseModel;
 import com.netflix.discovery.converters.Auto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +22,15 @@ public class SysApplicationTest {
     private DataSource dataSource;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private AccountService accountService;
 
     @Test
     public void load(){
-        System.out.println(dataSource);
+        BaseModel baseModel = new BaseModel();
+        baseModel.setTenant("tenantcm001");
+        Account account = accountService.get("admin",baseModel);
+        System.out.println(account);
     }
 
 

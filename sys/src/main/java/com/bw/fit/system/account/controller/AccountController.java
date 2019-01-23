@@ -38,7 +38,7 @@ public class AccountController extends BaseController {
     public JSONObject get(@PathVariable(value = "logName") String logName){
         TAccount tAccount = new TAccount();
         tAccount.setLogName(logName);
-        TAccount tAccount1 = accountMapper.getByLogName(tAccount);
+        TAccount tAccount1 = accountMapper.getByLogName(logName);
         return (JSONObject)JSONObject.toJSON(tAccount1);
     }
 

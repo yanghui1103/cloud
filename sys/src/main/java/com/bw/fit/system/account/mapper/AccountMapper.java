@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AccountMapper {
-    TAccount getByLogName(TAccount tAccount);
+    TAccount getByLogName(String logName);
 }

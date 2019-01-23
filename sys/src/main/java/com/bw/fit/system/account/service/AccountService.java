@@ -1,5 +1,8 @@
 package com.bw.fit.system.account.service;
 
+import com.bw.fit.system.account.model.Account;
+import com.bw.fit.system.common.model.BaseModel;
+
 /**
  * @Description
  * @Author yangh
@@ -9,4 +12,6 @@ package com.bw.fit.system.account.service;
  * @VERSION
  */
 public interface AccountService {
+    Account get(String logName, BaseModel baseModel);
+
 }

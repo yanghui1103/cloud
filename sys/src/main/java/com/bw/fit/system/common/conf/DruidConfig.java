@@ -3,22 +3,23 @@ package com.bw.fit.system.common.conf;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.bw.fit.system.common.dynamicdatasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class DruidConfig  {
 
+    @Autowired
+    private DataSource dataSource;
+
     @ConfigurationProperties(prefix = "spring.datasource")
-    @Bean
+    @Bean(name="dataSource")
     public DruidDataSource getDruidDataSource(){
         return new DruidDataSource();
     }
@@ -39,7 +40,7 @@ public class DruidConfig  {
         servletRegistrationBean.addInitParameter("resetEnable","false");
         return servletRegistrationBean;
 
-        // http://localhost:8001/sys/druid/  Druid 后台管理平台访问即可
+        // http://localhost:8001/druid/  Druid 后台管理平台访问即可
     }
 
     @Bean

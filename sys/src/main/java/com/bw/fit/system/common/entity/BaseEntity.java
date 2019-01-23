@@ -8,7 +8,7 @@ import java.util.List;
  *
  */
 public class BaseEntity {
-
+	private String tenant;
 	private String id ;
 	private String parentId;
 	private String foreignId;
@@ -55,10 +55,17 @@ public class BaseEntity {
 	private String paginationEnable;
 	private Integer rn ;
 	private List<String> createOrgIds;
-	
-	
-	
-	
+
+
+
+
+	public String getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(String tenant) {
+		this.tenant = tenant;
+	}
 	public String getTemp_str6() {
 		return temp_str6;
 	}

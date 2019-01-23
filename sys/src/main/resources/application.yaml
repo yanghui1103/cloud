@@ -48,14 +48,14 @@ pagehelper:
 #租户对应数据源
 custom:
     datasource:
-      names: ds1,ds2
-      ds1:
+      names: tenantcm001,tenantcm002
+      tenantcm001:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: oracle.jdbc.driver.OracleDriver
         url: jdbc:oracle:thin:@10.1.9.160:1521/pm
         username: zjk
         password: zjk2018
-      ds2:
+      tenantcm002:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: oracle.jdbc.driver.OracleDriver
         url: jdbc:oracle:thin:@10.1.9.160:1521/pm

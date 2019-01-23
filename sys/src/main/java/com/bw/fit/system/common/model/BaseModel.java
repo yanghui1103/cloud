@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class BaseModel{
 
+	private String tenant;
 	private String id ;
 	private String parentId;
 	private String foreignId;
@@ -331,5 +332,12 @@ public class BaseModel{
 	public void setTemp_str3(String temp_str3) {
 		this.temp_str3 = temp_str3;
 	}
-	
+
+	public String getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(String tenant) {
+		this.tenant = tenant;
+	}
 }
