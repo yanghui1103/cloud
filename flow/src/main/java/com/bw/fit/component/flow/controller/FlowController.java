@@ -2,6 +2,7 @@ package com.bw.fit.component.flow.controller;
 
 import static com.bw.fit.system.common.util.PubFun.returnFailJson;
 
+import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,14 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
@@ -33,14 +30,9 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.activiti.engine.impl.pvm.PvmTransition;
-import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.task.Task;
-import org.apache.log4j.Logger;
 import org.apache.shiro.session.Session;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
