@@ -3,26 +3,26 @@ package com.bw.fit.system.common.conf;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.bw.fit.system.common.dynamicdatasource.DynamicDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class DruidConfig {
-
-    @Autowired
-    DataSource dataSource;
+public class DruidConfig  {
 
     @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
     public DruidDataSource getDruidDataSource(){
         return new DruidDataSource();
     }
+
 
     @Bean
     public ServletRegistrationBean statViewServlet(){
