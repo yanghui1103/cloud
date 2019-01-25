@@ -118,34 +118,6 @@ public class OrganizationController extends BaseController {
 		json.put("org", (JSONObject)JSONObject.toJSON(o) );
 		return json ;
 	}
-	/*****
-		 * 可以翻页，获取组织列表
-		 * @param org
-		 * @return
-		 */
-		@RequestMapping(value="organizations",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
-		@ResponseBody
-		public JSONObject organizations(@ModelAttribute Organization org){
-			JSONObject js = new JSONObject();
-			JSONArray array = new JSONArray();
-			org.setPaginationEnable("0");
-			List<Organization> list = organizationDao.getOrganizations(org);
-			if(list==null||list.size()<1){
-				returnFailJson(js, "无数据");
-				return js ;
-			}
-			for(Organization o:list){
-				JSONObject j = new JSONObject();
-				j.put("id", o.getId());
-				j.put("pId", o.getParentId());
-				j.put("name", o.getName());
-				j.put("open", true); // 默认全部打开
-				array.add(j);
-			}
-			js.put("res", "2");
-			js.put("list", array);
-			return js ;
-		}
 
 	@RequestMapping("get")
 	public String get(){

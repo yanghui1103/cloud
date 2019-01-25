@@ -7,6 +7,7 @@ eureka:
     prefer-ip-address: true
 server:
   port: 8004
+
 spring:
   application:
     name: flow-proj
@@ -27,7 +28,6 @@ mybatis:
   type-aliases-package: com.bw.fit
   configuration:
     map-underscore-to-camel-case: true
-
 
   activiti:
     history-level: full

@@ -33,9 +33,9 @@ public class DataSourceAspect {
         String[] argNames = ((MethodSignature)point.getSignature()).getParameterNames(); // 参数名
         for(Object object:args){
             if(object instanceof BaseModel){
-                if("tenantcm001".equalsIgnoreCase(((BaseModel) object).getTenant())){
+                if("tenantcm001".equalsIgnoreCase(((BaseModel) object).getTenantId())){
                     DatabaseContextHolder.setDatabaseType(DatabaseType.tenantcm001);
-                }else if("tenantcm002".equalsIgnoreCase(((BaseModel) object).getTenant())){
+                }else if("tenantcm002".equalsIgnoreCase(((BaseModel) object).getTenantId())){
                     DatabaseContextHolder.setDatabaseType(DatabaseType.tenantcm002);
                 }
             }

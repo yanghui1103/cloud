@@ -28,7 +28,7 @@ public class SysApplicationTest {
     @Test
     public void load(){
         BaseModel baseModel = new BaseModel();
-        baseModel.setTenant("tenantcm001");
+        baseModel.setTenantId("tenantcm001");
         Account account = accountService.get("admin",baseModel);
         System.out.println(account);
     }
