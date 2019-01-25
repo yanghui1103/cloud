@@ -1,6 +1,5 @@
 package com.bw.fit.component.flow.service.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,14 +9,10 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.activiti.engine.*;
-import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
-import org.activiti.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
-import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.engine.impl.persistence.entity.HistoricActivityInstanceEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
 import org.activiti.engine.impl.pvm.PvmTransition;
@@ -32,27 +27,13 @@ import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Comment;
-import org.activiti.engine.task.IdentityLink;
-import org.activiti.engine.task.IdentityLinkType;
-import org.activiti.engine.task.Task; 
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
- 
 
 
-
-
-
-
-
-
-
-
-
-
-import com.bw.fit.component.flow.model.RejectTaskCMD;
 import com.bw.fit.component.flow.service.FlowCoreService;
 
 @Service

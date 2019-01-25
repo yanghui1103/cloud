@@ -1,7 +1,7 @@
 package com.bw.fit.component.flow.listener;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bw.fit.system.common.model.RbackException;
+import com.bw.fit.component.flow.model.RbackException;
 
 public interface TodoreadService {
 	/*****
@@ -9,7 +9,7 @@ public interface TodoreadService {
 	 * @return
 	 * @throws RbackException
 	 */
-	public JSONObject sendTodoOA() throws RbackException ;
+	public JSONObject sendTodoOA() throws RbackException;
 	/*****
 	 * 置为OA待办/待阅为已经办理或已经阅读
 	 * @return

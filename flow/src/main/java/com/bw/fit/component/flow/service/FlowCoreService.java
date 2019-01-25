@@ -16,7 +16,6 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task; 
 
-import com.bw.fit.system.common.model.RbackException;
 
 import java.awt.image.*;
 import java.io.IOException;
@@ -120,7 +119,7 @@ public interface FlowCoreService {
     /****
      * 删除任务集合,及相关数据
      * @param taskIds
-     * @param b 是否级联删除相关数据
+     * @param cascade 是否级联删除相关数据
      */
     public void deleteTaskCascade(Collection<String> taskIds, boolean cascade);
     /****

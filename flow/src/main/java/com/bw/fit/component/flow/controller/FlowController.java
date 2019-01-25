@@ -1,7 +1,7 @@
 package com.bw.fit.component.flow.controller;
 
-import static com.bw.fit.system.common.util.PubFun.returnFailJson;
 
+import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.HistoryService;
@@ -31,26 +32,13 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.task.Task;
-import org.apache.shiro.session.Session;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bw.fit.component.flow.dao.FlowDao;
-import com.bw.fit.component.flow.entity.TNode2Dealer;
-import com.bw.fit.component.flow.entity.TTodo;
-import com.bw.fit.component.flow.model.Audit;
 import com.bw.fit.component.flow.service.FlowPlusService;
-import com.bw.fit.plan.admin.dao.PlanDao;
-import com.bw.fit.plan.admin.entity.TPlan;
-import com.bw.fit.system.account.model.Account;
-import com.bw.fit.system.account.service.AccountService;
-import com.bw.fit.system.common.model.RbackException;
-import com.bw.fit.system.common.util.PubFun;
-import com.bw.fit.system.dict.service.DictService;
-import com.bw.fit.zj.admin.dao.ZjDao;
-import com.bw.fit.zj.admin.entity.TZj;
+
 
 /*****
  * 流程模块
@@ -61,15 +49,15 @@ import com.bw.fit.zj.admin.entity.TZj;
 @Controller
 public class FlowController {
 
-	@Autowired
+	@Resource
 	private ProcessEngine processEngine;
-	@Autowired
+	@Resource
 	private RepositoryService repositoryService;
-	@Autowired
+	@Resource
 	private TaskService taskService;
-	@Autowired
+	@Resource
 	private RuntimeService runtimeService;
-	@Autowired
+	@Resource
 	private HistoryService historyService;
 	@Autowired
 	private FlowPlusService flowPlusService;
@@ -166,127 +154,4 @@ public class FlowController {
 	}
 	
 
-	@RequestMapping(value="audit",method=RequestMethod.POST)
-	@ResponseBody
-	public JSONObject audit(@ModelAttribute Audit au,BindingResult result) throws RbackException{
-		JSONObject json = new JSONObject();
-		if (result.hasErrors()) {
-			FieldError error = result.getFieldError();
-			json.put("res", "1");
-			returnFailJson(json, error.getDefaultMessage());
-			return json;
-		}
-		Session session = PubFun.getCurrentSession();
-		PubFun.fillCommonProptities(au, false, session);
-		json = flowPlusService.audit(au);
-		return json ;
-	}
-	
-	@RequestMapping(value="todos",method=RequestMethod.GET)
-	@ResponseBody
-	public JSONArray todos(){
-		Account account = PubFun.getCurrentAccount();
-		List<TTodo> ds = flowDao.getRelationFlows(account.getId());
-		return (JSONArray)JSONArray.toJSON(ds) ;
-	}
-	
-	@RequestMapping(value="auditDetail/{id}/{taskId}/{foreignId}",method=RequestMethod.GET)
-	public String auditDetail(@PathVariable String id,@PathVariable String taskId,
-			@PathVariable String foreignId,Model model){
-		model.addAttribute("id", id);
-		model.addAttribute("taskId",taskId);
-		model.addAttribute("foreignId",foreignId);
-		List<TTodo> dos = flowDao.getDealsOfPid(id);
-		model.addAttribute("deals", dos);
-		/****
-		 * 此处后期最好使用策略模式，此次我就不了
-		 */
-		TZj t = zjDao.getCo(id);
-		TZj tg = zjDao.getCo(foreignId);
-		TPlan tp = planDao.get(id);
-		if(t!=null && ( t.getCoType().equals("registerzj") || t.getCoType().equals("editzj"))){
-			return "forward:/zj/audit/"+id+"/"+taskId ;
-		}else if(tg!=null && (tg.getCoType().equals("unshield") || tg.getCoType().equals("shield") || tg.getCoType().equals("exitzj"))){
-			return "forward:/zj/audit2/"+id+"/"+taskId+"/"+foreignId ;
-		}else if(tp !=null && !"-9".equals(taskId) ){
-			return "forward:/plan/audit/"+id+"/"+taskId+"/"+foreignId ;
-		}else  if(tp !=null && "-9".equals(taskId) ){
-			return "forward:/bounty/audit/"+id+"/"+taskId;
-		}
-		
-		return "component/flow/auditDetail";
-	}
-	
-	@RequestMapping(value="flow/{id}/{taskId}",method=RequestMethod.DELETE)
-	@ResponseBody
-	public JSONObject delete(@ModelAttribute Audit audit,@PathVariable(value="id") String id,@PathVariable(value="taskId") String taskId) throws Exception{
-		audit.setId(id);
-		audit.setTaskId(taskId);
-		JSONObject json = flowPlusService.deletePiPlus(audit);
-		return json ;
-	}
-	
-	@RequestMapping(value="dealers",method=RequestMethod.GET)
-	@ResponseBody
-	public JSONArray dealers(){
-		JSONArray json = new JSONArray();
-		List<TNode2Dealer> nds = flowDao.getNodeDealersConf(null, null);
-		for(TNode2Dealer node:nds){
-			node.setTypeCode(dictService.getDictByValue(node.getTypeCode())==null?"":dictService.getDictByValue(node.getTypeCode()).getDictName());
-			node.setPdinst(dictService.getDictByValue(node.getPdinst())==null?"":dictService.getDictByValue(node.getPdinst()).getDictName());
-			node.setNodeCode(dictService.getDictByValue(node.getNodeCode())==null?"":dictService.getDictByValue(node.getNodeCode()).getDictName());
-			String dealers = node.getDealer();
-			StringBuffer sb = new StringBuffer();
-			if(!"".equals(dealers)){
-				String[] arr = dealers.split(",");
-				for(String s:arr){
-					sb.append(accountService.get(s).getName());
-					sb.append(",");
-				}
-				node.setDealer(sb.toString());
-			}
-			node.setOperator(accountService.get(node.getOperator())==null?"":accountService.get(node.getOperator()).getName());
-		}
-		if(nds !=null){
-			json = (JSONArray)JSONArray.toJSON(nds);
-		}
-		return json ;
-	}
-	
-	@RequestMapping(value="dealer/{pdinst}/{node}")
-	public String dealerCrtPage(@PathVariable(value="pdinst") String pdinst,
-			@PathVariable(value="node") String node,
-			Model model){
-		TNode2Dealer tg = new TNode2Dealer();
-		tg.setPdinst(pdinst);
-		tg.setNodeCode(node);
-		List<TNode2Dealer> list = flowDao.getDealerConf(tg);
-		model.addAttribute("pdinstCode",list.get(0).getPdinst());
-		model.addAttribute("nodeCode",list.get(0).getNodeCode());
-		model.addAttribute("pdinst",(dictService.getDictByValue(list.get(0).getPdinst())==null?"":dictService.getDictByValue(list.get(0).getPdinst()).getDictName()));
-		model.addAttribute("node",(dictService.getDictByValue(list.get(0).getNodeCode())==null?"":dictService.getDictByValue(list.get(0).getNodeCode()).getDictName()));
-		model.addAttribute("type", (dictService.getDictByValue(list.get(0).getTypeCode())==null?"":dictService.getDictByValue(list.get(0).getTypeCode()).getDictName()));
-		StringBuffer sbIds = new StringBuffer();
-		StringBuffer sbNames = new StringBuffer();
-		list.stream().forEach(x->{
-			sbIds.append(x.getDealer());
-			sbNames.append(accountService.get(x.getDealer()).getName());
-			sbIds.append(",");
-			sbNames.append(",");
-		});
-		model.addAttribute("names", sbNames.toString());
-		model.addAttribute("ids", sbIds.toString());
-		return "component/flow/dealerCreatePage";
-	}
-	
-	@RequestMapping(value="dealer",method=RequestMethod.POST)
-	@ResponseBody
-	public JSONObject save(@ModelAttribute TNode2Dealer nodeDealer,@RequestParam(value="accountIds") String accountIds) throws Exception{
-		JSONObject json = new JSONObject();
-		nodeDealer.setDealer(accountIds);
-		Session session  = PubFun.getCurrentSession();
-		PubFun.fillCommonProptities(nodeDealer, true, session);
-		json = flowPlusService.createNodeDealer(nodeDealer);
-		return json ;
-	}
 }
