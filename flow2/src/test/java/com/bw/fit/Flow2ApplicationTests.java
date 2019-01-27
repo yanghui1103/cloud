@@ -1,5 +1,6 @@
 package com.bw.fit;
 
+import com.bw.fit.component.flow.service.FlowCoreService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -10,6 +11,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -26,6 +28,8 @@ public class Flow2ApplicationTests {
     private TaskService taskService;
     @Resource
     private HistoryService historyService;
+    @Autowired
+    private FlowCoreService flowCoreService;
 
     @Test
     public void contextLoads() {
@@ -57,12 +61,36 @@ public class Flow2ApplicationTests {
     }
 
     @Test
+    public void nextTask(){
+        String processId ="760001";
+        List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
+        for(Task task:tasks){
+            System.out.println("执行前，任务名称："+task.getName());
+            System.out.println("执行前，任务taskId："+task.getId());
+        }
+    }
+
+    @Test
     public void complete(){
         String processId ="760001";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
             System.out.println("执行前，任务名称："+task.getName());
             taskService.complete(task.getId());
+        }
+    }
+
+    @Test
+    public void completeCurrentTask(){
+        taskService.complete("780005");
+    }
+
+    @Test
+    public void rollbackCuurent(){
+        try {
+            flowCoreService.rollBackProcess("780003");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

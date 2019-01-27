@@ -27,7 +27,7 @@ spring:
   activiti:
     history-level: full
     database-schema: ACT
-    check-process-definitions: false
+    check-process-definitions: true
     process-definition-location-prefix: classpath:processes/
     database-schema-update: none
 #    process-definition-location-suffixes:
