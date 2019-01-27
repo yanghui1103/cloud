@@ -53,7 +53,7 @@ public class Flow2ApplicationTests {
     @Test
     public void start(){
         //启动流程定义，返回流程实例
-        ProcessInstance pi = runtimeService.startProcessInstanceById("myProcess_2:1:747504");
+        ProcessInstance pi = runtimeService.startProcessInstanceById("myProcess_2:3:860014");
         String processId = pi.getId();
         System.out.println("流程创建成功，当前流程实例ID："+processId);
 
@@ -62,17 +62,18 @@ public class Flow2ApplicationTests {
 
     @Test
     public void nextTask(){
-        String processId ="760001";
+        String processId ="862501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
-            System.out.println("执行前，任务名称："+task.getName());
-            System.out.println("执行前，任务taskId："+task.getId());
+            System.out.println("当前任务名称："+task.getName());
+            System.out.println("当前任务taskId："+task.getId());
+            System.out.println("当前任务taskKey："+task.getTaskDefinitionKey());
         }
     }
 
     @Test
     public void complete(){
-        String processId ="760001";
+        String processId ="862501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
             System.out.println("执行前，任务名称："+task.getName());
@@ -82,15 +83,25 @@ public class Flow2ApplicationTests {
 
     @Test
     public void completeCurrentTask(){
-        taskService.complete("780005");
+        taskService.complete("842504");
     }
 
     @Test
     public void rollbackCuurent(){
         try {
-            flowCoreService.rollBackProcess("780003");
+            flowCoreService.rollBackProcess("805013");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void rollback(){
+        try {
+            flowCoreService.rollBack("862501","_3","msg");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
