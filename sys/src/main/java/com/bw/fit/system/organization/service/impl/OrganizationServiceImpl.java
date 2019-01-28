@@ -13,10 +13,12 @@ import com.bw.fit.system.organization.mapper.OrganizationMapper;
 import com.bw.fit.system.organization.model.Organization;
 import com.bw.fit.system.organization.service.OrganizationService;
 
+import javax.annotation.Resource;
+
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
-	@Autowired
+	@Resource
 	private OrganizationMapper organizationDao ;
 	
 	
