@@ -46,7 +46,7 @@ public class Flow2ApplicationTests {
         Deployment deployment = repositoryService.createDeployment()
                 .name("qjlc111")
                 .tenantId("tenantcm001")
-                .addClasspathResource("processes/test1.bpmn").deploy();
+                .addClasspathResource("processes/test32.bpmn").deploy();
 
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
         System.out.println(processDefinition.getId());
@@ -56,10 +56,10 @@ public class Flow2ApplicationTests {
     public void start(){
 
         Map<String,Object> vars = new HashMap<>();
-        vars.put("dealers", "staff");
+        vars.put("draftToward", "1");
 
         //启动流程定义，返回流程实例
-        ProcessInstance pi = runtimeService.startProcessInstanceById("myProcess_2:2:17514",vars);
+        ProcessInstance pi = runtimeService.startProcessInstanceById("test32:2:152504",vars);
         String processId = pi.getId();
         System.out.println("流程创建成功，当前流程实例ID："+processId);
 
@@ -68,7 +68,7 @@ public class Flow2ApplicationTests {
 
     @Test
     public void currentTask(){
-        String processId ="42501";
+        String processId ="155001";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
             System.out.println("当前任务名称："+task.getName());
@@ -79,7 +79,7 @@ public class Flow2ApplicationTests {
 
     @Test
     public void complete(){
-        String processId ="42501";
+        String processId ="147501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
             System.out.println("执行前，任务名称："+task.getName());
@@ -89,7 +89,7 @@ public class Flow2ApplicationTests {
 
     @Test
     public void completeCurrentTask(){
-        String processId ="42501";
+        String processId ="147501";
         Map<String,Object> vars = new HashMap<>();
         vars.put("dealers1", "staff001,staff011");
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).taskCandidateUser("staff").list();
@@ -101,7 +101,7 @@ public class Flow2ApplicationTests {
 
     @Test
     public void cliamTask(){
-        String processId ="42501";
+        String processId ="147501";
         Map<String,Object> vars = new HashMap<>();
         vars.put("dealers2", "staff002,staff012");
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).taskCandidateUser("staff001").list();
@@ -131,7 +131,7 @@ public class Flow2ApplicationTests {
     @Test
     public void rollback(){
         try {
-            flowCoreService.rollBack("42501","_3","msg");
+            flowCoreService.rollBack("155001","_2","-1");
         } catch (Exception e) {
             e.printStackTrace();
         }

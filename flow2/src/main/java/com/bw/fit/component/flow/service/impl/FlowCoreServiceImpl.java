@@ -50,7 +50,7 @@ public class FlowCoreServiceImpl implements FlowCoreService {
 	private HistoryService historyService; 
 
 	@Override
-	public void rollBack(String procInstId, String destTaskKey, String messageContent) {
+	public void rollBack(String procInstId, String destTaskKey, String draftToward) {
 		// TODO Auto-generated method stub
 		  //获得当前任务的对应实列
 		  
@@ -106,12 +106,11 @@ public class FlowCoreServiceImpl implements FlowCoreService {
 		  newTransitionImpl.setDestination(destActiviti);
 		  //保存驳回意见
 		  
-		  taskEntity.setDescription(messageContent);//设置驳回意见
 		  taskService.saveTask(taskEntity);
 		  //设定驳回标志  
 		  
 		  Map<String, Object> variables = new java.util.HashMap<String, Object>(0);
-		  variables.put("messageContent", messageContent);
+		  variables.put("draftToward", draftToward);
 		  //执行当前任务驳回到目标任务draft		  
 		  taskService.complete(taskEntity.getId(), variables);
 		  

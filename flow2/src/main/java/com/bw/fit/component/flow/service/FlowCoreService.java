@@ -45,10 +45,10 @@ public interface FlowCoreService {
      * 驳回流程 
      * @param procInstId  PINCEID 
      * @param destTaskKey   节点key 
-     * @param messageContent  信息
+     * @param draftToward  驳回后方向：1正向，-1反向
      * @throws Exception 
      */  
-    public void rollBack(String procInstId, String destTaskKey, String messageContent)  throws Exception;
+    public void rollBack(String procInstId, String destTaskKey, String draftToward)  throws Exception;
     /*****
      * 挂起流程定义，流程就不能被启动
      * @param defId
