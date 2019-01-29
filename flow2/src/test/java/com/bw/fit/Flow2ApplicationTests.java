@@ -53,7 +53,7 @@ public class Flow2ApplicationTests {
     @Test
     public void start(){
         //启动流程定义，返回流程实例
-        ProcessInstance pi = runtimeService.startProcessInstanceById("myProcess_2:3:860014");
+        ProcessInstance pi = runtimeService.startProcessInstanceById("myProcess_2:1:14");
         String processId = pi.getId();
         System.out.println("流程创建成功，当前流程实例ID："+processId);
 
