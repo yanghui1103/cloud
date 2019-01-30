@@ -17,6 +17,10 @@
     <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/main.js}"></script>
     <script type="text/javascript">
+        $(function(){
+            var account = JSON.parse($("#currentUser").val()) ;
+            alert(account.logName);
+        });
         function logout(){
             $.ajax({
                 url:ctx+"system/logout",
@@ -57,7 +61,7 @@
                     <li>
                         <a href="javascript:accountInfo();">
                             <i class="iconfont">&#xe60d;</i>
-                            <span class="pf-opt-name" th:text="${session.sessionId }"></span>
+                            <span class="pf-opt-name" th:text="${session.currentUser }"></span>
                         </a>
                     </li>
                     <!--                          <li class="pf-modify-pwd"> -->
@@ -82,7 +86,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" th:value="${session.sessionId}" id="sessionId"/>
+    <input type="hidden" th:value="${session.currentUser}" id="currentUser"/>
     <div id="pf-bd">
         <div class="pf-sider-wrap">
 

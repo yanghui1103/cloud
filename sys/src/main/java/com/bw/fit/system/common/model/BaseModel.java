@@ -63,6 +63,7 @@ public class BaseModel{
 	private List<String> tempList2;
 	private List<String> tempList3;
 	private String sessionId;
+	private String paginationEnable;
 
 
 	public String getTenantId() {
@@ -467,5 +468,13 @@ public class BaseModel{
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public String getPaginationEnable() {
+		return paginationEnable;
+	}
+
+	public void setPaginationEnable(String paginationEnable) {
+		this.paginationEnable = paginationEnable;
 	}
 }

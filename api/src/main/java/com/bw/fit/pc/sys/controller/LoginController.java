@@ -108,6 +108,7 @@ public class LoginController {
         accountJSON.put("sessionId",sessionId);
         JSONObject jj = commonService.setCacheValue("session:"+sessionId,accountJSON);
         session.setAttribute("sessionId",sessionId);
+        session.setAttribute("currentUser",accountJSON.toJSONString());
         model.addAttribute("sessionId",sessionId);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
