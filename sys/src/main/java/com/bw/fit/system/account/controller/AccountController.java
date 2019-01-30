@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.mapper.AccountMapper;
 import com.bw.fit.system.account.entity.TAccount;
 import com.bw.fit.system.common.controller.BaseController;
+import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.common.util.PubFun;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class AccountController extends BaseController {
     RestTemplate restTemplate;
     @Resource
     private AccountMapper accountMapper;
+    @Autowired
+    private CommonService commonService;
+
 
     @GetMapping (value="account/{logName}")
     @ResponseBody

@@ -1,5 +1,10 @@
 package com.bw.fit.system.common.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.system.common.model.BaseModel;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Description
  * @Author yangh
@@ -18,4 +23,18 @@ public interface CommonService {
      * @date: 2018-12-8 12:50
      */
     String getCacheValue(String key);
+
+    /*****
+     * 获取当前请求的账户信息，如果request的参数里没有sessionId，就不会取数据。
+     * @param request
+     * @return
+     */
+    JSONObject getCurrentAccount(HttpServletRequest request);
+
+    /*****
+     * 将basemodel的公共字段填充；
+     * @param baseModel
+     * @param request
+     */
+    void fillCommonProptities(BaseModel baseModel,HttpServletRequest request,boolean isFillFdid);
 }

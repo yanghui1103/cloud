@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
@@ -371,15 +373,6 @@ public class PubFun {
 		return rb.getString(key);
 	}
 
-
-	/*****
-	 * 获取当前用户的会话 shrio 方法
-	 *
-	 * @return
-	 */
-	public static org.apache.shiro.session.Session getCurrentSession() {
-		return SecurityUtils.getSubject().getSession();
-	}
 
 
 	public static void copyProperties(Object dest, Object orig) {
