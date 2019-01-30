@@ -55,7 +55,7 @@ public class BaseEntity {
 	private String paginationEnable;
 	private Integer rn ;
 	private List<String> createOrgIds;
-
+	private String sessionId ;
 
 
 
@@ -328,5 +328,12 @@ public class BaseEntity {
 	public void setTemp_str3(String temp_str3) {
 		this.temp_str3 = temp_str3;
 	}
-	
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
 }
