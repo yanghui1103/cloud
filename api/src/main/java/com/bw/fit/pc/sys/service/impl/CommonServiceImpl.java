@@ -5,7 +5,7 @@ import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -69,6 +69,32 @@ public class CommonServiceImpl implements CommonService {
         ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
                 JSONObject.class );
         return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject getOtherAppReturn(String url, MultiValueMap<String, String> params) {
+        ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
+                JSONObject.class,params );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject postOtherAppReturn(String url,MultiValueMap<String, String> params) {
+        ResponseEntity<JSONObject> response = restTemplate.postForEntity(url,params,
+                JSONObject.class );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject putOtherAppReturn(String url, HttpEntity<String> entity) {
+        ResponseEntity<JSONObject> response = restTemplate.exchange(url, HttpMethod.PUT, entity, JSONObject.class);
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject deleteOtherAppReturn(String url,Object[] args) {
+        ResponseEntity<JSONObject> response = restTemplate.exchange(url, HttpMethod.PUT, null, JSONObject.class,args);
+        return response.getBody()  ;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class ApiController {
     @ResponseBody
     public String getMicroServiceUrl(@PathVariable String serviceName){
         String url = env.getProperty("zuul.routes." + serviceName + ".url").toString();
-        return   url!=null?url:"";
+        return  url!=null?url:"";
     }
 
     @GetMapping(value="getMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
