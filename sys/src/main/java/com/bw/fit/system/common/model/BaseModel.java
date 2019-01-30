@@ -62,6 +62,8 @@ public class BaseModel{
 	private List<String> tempList1;
 	private List<String> tempList2;
 	private List<String> tempList3;
+	private String sessionId;
+
 
 	public String getTenantId() {
 		return tenantId;
@@ -457,5 +459,13 @@ public class BaseModel{
 
 	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

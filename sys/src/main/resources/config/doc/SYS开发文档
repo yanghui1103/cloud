@@ -8,3 +8,5 @@
 
 
 二，SYS工程开发
+    1，SessionCorrectInterceptor  是处理所有发起/××请求的会话id有效性验证，如果request里有名称为sessionId的数据就会拦截，如果没有这个参数就
+    不会拦截。

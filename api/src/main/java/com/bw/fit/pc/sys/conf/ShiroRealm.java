@@ -64,32 +64,33 @@ public class ShiroRealm extends AuthorizingRealm {
         //获取基于用户名和密码的令牌
         //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+        if(token == null){
+            throw new AuthenticationException("认证失败，请重新登录");
+        }
         String account = token.getUsername();
+        String password = String.valueOf(token.getPassword());
         if(Strings.isNullOrEmpty(account)){
-            return null;
+            throw new AuthenticationException("账号不存在");
         }
         /****
          * 根据账号获取账户详情
          */
-
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account, JSONObject.class);
         //User user = userService.selectByAccount(account);//根据登陆名account从库中查询user对象
-        if("".equals(accountJSON)){throw new AuthenticationException("账户不存在");}
+        if("1".equals(accountJSON.get("res"))){throw new AuthenticationException("账户不存在");}
         ByteSource salt = ByteSource.Util.bytes( PropertiesUtil.getValueByKey("user.pw.slogmm").toString() + account );
-        AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(account, PropertiesUtil.getValueByKey("sys.default.password").toString(), salt, getName());
-
-        //清之前的授权信息
-        super.clearCachedAuthorizationInfo(authcInfo.getPrincipals());
-        //如果有问题，向上抛异常，一直抛到控制器
-        //1,把AuthenticationToken 转化为UsernamePasswordToken
-
+//        AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(account, PropertiesUtil.getValueByKey("sys.default.password").toString(), salt, getName());
+//
+//        //清之前的授权信息
+//        super.clearCachedAuthorizationInfo(authcInfo.getPrincipals());
         //5,最后返回的用户信息，
         Object principal = accountJSON.get("logName") ;
-        Object credentials = accountJSON.get("logPwd").toString();
+        Object credentials = password ;
         //6 盐值
         SimpleAuthenticationInfo info = null ;
+        String name = getName();
         info = new SimpleAuthenticationInfo(principal,credentials,salt,getName());
-        return authcInfo ;
+        return info ;
     }
 
     @Override

@@ -93,7 +93,7 @@ public class LoginController {
             session = currentUser.getSession();
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            model.addAttribute("errorMsg", "登录失败,认证拦截");
+            model.addAttribute("errorMsg", "登录失败,认证拦截:"+e.getMessage());
             return loginPage;
         }
         if (session == null) {
@@ -106,7 +106,7 @@ public class LoginController {
          */
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account.getLogName(), JSONObject.class);
         accountJSON.put("sessionId",sessionId);
-        JSONObject jj = commonService.setCacheValue(sessionId,accountJSON);
+        JSONObject jj = commonService.setCacheValue("session:"+sessionId,accountJSON);
         session.setAttribute("sessionId",sessionId);
         model.addAttribute("sessionId",sessionId);
         logger.info(sessionId);
