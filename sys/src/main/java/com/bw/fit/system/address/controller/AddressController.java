@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.address.service.AddressService;
-import com.bw.fit.system.organization.dao.OrganizationDao;
 
 @RequestMapping("address")
 @Controller
