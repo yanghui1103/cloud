@@ -44,13 +44,6 @@ public abstract class BaseController {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	}
 
-	/*****
-	 * 对于所有进入sys工程的请求做sessionId合法性进行验证
-	 * 前提是拦截到数据
-	 * @param baseModel
-	 * @return
-	 */
-
 
 	
 }
