@@ -2,6 +2,7 @@ package com.bw.fit.system.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.common.model.BaseModel;
 import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.common.util.PubFun;
@@ -53,15 +54,17 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void fillCommonProptities(BaseModel baseModel, HttpServletRequest request,boolean isFillFdid) {
-        JSONObject jsonObject = getCurrentAccount(request);
-        if("2".equals(jsonObject.get("res"))){
+        JSONObject accountJson = getCurrentAccount(request);
+        if("2".equals(accountJson.get("res"))){
             if(isFillFdid){
                 baseModel.setId(PubFun.getUUID());
             }
-
-
-
-
+            Account account = JSONObject.toJavaObject(accountJson,Account.class);
+            baseModel.setCreator(account.getId());
+            baseModel.setCreatorName(account.getName());
+            baseModel.setCreateOrgId(account.getCurrentOrgId());
+            baseModel.setCreateTime(PubFun.getSysDate());
+            baseModel.setHaveOrgListAuth(account.getHaveOrgListAuth());
         }
     }
 }
