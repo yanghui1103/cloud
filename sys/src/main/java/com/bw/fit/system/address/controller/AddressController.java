@@ -1,11 +1,11 @@
 package com.bw.fit.system.address.controller;
 
-import static com.bw.fit.system.common.util.PubFun.getCurrentSession;
 import static com.bw.fit.system.common.util.PubFun.returnSuccessJson;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import com.bw.fit.system.common.service.CommonService;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +19,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.address.service.AddressService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequestMapping("address")
 @Controller
 public class AddressController {
 	
 	@Autowired
 	private AddressService addressService ;
+	@Autowired
+	private CommonService commonService;
 	
 	/***
 	 * 打开地址本页面
@@ -37,12 +41,11 @@ public class AddressController {
 	 * @return
 	 */
 	@RequestMapping("openAddressPage/{o}/{p}/{a}/{ids}/{isMultiple}")
-	public String openAddressPage(Model model,@PathVariable boolean o,
-			@PathVariable boolean p,@PathVariable boolean a,
-			@PathVariable(value="ids",required=false) String ids,
-			@PathVariable boolean isMultiple){
-		Session session = getCurrentSession();
-		Account account = (Account)session.getAttribute("CurrentUser");
+	public String openAddressPage(Model model, @PathVariable boolean o,
+								  @PathVariable boolean p, @PathVariable boolean a,
+								  @PathVariable(value="ids",required=false) String ids,
+								  @PathVariable boolean isMultiple, HttpServletRequest request){
+		Account account = JSONObject.toJavaObject(commonService.getCurrentAccount(request),Account.class);
 		String orgId = account.getCurrentOrgId();
 		//待选列表
 		model.addAttribute("selectList", addressService.getSelectAddr(o, p, a, orgId,false));
@@ -61,11 +64,6 @@ public class AddressController {
 	
 	/*****
 	 * 地址本中点击左侧组织树(或者查询)，响应右侧待选
-	 * @param orgId 组织id
-	 * @param o是否查询组织
-	 * @param p是否查询岗位
-	 * @param a是否查询账号
-	 * @param type查询类型：true:搜索框查询false：点击左侧组织树查询
 	 * @return
 	 */
 	@RequestMapping(value="address/{keyWords}/{o}/{p}/{a}/{type}",method=RequestMethod.GET,produces="application/json;charset=UTF8")

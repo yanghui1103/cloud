@@ -41,7 +41,7 @@
       <module name="link" options="-parameters" />
       <module name="log" options="-parameters" />
       <module name="report" options="-parameters" />
-      <module name="sys" options="-parameters" />
+      <module name="sys" options="" />
     </option>
   </component>
 </project>

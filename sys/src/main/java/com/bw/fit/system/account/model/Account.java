@@ -21,6 +21,7 @@ public class Account extends User {
     private String userId;
     private String positionIds;
     private String roleIds;
+    private String authCodes;
 
     public String getLogPwd() {
         return logPwd;
@@ -76,5 +77,13 @@ public class Account extends User {
 
     public void setRoleIds(String roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public String getAuthCodes() {
+        return authCodes;
+    }
+
+    public void setAuthCodes(String authCodes) {
+        this.authCodes = authCodes;
     }
 }
