@@ -21,6 +21,8 @@ import com.bw.fit.system.position.entity.TPosition;
 import com.bw.fit.system.role.entity.TRole;
 import com.bw.fit.system.role.mapper.RoleMapper;
 import com.bw.fit.system.role.model.Role2Account;
+import com.bw.fit.system.user.entity.TUser;
+import com.bw.fit.system.user.mapper.UserMapper;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -57,6 +59,8 @@ public class AccountController extends BaseController {
     @Autowired
     RestTemplate restTemplate;
     @Resource
+    private UserMapper userMapper;
+    @Resource
     private AccountMapper accountMapper;
     @Autowired
     private CommonService commonService;
@@ -81,7 +85,14 @@ public class AccountController extends BaseController {
             jsonObject.put("msg","账号不存在或无效");
             return  jsonObject;
         }
-        PubFun.copyProperties(account,tAccount1);    // 用户与租户信息
+        TUser tUser = userMapper.getByCode(tAccount1.getUserId());
+        PubFun.copyProperties(account,tUser);// 用户与租户信息
+        account.setLogName(tAccount1.getLogName());
+        account.setUserId(tUser.getCode());
+        account.setId(tAccount1.getId());
+        account.setCreator(tAccount1.getCreator());
+        account.setCreatorName(tAccount1.getCreatorName());
+        account.setCreateOrgId(tAccount1.getCreateOrgId());
         TOrganization tOrganization = accountMapper.getOrgByAccount(logName);
         if(ObjectUtil.isNotNull(tOrganization)){
             account.setCurrentOrgId(tOrganization.getId());

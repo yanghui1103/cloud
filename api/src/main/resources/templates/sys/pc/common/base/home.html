@@ -19,7 +19,7 @@
     <script type="text/javascript">
         $(function(){
             var account = JSON.parse($("#currentUser").val()) ;
-            alert($("#currentUser").val());
+            $("#curentAccountName").text(account.name);
         });
         function logout(){
             $.ajax({
@@ -61,7 +61,7 @@
                     <li>
                         <a href="javascript:accountInfo();">
                             <i class="iconfont">&#xe60d;</i>
-                            <span class="pf-opt-name" th:text="${session.currentUser }"></span>
+                            <span class="pf-opt-name" id="curentAccountName"></span>
                         </a>
                     </li>
                     <!--                          <li class="pf-modify-pwd"> -->
