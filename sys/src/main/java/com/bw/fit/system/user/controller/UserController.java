@@ -12,6 +12,7 @@ import com.bw.fit.system.user.mapper.UserMapper;
 import com.bw.fit.system.user.model.User;
 import com.bw.fit.system.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -67,16 +68,18 @@ public class UserController  extends BaseController {
         return json;
     }
 
-    @RequestMapping("openUserDetail/{id}")
-    public String openUserDetail(@PathVariable String id, Model model){
+    @GetMapping(value = "user/{id}" )
+    @ResponseBody
+    public JSONObject openUserDetail(@PathVariable String id, Model model){
+        JSONObject jsonObject = new JSONObject();
         User user = new User();
         TUser tu = userMapper.get(id);
         PubFun.copyProperties(user, tu);
         user.setType(dictMapper.getDictByValue(user.getType()).getDictName());
         user.setGender(dictMapper.getDictByValue(user.getGender()).getDictName());
         user.setIsVisible(dictMapper.getDictByValue(user.getIsVisible()).getDictName());
-        model.addAttribute("user", user);
-        return "system/user/userDetailPage";
+
+        return (JSONObject)JSONObject.toJSON(user); // ;
     }
 
     @RequestMapping(value = "user",method=RequestMethod.POST,produces="application/json;charset=UTF-8")

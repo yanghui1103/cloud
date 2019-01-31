@@ -32,13 +32,13 @@
         }
         function accountInfo(){
             $('#_loadDialog_AccountInfo').dialog({
-                title: '账户详情',
-                width: 1000,
+                title: '人员详情',
+                width: '98%',
                 height: 500,
                 closed: false,
                 cache: false,
                 maximizable:false,
-                href: ctx+'user/openUserDetail/${sessionScope.CurrentUser.temp_str1 }' ,
+                href:  'user/openDetail/' + (JSON.parse($("#currentUser").val())).tempStr1  ,
                 modal: true
             });
         }
@@ -172,8 +172,6 @@
     //    $('.panel-body').height($("#pf-page").height()-76)
     // }, 200)
     function replace(doc, style) {
-
-
         $('link', doc).each(function(index, one) {
 
             var path = $(one).attr('href').replace(/(static\/)\w+(\/css)/g, '$1' + style + '$2').replace(/(custom\/)\w+(\/)/g, '$1' + style + '$2'),

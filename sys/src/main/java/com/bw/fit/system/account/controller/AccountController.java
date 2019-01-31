@@ -87,6 +87,7 @@ public class AccountController extends BaseController {
         }
         TUser tUser = userMapper.getByCode(tAccount1.getUserId());
         PubFun.copyProperties(account,tUser);// 用户与租户信息
+        account.setTempStr1(tUser.getId());
         account.setLogName(tAccount1.getLogName());
         account.setUserId(tUser.getCode());
         account.setId(tAccount1.getId());
