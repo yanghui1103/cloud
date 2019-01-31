@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.bw.fit.system.dict.model.DataDict;
 
 
-public class DataDictJsonTreeHandler {
+public class DDictJsonTreeHandler {
 	public static void main(String[] args) {
 		// 读取层次数据结果集列表
 		List dataList = VirtualDataGenerator.getVirtualResult();

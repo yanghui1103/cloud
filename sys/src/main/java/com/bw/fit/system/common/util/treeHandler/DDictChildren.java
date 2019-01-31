@@ -1,21 +1,21 @@
-package com.bw.fit.system.dict.model.treeHandler;
+package com.bw.fit.system.common.util.treeHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import com.bw.fit.system.dict.model.Dict;
+import com.bw.fit.system.dict.model.DataDict;
 
 
-public class DataDictChildren {
+public class DDictChildren {
 	private List list = new ArrayList();
 
 	public int getSize() {
 		return list.size();
 	}
 
-	public void addChild(Dict node) {
+	public void addChild(DataDict node) {
 		list.add(node);
 	}
 
@@ -23,7 +23,7 @@ public class DataDictChildren {
 	public String toString() {
 		String result = "[";
 		for (Iterator it = list.iterator(); it.hasNext();) {
-			result += ((Dict) it.next()).toString();
+			result += ((DataDict) it.next()).toString();
 			result += ",";
 		}
 		result = result.substring(0, result.length() - 1);
@@ -38,7 +38,7 @@ public class DataDictChildren {
 		Collections.sort(list, new DataDictNumComparator());
 		// 对每个节点的下一层节点进行排序
 		for (Iterator it = list.iterator(); it.hasNext();) {
-			((Dict) it.next()).sortChildren();
+			((DataDict) it.next()).sortChildren();
 		}
 	}
 

@@ -19,7 +19,7 @@
     <script type="text/javascript">
         $(function(){
             var account = JSON.parse($("#currentUser").val()) ;
-            alert(account.logName);
+            alert($("#currentUser").val());
         });
         function logout(){
             $.ajax({

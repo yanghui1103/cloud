@@ -2,6 +2,7 @@ package com.bw.fit.system.dict.service.impl;
 
 import java.util.*;
 
+import com.bw.fit.system.common.util.treeHandler.DDictJsonTreeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,14 @@ import com.bw.fit.system.dict.mapper.DictMapper;
 import com.bw.fit.system.dict.entity.TdataDict;
 import com.bw.fit.system.dict.model.DataDict;
 import com.bw.fit.system.dict.model.Dict;
-import com.bw.fit.system.dict.model.treeHandler.DataDictJsonTreeHandler;
 import com.bw.fit.system.dict.service.DictService;
+
+import javax.annotation.Resource;
 
 @Service
 public class DictServiceImpl implements DictService {
 
-	@Autowired
+	@Resource
 	private DictMapper dictMapper;
 	
 	@Override
@@ -55,7 +57,7 @@ public class DictServiceImpl implements DictService {
 			dataRecord1.put("num", d.getNum());
 			dataList.add(dataRecord1);
 		}
-		DataDict node = DataDictJsonTreeHandler.getJSONTree(dataList);
+		DataDict node = DDictJsonTreeHandler.getJSONTree(dataList);
 		return node;
 	}
 

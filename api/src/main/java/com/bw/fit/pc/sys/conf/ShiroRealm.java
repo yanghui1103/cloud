@@ -76,8 +76,7 @@ public class ShiroRealm extends AuthorizingRealm {
          * 根据账号获取账户详情
          */
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account, JSONObject.class);
-        //User user = userService.selectByAccount(account);//根据登陆名account从库中查询user对象
-        if("1".equals(accountJSON.get("res"))){throw new AuthenticationException("账户不存在");}
+        if("1".equals(accountJSON.get("res"))){throw new AuthenticationException(accountJSON.get("msg").toString());}
         ByteSource salt = ByteSource.Util.bytes( PropertiesUtil.getValueByKey("user.pw.slogmm").toString() + account );
 //        AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(account, PropertiesUtil.getValueByKey("sys.default.password").toString(), salt, getName());
 //

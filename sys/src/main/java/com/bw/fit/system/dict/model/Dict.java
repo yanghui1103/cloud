@@ -1,7 +1,7 @@
 package com.bw.fit.system.dict.model;
 
 import com.bw.fit.system.common.model.BaseModel;
-import com.bw.fit.system.dict.model.treeHandler.DataDictChildren;
+import com.bw.fit.system.common.util.treeHandler.DDictChildren;
 
 public class Dict extends BaseModel {
 
@@ -63,7 +63,7 @@ public class Dict extends BaseModel {
 	/**
 	 * 孩子节点列表
 	 */
-	private DataDictChildren children = new DataDictChildren();
+	private DDictChildren children = new DDictChildren();
 
 	// 先序遍历，拼接JSON字符串
 	public String toString() {
@@ -93,7 +93,7 @@ public class Dict extends BaseModel {
 	}
 
 	// 添加孩子节点
-	public void addChild(Dict node) {
+	public void addChild(DataDict node) {
 		this.children.addChild(node);
 	}
 	

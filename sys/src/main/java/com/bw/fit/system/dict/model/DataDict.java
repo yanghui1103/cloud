@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.bw.fit.system.common.util.treeHandler.Children;
-import com.bw.fit.system.common.util.treeHandler.DataDictChildren;
+import com.bw.fit.system.common.util.treeHandler.DDictChildren;
 import com.bw.fit.system.common.model.BaseModel;
 
 public class DataDict extends BaseModel   implements Serializable{
@@ -78,7 +77,7 @@ public class DataDict extends BaseModel   implements Serializable{
 	/**
 	 * 孩子节点列表
 	 */
-	private DataDictChildren children = new DataDictChildren();
+	private DDictChildren children = new DDictChildren();
 
 	// 先序遍历，拼接JSON字符串
 	public String toString() {
