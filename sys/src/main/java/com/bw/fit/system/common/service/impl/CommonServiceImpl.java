@@ -67,4 +67,15 @@ public class CommonServiceImpl implements CommonService {
             baseModel.setHaveOrgListAuth(account.getHaveOrgListAuth());
         }
     }
+
+    @Override
+    public JSONObject checkSessionValid(String sessionId) {
+        String accountStr = getCacheValue("session:"+sessionId);
+        if(StrUtil.isNotEmpty(accountStr)){
+            return JSONObject.parseObject(accountStr);
+        }
+        JSONObject jsonObject = new JSONObject();
+        PubFun.returnFailJson(jsonObject,"无效会话");
+        return jsonObject ;
+    }
 }

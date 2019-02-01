@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.service.AccountService;
 import com.bw.fit.system.common.controller.BaseController;
 import com.bw.fit.system.common.model.RbackException;
+import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.common.util.PubFun;
 import com.bw.fit.system.dict.mapper.DictMapper;
 import com.bw.fit.system.menu.service.MenuService;
@@ -45,6 +46,8 @@ public class UserController  extends BaseController {
     private MenuService menuService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CommonService commonService;
 
     @RequestMapping(value="users",method= RequestMethod.GET,produces="application/json;charset=UTF-8")
     @ResponseBody
@@ -68,10 +71,14 @@ public class UserController  extends BaseController {
         return json;
     }
 
-    @GetMapping(value = "user/{id}" )
+    @GetMapping(value = "user/{id}/{sessionId}" )
     @ResponseBody
-    public JSONObject openUserDetail(@PathVariable String id, Model model){
+    public JSONObject openUserDetail(@PathVariable String id,@PathVariable String sessionId, Model model){
         JSONObject jsonObject = new JSONObject();
+        jsonObject = commonService.checkSessionValid(sessionId);
+        if("1".equals(jsonObject.get("res").toString())){
+            return jsonObject;
+        }
         User user = new User();
         TUser tu = userMapper.get(id);
         PubFun.copyProperties(user, tu);

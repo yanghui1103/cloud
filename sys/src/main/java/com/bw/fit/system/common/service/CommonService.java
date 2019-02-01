@@ -37,4 +37,11 @@ public interface CommonService {
      * @param request
      */
     void fillCommonProptities(BaseModel baseModel,HttpServletRequest request,boolean isFillFdid);
+
+    /*****
+     * 验证对应会话id是否有效
+     * @param sessionId
+     * @return
+     */
+    public JSONObject checkSessionValid(String sessionId);
 }
