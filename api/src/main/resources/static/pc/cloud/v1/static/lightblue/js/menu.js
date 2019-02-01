@@ -1,8 +1,13 @@
 var menus = '';
 var SystemMenu ='';
 $(function(){
-	menus = getMicroServiceResultV1("sys-proj","account","menus,"+ [[$("#sessionId").val()]] );
-
+	$.ajax({url: "account/menus/"+[[$("#sessionId").val()]]  ,
+		type:'get',
+		async:false,
+		success:function(data){
+			menus = data ;
+		}
+	});
 });
  SystemMenu = [{
 	title: '系统管理',

@@ -1,5 +1,6 @@
 package com.bw.fit.pc.sys.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.RbackException;
@@ -7,6 +8,7 @@ import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +96,21 @@ public class ApiController {
         }
         return stringBuffer.toString();
     }
-    
+
+    @ApiOperation("跳转到对应的页面统一方法")
+    @GetMapping("gotoIframePage/{path1}/{path2}/{path3}/{path4}/{pageName}/{arg}")
+    public  String gotoframe(@PathVariable(value="path1") String path1,@PathVariable(value="path2") String path2,
+                             @PathVariable(value="path3") String path3,@PathVariable(value="path4") String path4,
+                             @PathVariable(value="pageName") String pageName,@PathVariable(value="arg") String arg,Model model) throws RbackException{
+        Session session = PubFun.getCurrentSession();
+        if(ObjectUtil.isNotNull(session)){
+            String string  = commonService.getCacheValue("session:"+session.getId());
+            if(StrUtil.isEmpty(string)){
+                throw new RbackException("1","无效会话");
+            }
+        }
+
+        model.addAttribute("arg",arg);
+        return path1+"/"+path2+"/"+path3+"/"+path4+"/"+pageName  ;
+    }
 }

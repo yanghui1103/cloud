@@ -98,12 +98,21 @@ var mainPlatform = {
 	_createTopMenu: function(){
 		var menuStr = '',
 			currentIndex = 0;
-		menus = getMicroServiceResultV1("sys-proj","account","menus,"+ [[$("#sessionId").val()]] );
-
+		$.ajax({url: "account/menus/"+ [[$("#sessionId").val()]],
+			type:'get',
+			async:false,
+			success:function(data){
+				menus = data ;
+				SystemMenu = [{
+					title: ' ',
+					icon: ' ',
+					isCurrent: true,
+					menu:  menus
+				}];
+			}
+		});
 		console.log(menus);
 			SystemMenu = [{
-			//					title: '系统管理',
-			//					icon: '&#xe63f;',
 				title: ' ',
 				icon: ' ',
 				isCurrent: true,

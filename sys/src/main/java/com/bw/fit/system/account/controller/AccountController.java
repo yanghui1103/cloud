@@ -138,7 +138,7 @@ public class AccountController extends BaseController {
      */
     @RequestMapping(value="menus/{sessionId}",method=RequestMethod.GET)
     @ResponseBody
-    public JSONArray getMenus(@PathVariable String sessionId, HttpServletRequest request){
+    public String getMenus(@PathVariable String sessionId, HttpServletRequest request){
         JSONObject json = commonService.checkSessionValid(sessionId);
         if("1".equals(json.get("res").toString())){
             return null;
@@ -146,7 +146,7 @@ public class AccountController extends BaseController {
         try {
             List<Menu> menus = accountService.getMenusOfThisAccount(json.get("logName").toString());
             JSONArray array = menuService.getMenuTreeJson(menus);
-            return array;
+            return array.toJSONString() ;
         } catch (Exception e) {
             e.printStackTrace();
         }

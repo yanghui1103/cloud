@@ -1,6 +1,7 @@
 package com.bw.fit.pc.sys.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.util.MultiValueMap;
@@ -52,6 +53,16 @@ public interface CommonService {
      * @date: 2018-12-9 20:00
      */
     void expireKey(String key,int sencods);
+    /**
+     * 功能描述: 去请求别的应用的getMapping请求，
+     *          仅支持携带参数的rest方式
+     *
+     * @param:
+     * @return:
+     * @auther: yangh
+     * @date: 2018-12-9 20:00
+     */
+    public String getOtherAppReturnString(String url);
 
     /**
      * 功能描述: 去请求别的应用的getMapping请求，
@@ -63,6 +74,16 @@ public interface CommonService {
      * @date: 2018-12-9 20:00
      */
     public JSONObject getOtherAppReturn(String url);
+    /**
+     * 功能描述: 去请求别的应用的getMapping请求，
+     *          仅支持携带参数的rest方式
+     *
+     * @param:
+     * @return:
+     * @auther: yangh
+     * @date: 2018-12-9 20:00
+     */
+    public JSONArray getOtherAppJSONArry(String url);
     /**
      * 功能描述: 去请求别的应用的getMapping请求
      *

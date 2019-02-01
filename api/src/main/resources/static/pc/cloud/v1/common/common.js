@@ -14,7 +14,9 @@ function getMicroServiceResultV1(serviceName,controllerName,params){
 		data : {},
 		async:false,
 		success : function(data) {
-			val =  data ;
+			if(data.res =="2"){
+				val =  data.data ;
+			}
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 			ajaxError(XMLHttpRequest, textStatus, errorThrown);

@@ -1,5 +1,6 @@
 package com.bw.fit.pc.sys.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
@@ -65,9 +66,23 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public String getOtherAppReturnString(String url) {
+        ResponseEntity<String> response = restTemplate.getForEntity(url,
+                String.class );
+        return  response.getBody()  ;
+    }
+
+    @Override
     public JSONObject getOtherAppReturn(String url) {
         ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
                 JSONObject.class );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONArray getOtherAppJSONArry(String url) {
+        ResponseEntity<JSONArray> response = restTemplate.getForEntity(url,
+                JSONArray.class );
         return  response.getBody()  ;
     }
 
