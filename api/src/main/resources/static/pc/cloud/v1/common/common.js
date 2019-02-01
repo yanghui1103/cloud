@@ -4,14 +4,13 @@
 *	2，通用的JS方法
 *	3，其他
 ****/
-var ctx = "http://localhost/";
 var prompt_title = "系统提示框";
 
 function getMicroServiceResultV1(serviceName,controllerName,params){
 	var val = "";
 	$.ajax({
 		type : 'GET',
-		url : ctx + "getMicroServiceResult/v1/"+serviceName+"/"+controllerName+"/"+params ,
+		url :  "getMicroServiceResult/v1/"+serviceName+"/"+controllerName+"/"+params ,
 		data : {},
 		async:false,
 		success : function(data) {
@@ -21,7 +20,7 @@ function getMicroServiceResultV1(serviceName,controllerName,params){
 			ajaxError(XMLHttpRequest, textStatus, errorThrown);
 			return "";
 		},
-		dataType : "TEXT"
+		dataType : "JSON"
 	});
 	return val ;
 }

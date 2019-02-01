@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
             if(ms !=null && ms.size()>0){
                 for(Menu m:ms){
                     if(!"".equals(m.getHref())){
-                        m.setHref(PropertiesUtil.getValueByKey("system.default.url").toString() + m.getHref());
+                        m.setHref( m.getHref());
                     }
                     if(!(menus.stream().filter(x->x.getId().equals(m.getId()))).findAny().isPresent()){
                         menus.add(m);

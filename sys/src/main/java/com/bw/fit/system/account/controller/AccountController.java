@@ -122,7 +122,7 @@ public class AccountController extends BaseController {
         return  jsonObject;
     }
 
-    @GetMapping(value="menus/{sessionId}")
+    @GetMapping(value="menus2/{sessionId}")
     @ResponseBody
     public JSONArray menus(@PathVariable String sessionId){
         JSONArray jsonArray = new JSONArray();
@@ -136,12 +136,21 @@ public class AccountController extends BaseController {
      * menu.js 调用
      * @return
      */
-    @RequestMapping(value="menus",method=RequestMethod.GET)
+    @RequestMapping(value="menus/{sessionId}",method=RequestMethod.GET)
     @ResponseBody
-    public JSONArray getMenus(HttpServletRequest request){
-        JSONObject jsonObject = commonService.getCurrentAccount(request);
-        List<Menu> menus = accountService.getMenusOfThisAccount(jsonObject.get("logName").toString());
-        return menuService.getMenuTreeJson(menus);
+    public JSONArray getMenus(@PathVariable String sessionId, HttpServletRequest request){
+        JSONObject json = commonService.checkSessionValid(sessionId);
+        if("1".equals(json.get("res").toString())){
+            return null;
+        }
+        try {
+            List<Menu> menus = accountService.getMenusOfThisAccount(json.get("logName").toString());
+            JSONArray array = menuService.getMenuTreeJson(menus);
+            return array;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @RequestMapping(value="accounts",method=RequestMethod.GET,produces="application/json;charset=UTF-8")

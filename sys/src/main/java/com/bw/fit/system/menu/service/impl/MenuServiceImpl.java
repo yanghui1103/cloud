@@ -24,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
 	    for (int i = 0; i < menus.size(); i++) {  
 	        Map<String, Object> map = null;  
 	        Menu menu = (Menu) menus.get(i);  
-	        if (menu.getParentId().equals("0")) {  
+	        if (menu.getParentId().equals(fid)) {
 	            map = new HashMap<String, Object>();  
 	            //这里必须要将对象角色的id、name转换成ComboTree在页面的显示形式id、text  
 	            //ComboTree,不是数据表格，没有在页面通过columns转换数据的属性  
@@ -34,9 +34,10 @@ public class MenuServiceImpl implements MenuService {
 	            map.put("isCurrent", menus.get(i).isCurrent());
 	            if(!"".equals(menus.get(i).getHref())){
 	            	map.put("href",menus.get(i).getHref());    
-	            } 
-	            map.put("children", createComboTreeChildren(menus, menu.getId()));  
-	        }  
+	            }
+				List<Map<String, Object>> childs =  createComboTreeChildren(menus, menu.getId());
+				map.put("children",childs);
+			}
 	        if (map != null)  
 	            comboTreeList.add(map);  
 	    }  
@@ -45,7 +46,7 @@ public class MenuServiceImpl implements MenuService {
 	
 	/** 
 	 * 递归设置role树 
-	 * @param list 
+	 * @param menus
 	 * @param fid 
 	 * @return 
 	 */  

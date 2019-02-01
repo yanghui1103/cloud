@@ -73,6 +73,7 @@ public class LoginController {
         if(!"".equals(sessionId)){
             JSONObject us_first = commonService.getAccount(sessionId);
             if(us_first!=null||(us_first!=null )){
+                model.addAttribute("sessionId",sessionId);
                 return indexPage;
             }
         }
@@ -115,4 +116,8 @@ public class LoginController {
         return  indexPage ;
     }
 
+    @PostMapping("logout")
+    public  void logout(){
+        SecurityUtils.getSubject().logout();
+    }
 }

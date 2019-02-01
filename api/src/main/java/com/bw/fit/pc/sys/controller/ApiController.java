@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-@Api("api通用借口")
+@Api("API网关工程通用接口")
 @Controller
 @EnableEurekaClient
 public class ApiController {
@@ -67,8 +67,7 @@ public class ApiController {
     @ApiOperation("去往单元微服务系统所指定去往的页面，model[mapData]只支持微服务返回一个JSON对象")
     @GetMapping("towardMicroServicePage/v1/{serviceName}/{urlString}/{pageString}")
     public String toward(@PathVariable String serviceName, @PathVariable(value = "urlString",required = true) String urlString,
-                         @PathVariable(value = "pageString",required = true) String pageString, Model model) throws RbackException {
-
+                         @PathVariable(value = "pageString",required = true) String pageString, Model model){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = urlString.split(",");
         String[] paramArray2 = pageString.split(",");
