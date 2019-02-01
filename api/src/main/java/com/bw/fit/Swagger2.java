@@ -37,7 +37,7 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Swagger2构建RESTful API")
+                .title("API-RESTful API")
                 //创建人
                 .contact(new Contact("yangh", "http://www.baidu.com", ""))
                 //版本号

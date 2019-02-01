@@ -93,7 +93,7 @@ public class LoginController {
             session = currentUser.getSession();
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            model.addAttribute("errorMsg", "登录失败,认证拦截:"+e.getMessage());
+            model.addAttribute("errorMsg", "登录失败,认证拦截");
             return loginPage;
         }
         if (session == null) {

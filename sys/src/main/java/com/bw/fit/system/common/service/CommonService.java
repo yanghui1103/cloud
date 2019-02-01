@@ -39,7 +39,7 @@ public interface CommonService {
     void fillCommonProptities(BaseModel baseModel,HttpServletRequest request,boolean isFillFdid);
 
     /*****
-     * 验证对应会话id是否有效
+     * 验证对应会话id是否有效;如果有效则会返回次会话的账户全量信息
      * @param sessionId
      * @return
      */
