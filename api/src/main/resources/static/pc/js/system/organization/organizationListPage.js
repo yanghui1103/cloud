@@ -39,9 +39,10 @@ var setting = {
 
 		function onClick(e, treeId, node) {
 			var orgId = node.id;
+
 			$.ajax({
 				type : 'GET',
-				url : ctx + "org/organization/"+orgId,
+				url : ctx + "getMicroServiceResult/v1/sys-proj/org/organization,"+orgId,
 				data : {},
 				success : function(data) {
 					if(data.res=="2"){
@@ -120,7 +121,7 @@ var setting = {
 
 		var key;
 		$(document).ready(function(){		
-			$.get(ctx+"org/organizations",function(data){ 
+			$.get(ctx + "getMicroServiceResult/v1/sys-proj/org/organizations",function(data){
 				if(data.res =="2"){ 
 					zNodes = (data.list) ; 					
 					$.fn.zTree.init($("#orgTree"), setting, zNodes);

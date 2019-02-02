@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 @Api("API网关工程通用接口")
@@ -114,5 +115,12 @@ public class ApiController {
 
         model.addAttribute("arg",arg);
         return path1+"/"+path2+"/"+path3+"/"+path4+"/"+pageName  ;
+    }
+
+    @GetMapping("getCtx")
+    @ResponseBody
+    public String getCtx(HttpServletRequest httpServletRequest){
+        return httpServletRequest.getScheme() +"://"+httpServletRequest.getServerName()+":"+httpServletRequest.getServerPort()+"/"+
+                httpServletRequest.getContextPath() +"/";
     }
 }

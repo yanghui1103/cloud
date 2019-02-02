@@ -5,6 +5,9 @@
 *	3，其他
 ****/
 var prompt_title = "系统提示框";
+var local = window.location;
+var contextPath = local.pathname.split("/")[1];
+var ctx = local.protocol+"//"+local.host+"/" ;
 
 function getMicroServiceResultV1(serviceName,controllerName,params){
 	var val = "";
@@ -256,7 +259,7 @@ function addExternalTab(title, url) {
 	 * 需要根据res值，刷新dgid页的datagrid重新加载
 	 * 并让当前tab做action动作
 	 * @param data
-	 * @param res
+	 * @param resn
 	 * @param dgId treegrid对象
 	 * @param action
 	 */
@@ -342,7 +345,7 @@ function addExternalTab(title, url) {
 		var val = "";
 		$.ajax({
 			type : 'GET',
-			url : ctx + "dict/getDictNameByValue/"+value,
+			url : ctx + "getMicroServiceResult/v1/sys-proj/dict/getDictNameByValue,"+value,
 			data : {},
 			async:false,
 			success : function(data) { 

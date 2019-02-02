@@ -5,15 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
     <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}"  rel="stylesheet" >
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}"  rel="stylesheet" >
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/platform.css}" rel="stylesheet">
     <link type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+
     <script type="text/javascript">
         $(function(){
             var account = JSON.parse($("#currentUser").val()) ;
