@@ -73,11 +73,11 @@ public class UserController  extends BaseController {
 
     @GetMapping(value = "user/{id}/{sessionId}" )
     @ResponseBody
-    public JSONObject openUserDetail(@PathVariable String id,@PathVariable String sessionId, Model model){
+    public String openUserDetail(@PathVariable String id,@PathVariable String sessionId, Model model){
         JSONObject jsonObject = new JSONObject();
         jsonObject = commonService.checkSessionValid(sessionId);
         if("1".equals(jsonObject.get("res").toString())){
-            return jsonObject;
+            return jsonObject.toJSONString();
         }
         User user = new User();
         TUser tu = userMapper.get(id);
@@ -86,7 +86,7 @@ public class UserController  extends BaseController {
         user.setGender(dictMapper.getDictByValue(user.getGender()).getDictName());
         user.setIsVisible(dictMapper.getDictByValue(user.getIsVisible()).getDictName());
 
-        return (JSONObject)JSONObject.toJSON(user); // ;
+        return ((JSONObject)JSONObject.toJSON(user)).toJSONString();
     }
 
     @RequestMapping(value = "user",method=RequestMethod.POST,produces="application/json;charset=UTF-8")

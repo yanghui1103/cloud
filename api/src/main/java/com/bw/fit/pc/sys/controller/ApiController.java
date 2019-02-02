@@ -117,10 +117,5 @@ public class ApiController {
         return path1+"/"+path2+"/"+path3+"/"+path4+"/"+pageName  ;
     }
 
-    @GetMapping("getCtx")
-    @ResponseBody
-    public String getCtx(HttpServletRequest httpServletRequest){
-        return httpServletRequest.getScheme() +"://"+httpServletRequest.getServerName()+":"+httpServletRequest.getServerPort()+"/"+
-                httpServletRequest.getContextPath() +"/";
-    }
+
 }
