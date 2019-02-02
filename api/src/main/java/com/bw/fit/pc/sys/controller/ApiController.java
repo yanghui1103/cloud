@@ -59,7 +59,8 @@ public class ApiController {
                     stringBuffer.append("/");
                 }
             }
-            jsonObject = restTemplate.getForObject("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() , JSONObject.class);
+            String string = restTemplate.getForObject("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() , String.class);
+            jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
@@ -81,7 +82,8 @@ public class ApiController {
                     stringBuffer.append("/");
                 }
             }
-            jsonObject = restTemplate.getForObject("http://" + serviceName + "/" + stringBuffer.toString(), JSONObject.class);
+            String string = restTemplate.getForObject("http://" + serviceName + "/" + stringBuffer.toString(), String.class);
+            jsonObject = JSONObject.parseObject(string);
             Map map = JSONObject.toJavaObject(jsonObject, Map.class);
             model.addAttribute("mapData", map);
         }
