@@ -1,5 +1,6 @@
 package com.bw.fit.pc.sys.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
@@ -114,7 +115,16 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public JSONObject getAccount(String sessionId) {
-        JSONObject accountJSON =  JSONObject.parseObject(getCacheValue(sessionId));
-        return accountJSON;
+        String string = getCacheValue("session:"+sessionId);
+        if(StrUtil.isNotEmpty(string)){
+            JSONObject accountJSON =  JSONObject.parseObject(string);
+            accountJSON.put("res","2");
+            return accountJSON;
+        }else{
+            JSONObject accountJSON = new JSONObject();
+            accountJSON.put("res","1");
+            accountJSON.put("msg","无数据");
+            return accountJSON;
+        }
     }
 }
