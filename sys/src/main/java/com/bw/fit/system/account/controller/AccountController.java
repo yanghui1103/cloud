@@ -115,7 +115,6 @@ public class AccountController extends BaseController {
             if(ObjectUtil.isNotNull(orgs)){
                 account.setHaveOrgListAuth(orgs.stream().map(Organization::getId).collect(Collectors.toList()));
             }
-
         }//角色信息，功能权限信息，数据权限{包含哪些组织权限}
         jsonObject = (JSONObject)JSONObject.toJSON(account);
         jsonObject.put("res","2");
