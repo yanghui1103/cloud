@@ -36,7 +36,7 @@
       <module name="cache" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />
-      <module name="flow2" options="-parameters" />
+      <module name="flow2" options="" />
       <module name="job" options="-parameters" />
       <module name="link" options="-parameters" />
       <module name="log" options="-parameters" />

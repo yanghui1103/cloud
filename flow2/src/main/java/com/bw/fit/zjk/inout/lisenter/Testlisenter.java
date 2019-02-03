@@ -19,5 +19,7 @@ public class Testlisenter {
     }
     public void sysout2(  DelegateTask task){
         System.out.println("sys out2..............");
+        task.addCandidateUser("");
+        task.getProcessDefinitionId();
     }
 }
