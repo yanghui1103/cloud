@@ -4,6 +4,7 @@ import org.activiti.engine.delegate.DelegateTask;
 
 /**
  * @Description 每个需要系统用户任务办理的节点统一加入此监听，在create阶段就加入；
+ *              支持Delegate expression
  * @Author yangh
  * @Date 2019-2-3 9:21
  * @Param ${PARAM}

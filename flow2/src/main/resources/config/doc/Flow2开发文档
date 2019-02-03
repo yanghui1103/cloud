@@ -1,0 +1,13 @@
+                                            开发文档
+
+
+    一，通用开发
+        1，
+
+    二，Flow2工程开发：
+        1，所有租户的工作流程定义请放置在processes文件夹下。
+        2，所有需要节点处理人处理的节点，请加入（commonSetCandidateUsersListener）bean即可。会在节点create时候就会自动
+        安排处理人，前提是需要在流程定义模块安置完毕。
+        3，其他集成系统通知待办，已办请在节点assignment，delete加上相应节点即可。
+        4，我的待办：getCurrentTasksOfUser；我的已办，getUserhistoryTaskInstance(true)；
+        5，启动流程：参数vars里必须要有一个draftToward=1；

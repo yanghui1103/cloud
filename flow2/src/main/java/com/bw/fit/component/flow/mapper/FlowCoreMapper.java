@@ -1,6 +1,7 @@
 package com.bw.fit.component.flow.mapper;
 
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @Return ${RETURN}
  * @VERSION
  */
+@Mapper
 public interface FlowCoreMapper {
 
     /*****

@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
 import org.activiti.engine.*;
@@ -38,15 +39,15 @@ import com.bw.fit.component.flow.service.FlowCoreService;
 
 @Service
 public class FlowCoreServiceImpl implements FlowCoreService {
-	@Autowired
+	@Resource
 	private ProcessEngine processEngine;
-	@Autowired
+	@Resource
 	private RepositoryService repositoryService;
-	@Autowired
+	@Resource
 	private TaskService taskService;
-	@Autowired
+	@Resource
 	private RuntimeService runtimeService;
-	@Autowired
+	@Resource
 	private HistoryService historyService; 
 
 	@Override
@@ -658,32 +659,6 @@ public class FlowCoreServiceImpl implements FlowCoreService {
         return nextId;
 	}
 
-	@Override
-	public TaskDefinition getNextTaskInfo(String processInstanceId)
-			throws Exception {
-//		ProcessDefinitionEntity processDefinitionEntity = null;
-//		String id = null;
-//		TaskDefinition task = null;
-//		//获取流程发布Id信息 
-//		String definitionId = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId(); 
-//		processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(definitionId); 
-//		List<Task> taskQuery = processEngine.getTaskService().createTaskQuery().processInstanceId(processInstanceId).list();
-//		//当前流程节点Id信息  
-//		String activitiId = taskQuery.get(0).getTaskDefinitionKey(); 
-//		List<ActivityImpl> activitiList = processDefinitionEntity.getActivities();
-//
-//for(ActivityImpl activityImpl : activitiList){
-//	id = activityImpl.getId();
-//if (activitiId.equals(id)) {
-//
-//			task = nextTaskDefinition(activityImpl, activityImpl.getId(), processInstanceId);
-//
-//		                break;
-//
-//		         }}return task;
-		return null ;
-	}
-	 
 	
 	
 }

@@ -5,6 +5,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -67,8 +68,19 @@ public class Flow2ApplicationTests {
     }
 
     @Test
+    public void getNextNodeTest(){
+        String processInstId = "162501";
+        try {
+            String s = flowCoreService.getNextNode(processInstId);
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void currentTask(){
-        String processId ="155001";
+        String processId ="162501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
             System.out.println("当前任务名称："+task.getName());
@@ -131,7 +143,7 @@ public class Flow2ApplicationTests {
     @Test
     public void rollback(){
         try {
-            flowCoreService.rollBack("155001","_2","-1");
+            flowCoreService.rollBack("162501","_2","-1");
         } catch (Exception e) {
             e.printStackTrace();
         }

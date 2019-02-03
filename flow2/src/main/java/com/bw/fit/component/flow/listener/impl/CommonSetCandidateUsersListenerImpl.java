@@ -23,7 +23,6 @@ import java.util.Arrays;
  */
 @Service(value="commonSetCandidateUsersListener")
 public class CommonSetCandidateUsersListenerImpl implements TaskListener, CommonSetCandidateUsersListener {
-
     private  static Logger logger = LoggerFactory.getLogger(CommonSetCandidateUsersListenerImpl.class);
     @Resource
     private FlowCoreMapper flowCoreMapper;
