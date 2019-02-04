@@ -2,6 +2,7 @@ package com.bw.fit.component.flow.service;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.pvm.PvmTransition;
@@ -394,5 +395,15 @@ public interface FlowCoreService {
      * @return
      */
     public String getNextNode(String procInstanceId);
+
+    /****
+     * 办结任务
+     * @param task
+     * @param accountId
+     * @param handleOpt 意见
+     * @param handleRemark 其他说明
+     * @return
+     */
+    public JSONObject handleTask(Task task, String accountId,String handleOpt,String handleRemark);
 
 }

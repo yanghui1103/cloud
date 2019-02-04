@@ -5,10 +5,12 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,7 +62,7 @@ public class Flow2ApplicationTests {
         vars.put("draftToward", "1");
 
         //启动流程定义，返回流程实例
-        ProcessInstance pi = runtimeService.startProcessInstanceById("test32:2:152504",vars);
+        ProcessInstance pi = runtimeService.startProcessInstanceById("test32:3:170011",vars);
         String processId = pi.getId();
         System.out.println("流程创建成功，当前流程实例ID："+processId);
 
@@ -69,7 +71,7 @@ public class Flow2ApplicationTests {
 
     @Test
     public void getNextNodeTest(){
-        String processInstId = "162501";
+        String processInstId = "177501";
         try {
             String s = flowCoreService.getNextNode(processInstId);
             System.out.println(s);
@@ -80,9 +82,11 @@ public class Flow2ApplicationTests {
 
     @Test
     public void currentTask(){
-        String processId ="162501";
+        String processId ="177501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
+            List<Comment> list = flowCoreService.getCommentOfProcessInstance(task.getProcessInstanceId());
+
             System.out.println("当前任务名称："+task.getName());
             System.out.println("当前任务taskId："+task.getId());
             System.out.println("当前任务taskKey："+task.getTaskDefinitionKey());
@@ -91,11 +95,15 @@ public class Flow2ApplicationTests {
 
     @Test
     public void complete(){
-        String processId ="147501";
+        String processId ="177501";
         List<Task> tasks=taskService.createTaskQuery().processInstanceId(processId).list();
         for(Task task:tasks){
+            System.out.println("执行前，任务id："+task.getId());
             System.out.println("执行前，任务名称："+task.getName());
-            taskService.complete(task.getId());
+            List<Comment> list = flowCoreService.getCommentOfTheTask(task.getId());
+            Authentication.setAuthenticatedUserId("admin");
+            flowCoreService.createTaskComment(task,"OK|这个问题不是问题，同意继续");
+            flowCoreService.completeTask(task.getId());
         }
     }
 
@@ -143,7 +151,7 @@ public class Flow2ApplicationTests {
     @Test
     public void rollback(){
         try {
-            flowCoreService.rollBack("162501","_2","-1");
+            flowCoreService.rollBack("177501","_2","-1");
         } catch (Exception e) {
             e.printStackTrace();
         }

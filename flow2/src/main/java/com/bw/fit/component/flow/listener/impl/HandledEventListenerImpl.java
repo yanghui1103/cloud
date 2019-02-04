@@ -1,5 +1,6 @@
 package com.bw.fit.component.flow.listener.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.listener.HandledEventListener;
 import com.bw.fit.component.flow.mapper.FlowCoreMapper;
@@ -8,10 +9,12 @@ import com.bw.fit.component.flow.service.FlowCoreService;
 import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+import org.activiti.engine.task.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description
@@ -36,8 +39,15 @@ public class HandledEventListenerImpl implements HandledEventListener, TaskListe
             String taskDefKey = delegateTask.getTaskDefinitionKey();
             String taskId = delegateTask.getId();
             String handler = delegateTask.getAssignee();
-            String handleOpt = delegateTask.getVariable("handleOpt").toString();
-            String handleRemark = delegateTask.getVariable("handleRemark").toString();
+            List<Comment> listComment = flowCoreService.getCommentOfTheTask(taskId);
+            Comment comment = listComment.get(0);
+            String handleOpt = ""; //delegateTask.getVariable("handleOpt").toString();
+            String handleRemark = "";//delegateTask.getVariable("handleRemark").toString();
+            if(ObjectUtil.isNotNull(comment)){
+                String[] array = comment.getFullMessage().split("|");
+                handleOpt = array[0];
+                handleRemark = array[1];
+            }
             String nextNodeId = flowCoreService.getNextNode(processInstId);
             String formKey  = delegateTask.getVariable("formKey").toString();
             TCoFlowExecuteDefinition tCoFlowExecuteDefinition = new TCoFlowExecuteDefinition();

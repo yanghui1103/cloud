@@ -9,10 +9,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
@@ -659,6 +662,24 @@ public class FlowCoreServiceImpl implements FlowCoreService {
         return nextId;
 	}
 
-	
-	
+	@Override
+	public JSONObject handleTask(Task task, String accountId,String handleOpt,String handleRemark) {
+		JSONObject jsonObject = new JSONObject();
+		try{
+			List<Comment> historyComments = getCommentOfProcessInstance(task.getProcessInstanceId());  // 以备后面用
+			Authentication.setAuthenticatedUserId(accountId);
+			createTaskComment(task,handleOpt + "|" +handleRemark);
+			completeTask(task.getId());
+			PubFun.returnSuccessJson(jsonObject);
+		}catch (Exception ex){
+			ex.printStackTrace();
+			jsonObject = new JSONObject();
+			PubFun.returnFailJson(jsonObject,"办结任务异常");
+		}finally {
+			return jsonObject;
+		}
+
+	}
+
+
 }
