@@ -1,6 +1,8 @@
 package com.bw.fit.component.flow.mapper;
 
+import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.model.RbackException;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -29,4 +31,10 @@ public interface FlowCoreMapper {
      * @return
      */
     TFlowExecuteDefinition getById(String id);
+
+    /*****
+     * 任务办结
+     * @param tCoFlowExecuteDefinition
+     */
+    void handledCurrentTask(TCoFlowExecuteDefinition tCoFlowExecuteDefinition) throws RbackException;
 }

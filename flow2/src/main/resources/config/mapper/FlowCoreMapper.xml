@@ -11,5 +11,12 @@
 			  select * from flowexecutedefinition a where a.id = #{id,jdbcType=VARCHAR}
 	</select>
 
+	<insert id="handledCurrentTask" parameterType="TCoFlowExecuteDefinition">
+		insert into Coflowexecutedefinition(id,processDefkey,Processid,Taskdefkey,Taskid,Handler,Handletime,Handleopt,Remark,Nexttaskdefkey,formkey) values
+		(#{id,jdbcType=VARCHAR},#{processDefKey,jdbcType=VARCHAR},#{processId,jdbcType=VARCHAR},
+		#{taskDefKey,jdbcType=VARCHAR},#{taskId,jdbcType=VARCHAR},#{handler,jdbcType=VARCHAR},
+		sysdate,#{handleOpt,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{nextTaskDefKey,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR})
+	</insert>
+
 
 </mapper>
