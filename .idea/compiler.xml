@@ -11,6 +11,7 @@
         <module name="base" />
         <module name="bounty" />
         <module name="cache" />
+        <module name="calls" />
         <module name="cloud" />
         <module name="eureka" />
         <module name="flow2" />

@@ -2,10 +2,11 @@ package com.bw.fit.component.flow.util;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.thoughtworks.xstream.converters.basic.DateConverter;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.imageio.ImageIO;
@@ -55,6 +56,18 @@ public class PubFun {
         }
 
         return false;
+    }
+
+    public static void copyProperties(Object dest, Object orig) {
+        try {
+            if(orig != null){
+                ConvertUtils.register(new DateConverter(), java.util.Date.class);
+                BeanUtils.copyProperties(dest, orig);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public static String getFixLenthString(int strLength) throws Exception {

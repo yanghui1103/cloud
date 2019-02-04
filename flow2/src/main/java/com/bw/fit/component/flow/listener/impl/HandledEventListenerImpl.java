@@ -12,7 +12,6 @@ import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.task.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.List;
 

@@ -4,6 +4,7 @@ package com.bw.fit.component.flow.controller;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -47,6 +48,7 @@ import com.bw.fit.component.flow.service.FlowPlusService;
  */
 @RequestMapping("flow")
 @Controller
+@EnableEurekaClient
 public class FlowController {
 
 	@Resource
