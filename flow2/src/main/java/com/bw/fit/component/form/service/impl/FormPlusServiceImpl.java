@@ -7,13 +7,11 @@ import com.bw.fit.component.flow.service.CommonService;
 import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.entity.TForm;
 import com.bw.fit.component.form.mapper.FormMapper;
-import com.bw.fit.component.form.model.Form;
-import com.bw.fit.component.form.service.FormService;
+import com.bw.fit.component.form.service.FormPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description
@@ -23,21 +21,22 @@ import javax.servlet.http.HttpServletRequest;
  * @Return ${RETURN}
  * @VERSION
  */
-@Service("formService")
-public class FormServiceImpl implements FormService {
+@Service
+public class FormPlusServiceImpl implements FormPlusService {
     @Resource
     private FormMapper formMapper;
     @Autowired
     private CommonService commonService;
 
     @Override
-    public JSONObject insert(JSONArray form, HttpServletRequest request) throws RbackException {
+    public JSONObject insert(JSONArray form, String accountId) throws RbackException {
         JSONObject jsonObject = new JSONObject();
         try{
             String formKey = "";
             for(int i=0;i<form.size();i++){
                 TForm tForm = JSONObject.toJavaObject(JSONObject.parseObject(form.get(i).toString()),TForm.class);
-                commonService.fillCommonProptities(tForm,request,true);
+                tForm.setId(PubFun.getUUID());
+                tForm.setCreator(accountId);
                 formMapper.insert(tForm);
                 formKey = tForm.getFormKey();
             }

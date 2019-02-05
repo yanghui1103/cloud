@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @Return ${RETURN}
  * @VERSION
  */
+@Configuration
 public class InterceptorConf extends WebMvcConfigurerAdapter {
     @Bean
     SessionCorrectInterceptor getSessionCorrectInterceptor(){

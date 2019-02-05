@@ -5,8 +5,13 @@
 	<insert id="insert" parameterType="tForm">
 		insert into t_form (id,formkey,htmlname,name,attr,attrtype,tabname,taborder,creator,createtime) values
 		(#{id,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR},#{htmlName,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},
-		#{attr,jdbcType=VARCHAR},#{attrType,jdbcType=VARCHAR},#{tabName,jdbcType=VARCHAR},#{tabOrder,jdbcType=INTEGER})
+		#{attr,jdbcType=VARCHAR},#{attrType,jdbcType=VARCHAR},#{tabName,jdbcType=VARCHAR},#{tabOrder,jdbcType=INTEGER},
+		#{creator,jdbcType=VARCHAR},sysdate)
 	</insert>
+
+	<select id="getFormInfo" parameterType="String" resultType="tForm">
+		select * from t_form a where a.formKey = #{formKey,jdbcType=VARCHAR} and isdeleted ='0'
+	</select>
 
 
 </mapper>

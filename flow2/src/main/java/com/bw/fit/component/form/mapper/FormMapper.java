@@ -4,6 +4,8 @@ import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.form.entity.TForm;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author yangh
@@ -21,4 +23,11 @@ public interface FormMapper {
      * @throws RbackException
      */
     void insert(TForm tForm) throws RbackException;
+
+    /*****
+     * 单笔表单信息
+     * @param formKey
+     * @return
+     */
+    List<TForm> getFormInfo(String formKey);
 }
