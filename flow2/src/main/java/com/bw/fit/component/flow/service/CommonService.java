@@ -1,6 +1,7 @@
 package com.bw.fit.component.flow.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.component.flow.entity.BaseEntity;
 import com.bw.fit.component.form.model.BaseModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,7 @@ public interface CommonService {
      * @param request
      */
     void fillCommonProptities(BaseModel baseModel, HttpServletRequest request, boolean isFillFdid);
+    void fillCommonProptities(BaseEntity baseEntity, HttpServletRequest request, boolean isFillFdid);
 
     /*****
      * 验证对应会话id是否有效;如果有效则会返回次会话的账户全量信息

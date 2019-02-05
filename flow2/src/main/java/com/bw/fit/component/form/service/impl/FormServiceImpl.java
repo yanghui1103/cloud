@@ -34,10 +34,15 @@ public class FormServiceImpl implements FormService {
     public JSONObject insert(JSONArray form, HttpServletRequest request) throws RbackException {
         JSONObject jsonObject = new JSONObject();
         try{
+            String formKey = "";
             for(int i=0;i<form.size();i++){
                 TForm tForm = JSONObject.toJavaObject(JSONObject.parseObject(form.get(i).toString()),TForm.class);
+                commonService.fillCommonProptities(tForm,request,true);
                 formMapper.insert(tForm);
+                formKey = tForm.getFormKey();
             }
+            PubFun.returnSuccessJson(jsonObject);
+            jsonObject.put("formKey",formKey);
         }catch (RbackException e){
             e.printStackTrace();
             jsonObject = new JSONObject();

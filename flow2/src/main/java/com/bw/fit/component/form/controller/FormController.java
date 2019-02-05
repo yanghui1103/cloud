@@ -32,12 +32,28 @@ public class FormController {
     private FormService formService;
 
 
+    /*****
+     * 单笔将一个表单JSONArray传入进来，如果成功则会返回formKey
+     * @param form
+     * @param result
+     * @param request
+     * @return
+     * @throws RbackException
+     */
     @PostMapping("form")
     @ResponseBody
     public String insert(@RequestParam(value="form" ,required = true) String form, BindingResult result, HttpServletRequest request) throws RbackException {
         JSONObject json = new JSONObject();
-        JSONObject jsonObject = formService.insert(JSONArray.parseArray(form),request);
-        return jsonObject.toJSONString();
+        try{
+            JSONObject jsonObject = formService.insert(JSONArray.parseArray(form),request);
+            return jsonObject.toJSONString();
+        }catch (RbackException ex){
+            ex.printStackTrace();
+            json = new JSONObject();
+            PubFun.returnFailJson(json,ex.getMsg());
+        }finally {
+            return json.toJSONString();
+        }
     }
 
 }
