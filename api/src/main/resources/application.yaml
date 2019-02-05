@@ -33,7 +33,7 @@ zuul:
 
     api-flow:
       path: /api-flow/**
-      serviceId: flow_proj
+      serviceId: flow2_proj
 
     api-job:
       path: /api-job/**

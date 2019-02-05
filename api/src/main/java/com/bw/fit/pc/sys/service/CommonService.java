@@ -62,7 +62,7 @@ public interface CommonService {
      * @auther: yangh
      * @date: 2018-12-9 20:00
      */
-    public String getOtherAppReturnString(String url);
+    public String getOtherAppReturnString(String url, Map<String, Object> params);
 
     /**
      * 功能描述: 去请求别的应用的getMapping请求，
@@ -83,7 +83,7 @@ public interface CommonService {
      * @auther: yangh
      * @date: 2018-12-9 20:00
      */
-    public JSONArray getOtherAppJSONArry(String url);
+    public String getOtherAppJSONAarry(String url);
     /**
      * 功能描述: 去请求别的应用的getMapping请求
      *
@@ -93,14 +93,14 @@ public interface CommonService {
      * @auther: yangh
      * @date: 2018-12-9 20:00
      */
-    public JSONObject getOtherAppReturn(String url,MultiValueMap<String, String> params);
+    public JSONObject getOtherAppReturn(String url,MultiValueMap<String, Object> params);
     /*****
      *  请求别的应用postMapping
      * @param url
      * @param params 使用MultiValueMap数据结构，键可以重复
      * @return
      */
-    public JSONObject postOtherAppReturn(String url, MultiValueMap<String, String> params);
+    public JSONObject postOtherAppReturn(String url, MultiValueMap<String, Object> params);
 
     /*****
      * 请求别的应用putMapping

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @EnableEurekaClient
 public class AccountController {
@@ -20,7 +23,9 @@ public class AccountController {
     @GetMapping("account/menus/{sessionId}")
     @ResponseBody
     public JSONArray menus(@PathVariable String sessionId){
-        String string =commonService.getOtherAppReturnString("http://sys-proj/account/menus/"+sessionId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("sessionId",sessionId);
+        String string =commonService.getOtherAppReturnString("http://sys-proj/account/menus/"+sessionId,map);
         return JSONArray.parseArray(string);
     }
 }

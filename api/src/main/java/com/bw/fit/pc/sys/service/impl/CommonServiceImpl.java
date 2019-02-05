@@ -13,6 +13,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 /**
  * @Description
  * @Author yangh
@@ -67,9 +69,9 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public String getOtherAppReturnString(String url) {
+    public String getOtherAppReturnString(String url, Map<String, Object> params) {
         ResponseEntity<String> response = restTemplate.getForEntity(url,
-                String.class );
+                String.class ,params);
         return  response.getBody()  ;
     }
 
@@ -81,21 +83,21 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public JSONArray getOtherAppJSONArry(String url) {
-        ResponseEntity<JSONArray> response = restTemplate.getForEntity(url,
-                JSONArray.class );
+    public String getOtherAppJSONAarry(String url) {
+        ResponseEntity<String> response = restTemplate.getForEntity(url,
+                String.class );
         return  response.getBody()  ;
     }
 
     @Override
-    public JSONObject getOtherAppReturn(String url, MultiValueMap<String, String> params) {
+    public JSONObject getOtherAppReturn(String url, MultiValueMap<String, Object> params) {
         ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
                 JSONObject.class,params );
         return  response.getBody()  ;
     }
 
     @Override
-    public JSONObject postOtherAppReturn(String url,MultiValueMap<String, String> params) {
+    public JSONObject postOtherAppReturn(String url,MultiValueMap<String, Object> params) {
         ResponseEntity<JSONObject> response = restTemplate.postForEntity(url,params,
                 JSONObject.class );
         return  response.getBody()  ;
