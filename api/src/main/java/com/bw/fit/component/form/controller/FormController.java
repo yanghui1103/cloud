@@ -45,6 +45,7 @@ public class FormController {
              * 生成数据并最终有html渲染
              */
             model.addAttribute("data",jsonArray);
+            model.addAttribute("formKey",formKey);
         }else{
             model.addAttribute("msg","抱歉，没有找到表单数据");
         }
