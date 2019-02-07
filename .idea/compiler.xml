@@ -31,18 +31,19 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ai" options="-parameters" />
-      <module name="api" options="" />
+      <module name="api" options="-parameters" />
       <module name="base" options="-parameters" />
       <module name="bounty" options="-parameters" />
       <module name="cache" options="-parameters" />
+      <module name="calls" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />
-      <module name="flow2" options="" />
+      <module name="flow2" options="-parameters" />
       <module name="job" options="-parameters" />
       <module name="link" options="-parameters" />
       <module name="log" options="-parameters" />
       <module name="report" options="-parameters" />
-      <module name="sys" options="" />
+      <module name="sys" options="-parameters" />
     </option>
   </component>
 </project>

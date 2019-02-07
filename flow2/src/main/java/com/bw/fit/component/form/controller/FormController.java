@@ -1,5 +1,6 @@
 package com.bw.fit.component.form.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -73,7 +74,7 @@ public class FormController {
     public String detail(@PathVariable(value = "formKey",required = true) String formKey){
         JSONObject jsonObject = new JSONObject();
         List<TForm> tFormList = formMapper.getFormInfo(formKey);
-        if(ObjectUtil.isNotNull(tFormList)){
+        if(ObjectUtil.isNotNull(tFormList) && tFormList.size()>1){
             jsonObject.put("res","2");
             jsonObject.put("data",JSONArray.toJSON(tFormList));
         }else{

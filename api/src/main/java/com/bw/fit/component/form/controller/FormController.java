@@ -46,7 +46,7 @@ public class FormController {
              */
             model.addAttribute("data",jsonArray);
         }else{
-            model.addAttribute("msg","抱歉，没有找到数据");
+            model.addAttribute("msg","抱歉，没有找到表单数据");
         }
         return "flow2/pc/component/form/formDetail";
     }

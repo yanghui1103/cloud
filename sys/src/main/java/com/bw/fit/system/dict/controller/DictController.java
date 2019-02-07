@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,20 +45,20 @@ public class DictController extends BaseController {
 	 */
 	@RequestMapping("getDictNameByValue/{value}")
 	@ResponseBody
-	public JSONObject getDictNameByValue(@PathVariable String value){
+	public String getDictNameByValue(@PathVariable String value){
 		JSONObject json = new JSONObject();
 		Dict dict = dictMapper.getDictByValue(value);
 		if(dict==null){
 			json = new JSONObject();
 			PubFun.returnFailJson(json, "不存在该数据字典");
 			json.put("dictName", "");
-			return json ;
+			return json.toJSONString() ;
 		}
 		json = new JSONObject();
 		PubFun.returnSuccessJson(json);
 		json.put("dictName", dict.getDictName());
-		json.put("dictRemark", dict.getDictRemark());
-		return json ;
+		json.put("dictRemark", StrUtil.isNotEmpty(dict.getDictRemark())?dict.getDictRemark():"不详");
+		return json.toJSONString() ;
 	}
 	
 	/*****

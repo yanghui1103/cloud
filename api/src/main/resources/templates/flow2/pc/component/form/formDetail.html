@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/fonts/demo.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
 </head>
 <body>
-ff
+<span th:if="#{msg!=null}" th:text="${msg}"></span>
+<div class="easyui-tabs" style="width:100%;">
+    <div th:title="${ea.tabName}" mapData-options="closable:false" th:each="ea:${data}" th:switch="${ea.attrType}">
+        <table class="kv-table" th:case="string">
+            <tbody>
+            <tr th:each="item:${ea.keySet()}">
+                <td class="kv-label"><span th:text="${item}"></span></td>
+                <td class="kv-content"><span th:text="${ea.getString(item)}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table id="tt" th:title="${ea.tabName}" class="easyui-datagrid" style="width:400px;height:auto;" th:case="list">
+            <thead>
+            <tr>
+                <th field="name1" width="auto">Col 1</th>
+                <th field="name2" width="auto">Col 2</th>
+                <th field="name3" width="auto">Col 3</th>
+                <th field="name4" width="auto">Col 4</th>
+                <th field="name5" width="auto">Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5Col 5</th>
+                <th field="name6" width="auto">Col 6</th>
+            </tr>
+
+            <tr>
+                <th field="name1" width="auto">Col 1</th>
+                <th field="name2" width="auto">Col 2</th>
+                <th field="name3" width="auto">Col 3</th>
+                <th field="name4" width="auto">Col 4</th>
+                <th field="name5" width="auto">Col 5</th>
+                <th field="name6" width="auto">Col 6</th>
+            </tr>
+            <tr>
+                <th field="name1" width="auto">Col 1</th>
+                <th field="name2" width="auto">Col 2</th>
+                <th field="name3" width="auto">Col 3</th>
+                <th field="name4" width="auto">Col 4</th>
+                <th field="name5" width="auto">Col 5</th>
+                <th field="name6" width="auto">Col 6</th>
+            </tr>
+            </thead>
+        </table>
+
+    </div>
+
+</div>
 </body>
 </html>
