@@ -13,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -72,6 +73,13 @@ public class CommonServiceImpl implements CommonService {
     public String getOtherAppReturnString(String url, Map<String, Object> params) {
         ResponseEntity<String> response = restTemplate.getForEntity(url,
                 String.class ,params);
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public Object getOtherAppReturnObject(String url, Map<String, Object> params) {
+        ResponseEntity<Object> response = restTemplate.getForEntity(url,
+                Object.class ,params);
         return  response.getBody()  ;
     }
 

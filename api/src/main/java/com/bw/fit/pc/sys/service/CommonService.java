@@ -63,6 +63,16 @@ public interface CommonService {
      * @date: 2018-12-9 20:00
      */
     public String getOtherAppReturnString(String url, Map<String, Object> params);
+    /**
+     * 功能描述: 去请求别的应用的getMapping请求，
+     *          仅支持携带参数的rest方式
+     *
+     * @param:
+     * @return:
+     * @auther: yangh
+     * @date: 2018-12-9 20:00
+     */
+    public Object getOtherAppReturnObject(String url, Map<String, Object> params);
 
     /**
      * 功能描述: 去请求别的应用的getMapping请求，
