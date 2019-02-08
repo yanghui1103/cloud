@@ -27,6 +27,11 @@ zuul:
       serviceId: base-proj
       url: http://localhost:8002/base/
 
+    api-api:
+      path: /api-api/**
+      serviceId: api-proj
+      url: http://localhost:80/
+
     api-ai:
       path: /api-ai/**
       serviceId: ai_proj
@@ -34,6 +39,7 @@ zuul:
     api-flow:
       path: /api-flow/**
       serviceId: flow2_proj
+      url: http://localhost:8004/
 
     api-job:
       path: /api-job/**

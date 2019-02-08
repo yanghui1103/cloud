@@ -11,9 +11,15 @@ var ctx = local.protocol+"//"+local.host+"/" ;
 
 function getMicroServiceResultV1(serviceName,controllerName,params){
 	var val = "";
+	var controllerPath = "";
+	if(controllerName==''){
+		controllerPath ="";
+	}else {
+		controllerPath = controllerName +"/";
+	}
 	$.ajax({
 		type : 'GET',
-		url :  "getMicroServiceResult/v1/"+serviceName+"/"+controllerName+"/"+params ,
+		url :  ctx + "getMicroServiceResult/v1/"+serviceName+"/"+controllerPath +params ,
 		data : {},
 		async:false,
 		success : function(data) {

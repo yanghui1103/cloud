@@ -51,4 +51,12 @@ public class FormController {
         }
         return "flow2/pc/component/form/formDetail";
     }
+
+    @GetMapping("flowDetail/pdInstId/{pdinstId}")
+    public String flowDetail(@PathVariable String pdinstId,Model model){
+
+        model.addAttribute("formKey","001");
+        model.addAttribute("pdinstId",pdinstId);
+        return "flow2/pc/component/flow/flowDetail";
+    }
 }

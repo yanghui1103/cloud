@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description
@@ -74,6 +76,7 @@ public class FormController {
     public String detail(@PathVariable(value = "formKey",required = true) String formKey){
         JSONObject jsonObject = new JSONObject();
         List<TForm> tFormList = formMapper.getFormInfo(formKey);
+        Map<String,String> map = new LinkedHashMap<>();
         if(ObjectUtil.isNotNull(tFormList) && tFormList.size()>1){
             jsonObject.put("res","2");
             jsonObject.put("data",JSONArray.toJSON(tFormList));
