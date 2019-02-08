@@ -22,9 +22,48 @@
 
     </div>
 
-    <div id="p2" class="easyui-panel" title="流程与审核信息" style="width:100%;height:auto;padding:10px;"
-         data-options="iconCls:'icon-list',collapsible:true">
+    <div class="easyui-panel" title="流程与审核信息" style="width:100%;height:auto;padding:10px;"
+         data-options="iconCls:'icon-tip',collapsible:true">
         <img id="flowImage" />
+        <table class="easyui-datagrid" style="width:100%;height:auto;" data-options="nowrap:false" >
+            <thead>
+            <tr>
+                <th field="name1" width="10%">节点名称</th>
+                <th field="name2" width="10%">办理者</th>
+                <th field="name3" width="20%">办理意见</th>
+                <th field="name4" width="40%">其他说明</th>
+                <th field="name5" width="10%">办理时间</th>
+                <th field="name6" width="10%">下个任务办理者</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，
+                    这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，
+                <td>Data 5</td>
+                <td>Data 5</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 5</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 5</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <input type="hidden" th:value="${pdinstId}" id="pdinstid" >

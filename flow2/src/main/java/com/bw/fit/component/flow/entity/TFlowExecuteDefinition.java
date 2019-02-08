@@ -12,6 +12,7 @@ package com.bw.fit.component.flow.entity;
 public class TFlowExecuteDefinition extends BaseEntity{
 
     private String processDefKey;
+    private String processId;
     private String taskDefKey;
     private int executeNum;
     private String relation;
@@ -55,5 +56,13 @@ public class TFlowExecuteDefinition extends BaseEntity{
 
     public void setHandlers(String handlers) {
         this.handlers = handlers;
+    }
+
+    public String getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(String processId) {
+        this.processId = processId;
     }
 }

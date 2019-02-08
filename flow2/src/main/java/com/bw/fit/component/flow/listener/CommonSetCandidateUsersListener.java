@@ -19,5 +19,5 @@ public interface CommonSetCandidateUsersListener {
      * @param processDefKey
      * @param delegateTask
      */
-    void setCandidateUsersetCandidateUsers(String taskDefKey, String processDefKey, DelegateTask delegateTask);
+    void setCandidateUsersetCandidateUsers(String taskDefKey, String processDefKey,String processId, DelegateTask delegateTask);
 }

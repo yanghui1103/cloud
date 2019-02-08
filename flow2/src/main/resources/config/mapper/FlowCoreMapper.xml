@@ -3,8 +3,11 @@
 <mapper namespace="com.bw.fit.component.flow.mapper.FlowCoreMapper">
 
     <select id="getNowHandlers"  parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
-		select * from flowexecutedefinition a where a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
+		select * from flowexecutedefinition a where 1=1 and a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
 		and a.taskdefkey = #{taskDefKey,jdbcType=VARCHAR}
+		<if test="processId != ''.toString()">
+			and processId = #{processId,jdbcType=VARCHAR}
+		</if>
 	</select>
 
 	<select id="getById"  parameterType="String" resultType="TFlowExecuteDefinition">

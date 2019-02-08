@@ -23,7 +23,7 @@ public interface FlowCoreMapper {
      * @param tFlowExecuteDefinition
      * @return TFlowExecuteDefinition
      */
-    TFlowExecuteDefinition getNowHandlers(TFlowExecuteDefinition tFlowExecuteDefinition);
+    List<TFlowExecuteDefinition> getNowHandlers(TFlowExecuteDefinition tFlowExecuteDefinition);
 
     /*****
      * 获取定义详情
