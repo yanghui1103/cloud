@@ -77,7 +77,7 @@ public class FormController {
         JSONObject jsonObject = new JSONObject();
         List<TForm> tFormList = formMapper.getFormInfo(formKey);
         Map<String,String> map = new LinkedHashMap<>();
-        if(ObjectUtil.isNotNull(tFormList) && tFormList.size()>1){
+        if(ObjectUtil.isNotNull(tFormList) || tFormList.size()>1){
             jsonObject.put("res","2");
             jsonObject.put("data",JSONArray.toJSON(tFormList));
         }else{

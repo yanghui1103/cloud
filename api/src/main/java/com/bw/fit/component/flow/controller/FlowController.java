@@ -1,11 +1,16 @@
 package com.bw.fit.component.flow.controller;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -15,6 +20,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api("流程服务-接口API")
 @Controller
 @EnableEurekaClient
 public class FlowController {
@@ -22,9 +28,29 @@ public class FlowController {
     @Autowired
     private CommonService commonService;
 
-    @GetMapping("getActivitiProccessImage/{pProcessInstanceId}")
-    public void getActivitiProccessImage(@PathVariable String pProcessInstanceId,
-            HttpServletResponse response) throws Exception {
+    @ApiOperation("根据流程实例id查看流程详情")
+    @GetMapping("flowDetail/pdInstId/{pdinstId}")
+    public String flowDetail(@PathVariable String pdinstId, Model model){
 
+        model.addAttribute("formKey","001");
+        model.addAttribute("pdinstId",pdinstId);
+        return "flow2/pc/component/flow/flowDetail";
+    }
+
+    @ApiOperation("根据流程实例id，任务id查看流程办理页面")
+    @GetMapping("flowAudit/pdInstId/{pdInstId}/taskId/{taskId}")
+    public String flowAuditPage(@PathVariable String pdInstId,
+                                @PathVariable String taskId, Model model){
+
+        /****
+         * 根据任务id，查询可以展示出来的操作：通过/驳回至某节点（系统自动计算出可以驳回去的节点列表）/转办(地址簿)
+         */
+        Map<String,String> map = new HashMap<>();
+        map.put("sessionId", PubFun.getCurrentSessionId());
+
+        model.addAttribute("formKey","001");
+        model.addAttribute("pdInstId",pdInstId);
+        model.addAttribute("taskId",taskId);
+        return "flow2/pc/component/flow/flowAudit";
     }
 }

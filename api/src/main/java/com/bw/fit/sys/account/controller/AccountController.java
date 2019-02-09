@@ -23,7 +23,7 @@ public class AccountController {
     @GetMapping("account/menus/{sessionId}")
     @ResponseBody
     public JSONArray menus(@PathVariable String sessionId){
-        Map<String,Object> map = new HashMap<>();
+        Map<String,String> map = new HashMap<>();
         map.put("sessionId",sessionId);
         String string =commonService.getOtherAppReturnString("http://sys-proj/account/menus/"+sessionId,map);
         return JSONArray.parseArray(string);

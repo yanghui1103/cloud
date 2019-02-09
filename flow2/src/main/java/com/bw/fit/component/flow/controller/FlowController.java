@@ -3,6 +3,7 @@ package com.bw.fit.component.flow.controller;
 
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
+import com.bw.fit.component.form.model.BaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -151,5 +152,51 @@ public class FlowController {
 		}
 	}
 
+	/*****
+	 * 工作流系统对外提供的流程流转所有操作,前提是该任务存在
+	 * @return
+	 */
+	@GetMapping("handleOpt/{taskId}")
+	@ResponseBody
+	public  String getAllOpts(@PathVariable String taskId){
+		List<Task> tasks = taskService.createTaskQuery().taskId(taskId).list();
+		if(tasks == null || tasks.size()<1){
+			return null;
+		}
+		JSONObject jsonObject = new JSONObject();
+		List<BaseModel> list= new ArrayList<>();
+		BaseModel baseModel= new BaseModel();
+		baseModel.setCode("pass");
+		baseModel.setRemark("通过");
+		list.add(baseModel);
+		baseModel= new BaseModel();
+		baseModel.setCode("reject");
+		baseModel.setRemark("驳回");
+		list.add(baseModel);
+		baseModel= new BaseModel();
+		baseModel.setCode("proxy");
+		baseModel.setRemark("转办");
+		list.add(baseModel);
+		jsonObject.put("total", list.size());
+		jsonObject.put("rows", JSONObject.toJSON(list));
+		return jsonObject.toJSONString();
+	}
+
+	/*****
+	 * 根据流程实例id，查看当前能驳回到哪些节点
+	 * @param pdInstId
+	 * @return
+	 */
+	@GetMapping("backNode/{pdInstId}")
+	@ResponseBody
+	public String canBackNode(@PathVariable String pdInstId){
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(pdInstId).list();
+		if(tasks == null || tasks.size()<1){//流程实例已经结束
+			return null;
+		}
+		JSONObject jsonObject = new JSONObject();
+		jsonObject = (JSONObject)JSONObject.toJSON(flowPlusService.getCanBackFlowNodes(pdInstId));
+		return jsonObject.toJSONString() ;
+	}
 
 }

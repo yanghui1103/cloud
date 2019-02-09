@@ -111,7 +111,6 @@ var mainPlatform = {
 				}];
 			}
 		});
-		console.log(menus);
 			SystemMenu = [{
 				title: ' ',
 				icon: ' ',

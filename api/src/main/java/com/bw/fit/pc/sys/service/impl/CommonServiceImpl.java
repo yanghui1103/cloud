@@ -70,7 +70,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public String getOtherAppReturnString(String url, Map<String, Object> params) {
+    public String getOtherAppReturnString(String url, Map<String, String> params) {
         ResponseEntity<String> response = restTemplate.getForEntity(url,
                 String.class ,params);
         return  response.getBody()  ;

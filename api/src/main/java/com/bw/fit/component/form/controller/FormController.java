@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
+import io.swagger.annotations.Api;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @Return ${RETURN}
  * @VERSION
  */
+@Api("流程表单-API接口")
 @Controller
 @EnableEurekaClient
 public class FormController {
@@ -35,8 +37,8 @@ public class FormController {
     @GetMapping("openFormDetail/{formKey}")
     public String formDetail(@PathVariable String formKey, Model model){
         Session session = PubFun.getCurrentSession();
-        Map<String,Object> map = new HashMap<>();
-        map.put("sessionId",session.getId());
+        Map<String,String> map = new HashMap<>();
+        map.put("sessionId",PubFun.getCurrentSessionId());
         String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
         JSONObject jsonObject = JSONObject.parseObject(form);
         if("2".equals(jsonObject.get("res").toString())){
@@ -52,11 +54,4 @@ public class FormController {
         return "flow2/pc/component/form/formDetail";
     }
 
-    @GetMapping("flowDetail/pdInstId/{pdinstId}")
-    public String flowDetail(@PathVariable String pdinstId,Model model){
-
-        model.addAttribute("formKey","001");
-        model.addAttribute("pdinstId",pdinstId);
-        return "flow2/pc/component/flow/flowDetail";
-    }
 }
