@@ -75,7 +75,7 @@
             <tr>
                 <td class="kv-label"><span>办理意见：</span></td>
                 <td class="kv-content"><select class="easyui-combogrid" editable="false"
-                                               style="width: 300px;"
+                                               style="width: 300px;"  id="handleOpt"
                                                data-options="limitToList:true,
 					idField: 'code',
 					textField: 'remark',
@@ -90,7 +90,7 @@
 				">
                 </select></td>
             </tr>
-            <tr>
+            <tr id="toNode">
                 <td class="kv-label"><span>至节点</span></td>
                 <td class="kv-content"><select class="easyui-combogrid" editable="false"
                                                style="width: 300px;"
@@ -108,7 +108,7 @@
 				">
                 </select></td>
             </tr>
-            <tr>
+            <tr id="toAccount">
                 <td class="kv-label"><span>至办结者</span></td>
                 <td class="kv-content"><input
                         class="easyui-textbox address-select-account" editable=false
@@ -148,6 +148,24 @@
             href: ctx + "openFormDetail/" + $("#formKey").val()
         });
         $("#flowImage").attr("src", flowPath.responseText + "flow/getActivitiProccessImage/" + $('#pdInstId').val());
+
+        $("#toNode").hide();
+        $("#toAccount").hide();
+        $('#handleOpt').combogrid({
+            onSelect: function(index,row){
+                if(row.code =="pass"){
+                    $("#toNode").hide();
+                    $("#toAccount").hide();
+                }else  if(row.code =="reject"){
+                    $("#toAccount").hide();
+                    $("#toNode").show();
+                } if(row.code =="proxy"){
+                    $("#toNode").hide();
+                    $("#toAccount").show();
+                }
+            }
+        });
+
     });
 
     $(function () {
