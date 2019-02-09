@@ -1,6 +1,8 @@
 package com.bw.fit.component.flow.controller;
 
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import com.bw.fit.component.form.model.BaseModel;
@@ -195,8 +197,17 @@ public class FlowController {
 			return null;
 		}
 		JSONObject jsonObject = new JSONObject();
-		jsonObject = (JSONObject)JSONObject.toJSON(flowPlusService.getCanBackFlowNodes(pdInstId));
-		return jsonObject.toJSONString() ;
+		List<TFlowExecuteDefinition> tfs = flowPlusService.getCanBackFlowNodes(pdInstId);
+		if(CollectionUtil.isNotEmpty(tfs)){
+			jsonObject = (JSONObject)JSONObject.toJSON(tfs);
+			jsonObject.put("res","2");
+
+		}else{
+			jsonObject = new JSONObject();
+			jsonObject.put("res","1");
+			jsonObject.put("msg","无数据");
+		}
+		return jsonObject.toJSONString();
 	}
 
 }

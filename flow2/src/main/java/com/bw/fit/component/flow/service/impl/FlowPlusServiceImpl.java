@@ -51,7 +51,10 @@ public class FlowPlusServiceImpl implements FlowPlusService {
 			tFlowExecuteDefinition.setExecuteNum(tf2.getExecuteNum());
 
 			List<TFlowExecuteDefinition> tfs = flowPlusMapper.getBeforeNodeByCurtNode(tFlowExecuteDefinition);
-
+			for(TFlowExecuteDefinition t:tfs){
+				String taskDefName = taskService.createTaskQuery().taskDefinitionKey(t.getTaskDefKey()).singleResult().getName();
+				t.setRemark(taskDefName);
+			}
 			return tfs;
 		}
 		return  null;

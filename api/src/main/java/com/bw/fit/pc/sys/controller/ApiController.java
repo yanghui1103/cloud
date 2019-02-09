@@ -60,7 +60,9 @@ public class ApiController {
                     stringBuffer.append("/");
                 }
             }
-            String string = restTemplate.getForObject("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() , String.class);
+            Map<String,String> map = new HashMap<>();
+            map.put("sessionId",PubFun.getCurrentSessionId());
+            String string = commonService.getOtherAppReturnString("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");

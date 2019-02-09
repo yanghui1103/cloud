@@ -75,7 +75,7 @@
             <tr>
                 <td class="kv-label"><span>办理意见：</span></td>
                 <td class="kv-content"><select class="easyui-combogrid" editable="false"
-                                               style="width: 300px;"  id="handleOpt"
+                                               style="width: 300px;"  id="handleOpt" name="handleOpt"
                                                data-options="limitToList:true,
 					idField: 'code',
 					textField: 'remark',
@@ -96,12 +96,12 @@
                                                style="width: 300px;"
                                                data-options="limitToList:true,
 					idField: 'taskDefKey',
-					textField: 'taskDefKey',
+					textField: 'remark',
 					url: ctx + 'getMicroServiceResult/v1/flow2-proj/flow/backNode,'+$('#pdInstId').val(),
 					method: 'get',
 					columns: [[
 						{field:'taskDefKey',title:'值',width:50},
-						{field:'taskDefKey',title:'名称',width:140}
+						{field:'remark',title:'名称',width:140}
 					]],
 					fitColumns: true,
 					required:true
@@ -159,7 +159,7 @@
                 }else  if(row.code =="reject"){
                     $("#toAccount").hide();
                     $("#toNode").show();
-                } if(row.code =="proxy"){
+                } else if(row.code =="proxy"){
                     $("#toNode").hide();
                     $("#toAccount").show();
                 }
