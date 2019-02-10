@@ -32,4 +32,11 @@ public interface FlowPlusMapper {
      */
     TFlowExecuteDefinition getThisNode(TFlowExecuteDefinition tFlowExecuteDefinition);
 
+    /****
+     * 获取所有定义
+     * @param tFlowExecuteDefinition
+     * @return
+     */
+    List<TFlowExecuteDefinition> getAllFlowDefs(TFlowExecuteDefinition tFlowExecuteDefinition);
+
 }

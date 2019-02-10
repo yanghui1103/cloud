@@ -7,8 +7,13 @@
 	</select>
 
 	<select id="getThisNode" parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
-		select a.* from  flowexecutedefinition a where a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
-		and a.taskDefKey = #{taskDefKey,jdbcType=VARCHAR}
+		select a.* from  flowexecutedefinition a where 1=1
+		and a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
+		and a.taskDefKey = #{taskDefKey,jdbcType=VARCHAR}   order by processdefkey asc
+	</select>
+
+	<select id="getAllFlowDefs" parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
+		select a.* from  flowexecutedefinition a  order by processdefkey asc
 	</select>
 
 

@@ -3,6 +3,7 @@ package com.bw.fit.component.flow.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.mapper.FlowPlusMapper;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import com.bw.fit.component.form.model.BaseModel;
@@ -62,6 +63,8 @@ public class FlowController {
 	private HistoryService historyService;
 	@Autowired
 	private FlowPlusService flowPlusService;
+	@Resource
+	private FlowPlusMapper flowPlusMapper;
 
 	/**
 	 * 打开流程图显示页面
@@ -201,7 +204,6 @@ public class FlowController {
 		if(CollectionUtil.isNotEmpty(tfs)){
 			jsonObject = (JSONObject)JSONObject.toJSON(tfs);
 			jsonObject.put("res","2");
-
 		}else{
 			jsonObject = new JSONObject();
 			jsonObject.put("res","1");
@@ -210,4 +212,19 @@ public class FlowController {
 		return jsonObject.toJSONString();
 	}
 
+	/*****
+	 * 所有流程执行定义列表
+	 * @return
+	 */
+	@GetMapping("processDefinition")
+	@ResponseBody
+	public String processDefinition(){
+		JSONArray jsonArray = new JSONArray();
+		List<TFlowExecuteDefinition> tFlowExecuteDefinitionList = flowPlusMapper.getAllFlowDefs(null);
+		if(CollectionUtil.isNotEmpty(tFlowExecuteDefinitionList)){
+			jsonArray = (JSONArray)JSONArray.toJSON(tFlowExecuteDefinitionList);
+			return jsonArray.toJSONString();
+		}
+		return  null;
+	}
 }
