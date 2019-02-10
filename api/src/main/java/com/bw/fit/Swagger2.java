@@ -29,9 +29,7 @@ public class Swagger2 {
                 .apiInfo(apiInfo())
                 .select()
                 //为当前包路径
-                .apis(RequestHandlerSelectors.basePackage("com.bw.fit.pc.sys.controller"))
-                .apis(RequestHandlerSelectors.basePackage("com.bw.fit.component.form.controller"))
-                .apis(RequestHandlerSelectors.basePackage("com.bw.fit.component.flow.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.bw.fit"))
                 .paths(PathSelectors.any())
                 .build();
     }

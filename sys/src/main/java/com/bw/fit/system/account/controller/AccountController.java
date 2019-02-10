@@ -23,6 +23,7 @@ import com.bw.fit.system.role.mapper.RoleMapper;
 import com.bw.fit.system.role.model.Role2Account;
 import com.bw.fit.system.user.entity.TUser;
 import com.bw.fit.system.user.mapper.UserMapper;
+import io.swagger.annotations.Api;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -51,6 +52,7 @@ import static com.bw.fit.system.common.util.PubFun.returnFailJson;
  * @Return ${RETURN}
  * @VERSION
  */
+@Api("账户模块提供的接口")
 @Controller
 @RequestMapping(value="account")
 @EnableEurekaClient

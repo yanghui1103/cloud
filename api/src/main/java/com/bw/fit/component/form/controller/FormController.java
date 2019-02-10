@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -34,6 +35,7 @@ public class FormController {
     @Autowired
     private CommonService commonService;
 
+    @ApiOperation("打开表单")
     @GetMapping("openFormDetail/{formKey}")
     public String formDetail(@PathVariable String formKey, Model model){
         Session session = PubFun.getCurrentSession();

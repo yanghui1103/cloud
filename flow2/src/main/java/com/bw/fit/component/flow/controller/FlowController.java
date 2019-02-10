@@ -7,6 +7,7 @@ import com.bw.fit.component.flow.mapper.FlowPlusMapper;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import com.bw.fit.component.form.model.BaseModel;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,7 @@ import com.bw.fit.component.flow.service.FlowPlusService;
  * @author yangh
  *
  */
+@Api("flow提供接口")
 @RequestMapping("flow")
 @Controller
 @EnableEurekaClient
