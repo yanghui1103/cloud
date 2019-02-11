@@ -5,7 +5,8 @@
     1，多数据源动态切换：
         首先做好配置，然后增加dynamicdatasource文件夹下的代码；其次，注意service/mapper的方法参数列表里必须要有
     BaseModel或BaseEntity对象，而且里面的租户字段也必须要有数据。
-    2,微服务返回数据统一位JSON格式的string。[如果返回的是JsonArray那么就必须要转位String返回。前提不建议返回jsonarray]
+    2,微服务返回数据统一位JSON格式的string。[如果返回的是JsonArray那么就必须要转位String返回。前提不建议返回jsonarray];
+    3,解除对swagger的屏蔽，请去SessionCorrectInterceptor里的白名单添加即可。
 
 二，SYS工程开发
     1，SessionCorrectInterceptor  是处理所有发起/××请求的会话id有效性验证，如果request里有名称为sessionId的数据就会拦截，如果没有这个参数就
