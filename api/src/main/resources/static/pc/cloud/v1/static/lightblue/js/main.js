@@ -98,9 +98,13 @@ var mainPlatform = {
 	_createTopMenu: function(){
 		var menuStr = '',
 			currentIndex = 0;
-		$.ajax({url: "account/menus/"+ [[$("#sessionId").val()]],
+		$.ajax({url: "account/menus",
 			type:'get',
+			beforeSend: function(request) {
+				request.setRequestHeader("sessionId", $("#sessionId").val());
+			},
 			async:false,
+			dataType : "JSON",
 			success:function(data){
 				menus = data ;
 				SystemMenu = [{

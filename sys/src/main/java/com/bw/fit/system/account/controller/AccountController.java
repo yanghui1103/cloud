@@ -137,9 +137,11 @@ public class AccountController extends BaseController {
      * menu.js 调用
      * @return
      */
-    @RequestMapping(value="menus/{sessionId}",method=RequestMethod.GET)
+    @RequestMapping(value="menus",method=RequestMethod.GET)
     @ResponseBody
-    public String getMenus(@PathVariable String sessionId, HttpServletRequest request){
+    public String getMenus( HttpServletRequest request,@RequestHeader(value = "sessionId", required = false) String sessionId ){
+        String sessionId3 = request.getParameter("sessionId");
+        String token = request.getParameter("token");
         JSONObject json = commonService.checkSessionValid(sessionId);
         if("1".equals(json.get("res").toString())){
             return null;

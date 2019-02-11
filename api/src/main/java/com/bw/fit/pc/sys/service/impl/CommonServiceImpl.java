@@ -70,16 +70,19 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public String getOtherAppReturnString(String url, Map<String, String> params) {
+    public String getOtherAppReturnString(String url, MultiValueMap<String, Object> paramMap) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(paramMap,headers);
         ResponseEntity<String> response = restTemplate.getForEntity(url,
-                String.class ,params);
+                String.class ,httpEntity);
         return  response.getBody()  ;
     }
 
     @Override
-    public Object getOtherAppReturnObject(String url, Map<String, Object> params) {
-        ResponseEntity<Object> response = restTemplate.getForEntity(url,
-                Object.class ,params);
+    public Object getOtherAppReturnObject(String url, MultiValueMap<String, Object> paramMap) {
+        ResponseEntity<Object> response = restTemplate.getForEntity(url+"?sessionId={sessionId}",
+                Object.class ,paramMap);
         return  response.getBody()  ;
     }
 

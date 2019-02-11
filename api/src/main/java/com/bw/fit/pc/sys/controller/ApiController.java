@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.RbackException;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
+import com.bw.fit.pc.sys.util.RestTemplateUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.session.Session;
@@ -16,11 +17,14 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +33,8 @@ import java.util.Map;
 @EnableEurekaClient
 public class ApiController {
     private  static Logger logger = LoggerFactory.getLogger(ApiController.class);
-    @Autowired
-    private RestTemplate restTemplate;
+    @Resource
+    private RestTemplateUtil restTemplateUtil;
     @Autowired
     private Environment env;
     @Autowired
@@ -49,7 +53,7 @@ public class ApiController {
     @GetMapping(value="getMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
     @ResponseBody
     public JSONObject getMicroServiceResultV1(@PathVariable String serviceName,@PathVariable String controllerName,
-                                            @PathVariable String params   ){
+                                            @PathVariable String params ,HttpServletRequest httpServletRequest  ){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = params.split(",");
         StringBuffer stringBuffer = new StringBuffer();
@@ -60,9 +64,10 @@ public class ApiController {
                     stringBuffer.append("/");
                 }
             }
-            Map<String,String> map = new HashMap<>();
-            map.put("sessionId",PubFun.getCurrentSessionId());
-            String string = commonService.getOtherAppReturnString("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.get(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            //String string = commonService.getOtherAppReturnString("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
@@ -72,7 +77,7 @@ public class ApiController {
 
     @ApiOperation("去往单元微服务系统所指定去往的页面，model[mapData]只支持微服务返回一个JSON对象")
     @GetMapping("towardMicroServicePage/v1/{serviceName}/{urlString}/{pageString}")
-    public String toward(@PathVariable String serviceName, @PathVariable(value = "urlString",required = true) String urlString,
+    public String toward(HttpServletRequest request,@PathVariable String serviceName, @PathVariable(value = "urlString",required = true) String urlString,
                          @PathVariable(value = "pageString",required = true) String pageString, Model model){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = urlString.split(",");
@@ -85,10 +90,12 @@ public class ApiController {
                     stringBuffer.append("/");
                 }
             }
-            String string = restTemplate.getForObject("http://" + serviceName + "/" + stringBuffer.toString(), String.class);
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.get(request,"http://" + serviceName + "/" + stringBuffer.toString() ,map);
             jsonObject = JSONObject.parseObject(string);
-            Map map = JSONObject.toJavaObject(jsonObject, Map.class);
-            model.addAttribute("mapData", map);
+            Map map2 = JSONObject.toJavaObject(jsonObject, Map.class);
+            model.addAttribute("mapData", map2);
         }
         stringBuffer = new StringBuffer();
         if (paramArray2 != null) {
@@ -115,6 +122,7 @@ public class ApiController {
             }
         }
 
+        model.addAttribute("sessionId",PubFun.getCurrentSessionId());
         model.addAttribute("arg",arg);
         return path1+"/"+path2+"/"+path3+"/"+path4+"/"+pageName  ;
     }

@@ -44,6 +44,9 @@ var setting = {
 				type : 'GET',
 				url : ctx + "getMicroServiceResult/v1/sys-proj/org/organization,"+orgId,
 				data : {},
+				beforeSend: function(request) {
+					request.setRequestHeader("sessionId", $("#sessionId").val() );
+				},
 				success : function(data) {
 					if(data.res=="2"){
 						printOrgDetailInfo(data.org);
@@ -120,21 +123,33 @@ var setting = {
 		}
 
 		var key;
-		$(document).ready(function(){		
-			$.get(ctx + "getMicroServiceResult/v1/sys-proj/org/organizations",function(data){
-				if(data.res =="2"){ 
-					zNodes = (data.list) ; 					
-					$.fn.zTree.init($("#orgTree"), setting, zNodes);
-					key = $("#key");
-					key.bind("focus", focusKey)
-					.bind("blur", blurKey)
-					.bind("propertychange", searchNode)
-					.bind("input", searchNode);
-					$("#name").bind("change", clickRadio);
-					$("#level").bind("change", clickRadio);
-					$("#id").bind("change", clickRadio); 
-					$("#getNodesByParamFuzzy").bind("change", clickRadio); 
+		$(document).ready(function(){
+			$.ajax({
+				type : 'GET',
+				url : ctx + "getMicroServiceResult/v1/sys-proj/org/organizations",
+				data : {},
+				beforeSend: function(request) {
+					request.setRequestHeader("sessionId",  $("#sessionId").val()  );
+				},
+				success : function(data) {
+					if(data.res =="2"){
+						zNodes = (data.list) ;
+						$.fn.zTree.init($("#orgTree"), setting, zNodes);
+						key = $("#key");
+						key.bind("focus", focusKey)
+							.bind("blur", blurKey)
+							.bind("propertychange", searchNode)
+							.bind("input", searchNode);
+						$("#name").bind("change", clickRadio);
+						$("#level").bind("change", clickRadio);
+						$("#id").bind("change", clickRadio);
+						$("#getNodesByParamFuzzy").bind("change", clickRadio);
+					}
+				},error(err){
+					alert(err);
 				}
 			});
+
+
 			
 		});

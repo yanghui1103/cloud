@@ -1,7 +1,7 @@
 /**
  * org admin
  */
-function printOrgDetailInfo(org){ 
+function printOrgDetailInfo(org){
 	// alert(getDictNameByValue("depoartment"));
 	$("td > span").empty();
 	$("#name1").text(org.name);
@@ -39,6 +39,9 @@ function removeOrg(){
 				type : 'DELETE',
 				url : ctx + "org/organization/"+id,
 				data : {},
+				beforeSend: function(request) {
+					request.setRequestHeader("sessionId",  $("#sessionId").val() );
+				},
 				success : function(data) {
 					promptMessage(data.res, data.msg );
 				},

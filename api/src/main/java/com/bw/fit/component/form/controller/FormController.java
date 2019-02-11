@@ -39,8 +39,9 @@ public class FormController {
     @GetMapping("openFormDetail/{formKey}")
     public String formDetail(@PathVariable String formKey, Model model){
         Session session = PubFun.getCurrentSession();
-        Map<String,String> map = new HashMap<>();
-        map.put("sessionId",PubFun.getCurrentSessionId());
+
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+        map.add("sessionId", PubFun.getCurrentSessionId());
         String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
         JSONObject jsonObject = JSONObject.parseObject(form);
         if("2".equals(jsonObject.get("res").toString())){

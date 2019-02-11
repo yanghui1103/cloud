@@ -353,6 +353,9 @@ function addExternalTab(title, url) {
 			type : 'GET',
 			url : ctx + "getMicroServiceResult/v1/sys-proj/dict/getDictNameByValue,"+value,
 			data : {},
+			beforeSend: function(request) {
+				request.setRequestHeader("sessionId", $("#sessionId").val() );
+			},
 			async:false,
 			success : function(data) { 
 				val =  data.dictName;

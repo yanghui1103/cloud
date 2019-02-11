@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Description 验证请求中sessionId关联的账户信息是否还有效
@@ -33,13 +35,27 @@ public class SessionCorrectInterceptor  implements HandlerInterceptor {
     long start = System.currentTimeMillis();
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        String sessionId = httpServletRequest.getParameter("sessionId");
+        String sessionId = httpServletRequest.getHeader("sessionId");
+        logger.info(sessionId);
+
         if(StrUtil.isNotEmpty(sessionId)){
-            String s = commonService.getCacheValue(sessionId);
+            String s = commonService.getCacheValue("session:"+sessionId);
             if(StrUtil.isNotEmpty(s)){
                 JSONObject account = JSONObject.parseObject(s);
             }else{
                 return  false; // 说明没有从缓存库里找到有效账户数据
+            }
+        }else{
+            /*****
+             * 这里会有个白名单，即哪些ControllerMapping是不会被拦截
+             */
+            String mapping = httpServletRequest.getRequestURI();
+            Pattern pattern = Pattern.compile("/account/account/*(?!/)");
+            Matcher matcher = pattern.matcher(mapping);
+            if(httpServletRequest.getMethod().equalsIgnoreCase("get") && matcher.find()){
+                return true;
+            }else{
+                return false;
             }
         }
         start = System.currentTimeMillis();
