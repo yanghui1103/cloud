@@ -103,6 +103,7 @@ var mainPlatform = {
 			beforeSend: function(request) {
 				request.setRequestHeader("sessionId", $("#sessionId").val());
 			},
+			data:serializeFormToJSON($("#zjAddFm").serializeArray()),
 			async:false,
 			dataType : "JSON",
 			success:function(data){

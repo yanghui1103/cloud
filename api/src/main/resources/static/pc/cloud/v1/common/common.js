@@ -138,6 +138,32 @@ function addExternalTab(title, url) {
 		    }) 
 		    return  JSON.parse(JSON.stringify(obj));
 	}
+
+	/*****
+ 	* 将一个form表单对象转为一个&间隔的请求串；例如fname=Donald&lname=Duck
+ 	* @param formObj
+ 	* @returns {string|*|jQuery}
+ 	*/
+	function transferFormToString(formObj) {
+		var postData = formObj.serialize();
+		for(var i in postData.split("&")){
+			var row=postData.split("&")[i];
+		}
+		return postData ;
+	}
+
+	/*****
+ 	* 将一个form对象转为json字符串；例如：{fname: "Donald", lname: "Duck"}
+ 	* @param formObj
+ 	*/
+	function transferFormToJson(formObj) {
+		var postData = formObj.serialize();
+		var tmpDic={};
+		for(var i in postData.split("&")){
+			tmpDic[row.split("=")[0]]=decodeURIComponent(row.split("=")[1]);
+		}
+		return tmpDic;
+	}
 	
 	/*****
 	 * 列表选择记录

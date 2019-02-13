@@ -40,6 +40,7 @@ import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.bw.fit.system.common.util.PubFun.returnFailJson;
@@ -141,7 +142,8 @@ public class AccountController extends BaseController {
     @ResponseBody
     public String getMenus( HttpServletRequest request,@RequestHeader(value = "sessionId", required = false) String sessionId ){
         String sessionId3 = request.getParameter("sessionId");
-        String token = request.getParameter("token");
+        String ac = request.getParameter("ac");
+        Map<String,String[]> token = request.getParameterMap();
         JSONObject json = commonService.checkSessionValid(sessionId);
         if("1".equals(json.get("res").toString())){
             return null;

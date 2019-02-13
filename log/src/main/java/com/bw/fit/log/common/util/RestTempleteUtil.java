@@ -1,10 +1,7 @@
-package com.bw.fit.pc.sys.util;
+package com.bw.fit.log.common.util;
 
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,11 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.Map;
 
-/*****
- * 通用的rest工具类
- */
 @Component
-public class RestTemplateUtil {
+public class RestTempleteUtil {
 
     @Resource
     private RestTemplate restTemplate;
@@ -54,6 +48,7 @@ public class RestTemplateUtil {
         HttpServletRequest request = (HttpServletRequest) req;
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();

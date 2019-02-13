@@ -32,10 +32,7 @@ public class AccountController {
     @GetMapping("account/menus")
     @ResponseBody
     public JSONArray menus( HttpServletRequest request){
-        MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-        map.add("sessionId", PubFun.getCurrentSessionId());
-        String s = request.getParameter("sessionId");
-        String string = restTemplateUtil.get(request,"http://sys-proj/account/menus" ,map);
+        String string = restTemplateUtil.get(request,"http://sys-proj/account/menus" ,null);
         //String string =commonService.getOtherAppReturnString("http://sys-proj/account/menus" ,map);
         return JSONArray.parseArray(string);
     }
