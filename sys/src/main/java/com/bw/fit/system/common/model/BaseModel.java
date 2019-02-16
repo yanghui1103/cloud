@@ -16,6 +16,8 @@ public class BaseModel{
 	public String id ;
 	public String code;
 	public String parentId;
+
+	public String xaId;
 	public String foreignId;
 	public String keyWords="";
 	public String startDate = "1901-12-31";
@@ -65,6 +67,14 @@ public class BaseModel{
 	public String sessionId;
 	public String paginationEnable;
 
+
+	public String getXaId() {
+		return xaId;
+	}
+
+	public void setXaId(String xaId) {
+		this.xaId = xaId;
+	}
 
 	public String getTenantId() {
 		return tenantId;

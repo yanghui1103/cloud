@@ -8,6 +8,7 @@ public class BaseModel{
     private String id ;
     private String code;
     private String parentId;
+    private String xaId;
     private String foreignId;
     private String keyWords="";
     private String startDate = "1901-12-31";
@@ -449,5 +450,13 @@ public class BaseModel{
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getXaId() {
+        return xaId;
+    }
+
+    public void setXaId(String xaId) {
+        this.xaId = xaId;
     }
 }

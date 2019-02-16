@@ -9,6 +9,9 @@ eureka:
     prefer-ip-address: true
 server:
   port: 80
+  max-http-header-size: 10485760
+  tomcat:
+    uri-encoding: utf-8
 
 spring:
   application:

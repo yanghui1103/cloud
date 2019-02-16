@@ -15,6 +15,7 @@ public class BaseEntity {
     public String tenant;
     public String id ;
     public String parentId;
+    public String xaId;
     public String foreignId;
     public String keyWords="";
     public String start_date="1900-01-01" ;
@@ -62,6 +63,13 @@ public class BaseEntity {
     public String sessionId ;
 
 
+    public String getXaId() {
+        return xaId;
+    }
+
+    public void setXaId(String xaId) {
+        this.xaId = xaId;
+    }
 
     public String getTenant() {
         return tenant;

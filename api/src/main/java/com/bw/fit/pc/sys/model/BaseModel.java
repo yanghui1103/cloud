@@ -14,6 +14,7 @@ public class BaseModel {
 
     private String id ;
     private String parentId;
+    private String xaId;
     private String foreignId;
     private String keyWords="";
     private String start_date="1900-01-01" ;
@@ -333,4 +334,11 @@ public class BaseModel {
     }
 
 
+    public String getXaId() {
+        return xaId;
+    }
+
+    public void setXaId(String xaId) {
+        this.xaId = xaId;
+    }
 }
