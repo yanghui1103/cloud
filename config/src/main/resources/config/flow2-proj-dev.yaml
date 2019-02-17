@@ -1,12 +1,7 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8000/eureka/
-  instance:
-    instance-id: flow2App
-    prefer-ip-address: true
 server:
   port: 8004
+  tomcat:
+    uri-encoding: UTF-8
 
 spring:
   application:
@@ -39,3 +34,5 @@ mybatis:
   type-aliases-package: com.bw.fit
   configuration:
     map-underscore-to-camel-case: true
+
+

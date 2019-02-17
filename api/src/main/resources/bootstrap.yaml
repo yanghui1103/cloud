@@ -5,18 +5,16 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
   instance:
-    instance-id: cacheApp
+    instance-id: apiApp
     prefer-ip-address: true
-server:
-  port: 9001
-  tomcat:
-    uri-encoding: UTF-8
+
 
 spring:
   application:
-    name: cache-proj
-  redis:
-    host: 10.1.20.87
-    port: 6379
-    password: 123456
-    database: 0
+    name: api-proj
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configServer
+      profile: dev
