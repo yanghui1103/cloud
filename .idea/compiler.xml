@@ -13,6 +13,7 @@
         <module name="cache" />
         <module name="calls" />
         <module name="cloud" />
+        <module name="config" />
         <module name="eureka" />
         <module name="flow2" />
         <module name="job" />
@@ -36,6 +37,7 @@
       <module name="bounty" options="-parameters" />
       <module name="cache" options="-parameters" />
       <module name="calls" options="-parameters" />
+      <module name="config" options="" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />
       <module name="flow2" options="-parameters" />
