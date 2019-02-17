@@ -21,4 +21,3 @@ spring:
           search-locations: classpath:config/ # 搜索src/main/resource 下的config文件夹下的文件
   profiles:
     active: native  # 配置使用本地储存
-
