@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class DemoApplicationTests {
 
-    @Value("${server.port}")
+    @Value("${logSystemTempName}")
     String ssex;
 
     @Autowired

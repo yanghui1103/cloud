@@ -119,6 +119,10 @@
             <version>1.8.9</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
 
         <!--activiti-->
         <dependency>
