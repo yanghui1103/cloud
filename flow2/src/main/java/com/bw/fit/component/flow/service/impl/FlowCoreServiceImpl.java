@@ -6,12 +6,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmActivity;
@@ -38,19 +42,19 @@ import com.bw.fit.component.flow.service.FlowCoreService;
 
 @Service
 public class FlowCoreServiceImpl implements FlowCoreService {
-	@Autowired
+	@Resource
 	private ProcessEngine processEngine;
-	@Autowired
+	@Resource
 	private RepositoryService repositoryService;
-	@Autowired
+	@Resource
 	private TaskService taskService;
-	@Autowired
+	@Resource
 	private RuntimeService runtimeService;
-	@Autowired
+	@Resource
 	private HistoryService historyService; 
 
 	@Override
-	public void rollBack(String procInstId, String destTaskKey, String messageContent) {
+	public void rollBack(String procInstId, String destTaskKey, String draftToward) {
 		// TODO Auto-generated method stub
 		  //获得当前任务的对应实列
 		  
@@ -106,12 +110,11 @@ public class FlowCoreServiceImpl implements FlowCoreService {
 		  newTransitionImpl.setDestination(destActiviti);
 		  //保存驳回意见
 		  
-		  taskEntity.setDescription(messageContent);//设置驳回意见
 		  taskService.saveTask(taskEntity);
 		  //设定驳回标志  
 		  
 		  Map<String, Object> variables = new java.util.HashMap<String, Object>(0);
-		  variables.put("messageContent", messageContent);
+		  variables.put("draftToward", draftToward);
 		  //执行当前任务驳回到目标任务draft		  
 		  taskService.complete(taskEntity.getId(), variables);
 		  
@@ -660,31 +663,23 @@ public class FlowCoreServiceImpl implements FlowCoreService {
 	}
 
 	@Override
-	public TaskDefinition getNextTaskInfo(String processInstanceId)
-			throws Exception {
-//		ProcessDefinitionEntity processDefinitionEntity = null;
-//		String id = null;
-//		TaskDefinition task = null;
-//		//获取流程发布Id信息 
-//		String definitionId = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId(); 
-//		processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(definitionId); 
-//		List<Task> taskQuery = processEngine.getTaskService().createTaskQuery().processInstanceId(processInstanceId).list();
-//		//当前流程节点Id信息  
-//		String activitiId = taskQuery.get(0).getTaskDefinitionKey(); 
-//		List<ActivityImpl> activitiList = processDefinitionEntity.getActivities();
-//
-//for(ActivityImpl activityImpl : activitiList){
-//	id = activityImpl.getId();
-//if (activitiId.equals(id)) {
-//
-//			task = nextTaskDefinition(activityImpl, activityImpl.getId(), processInstanceId);
-//
-//		                break;
-//
-//		         }}return task;
-		return null ;
+	public JSONObject handleTask(Task task, String accountId,String handleOpt,String handleRemark) {
+		JSONObject jsonObject = new JSONObject();
+		try{
+			List<Comment> historyComments = getCommentOfProcessInstance(task.getProcessInstanceId());  // 以备后面用
+			Authentication.setAuthenticatedUserId(accountId);
+			createTaskComment(task,handleOpt + "|" +handleRemark);
+			completeTask(task.getId());
+			PubFun.returnSuccessJson(jsonObject);
+		}catch (Exception ex){
+			ex.printStackTrace();
+			jsonObject = new JSONObject();
+			PubFun.returnFailJson(jsonObject,"办结任务异常");
+		}finally {
+			return jsonObject;
+		}
+
 	}
-	 
-	
-	
+
+
 }

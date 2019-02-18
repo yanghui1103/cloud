@@ -4,37 +4,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
     <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}"  rel="stylesheet" >
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}"  rel="stylesheet" >
     <link th:href="@{/pc/cloud/v1/static/lightblue/css/platform.css}" rel="stylesheet">
-    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
     <link type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/menu.js}"></script>
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/main.js}"></script>
+
     <script type="text/javascript">
+        $(function(){
+            var account = JSON.parse($("#currentUser").val()) ;
+            $("#curentAccountName").text(account.name);
+            var currentSessionId = ($("#sessionId").val());
+        });
         function logout(){
             $.ajax({
-                url:ctx+"system/logout",
+                url:"logout",
                 type:'post',
                 success:function(){
-                    window.location.href=ctx+"system/login"
+                    window.location.href="login"
                 }
             });
         }
         function accountInfo(){
             $('#_loadDialog_AccountInfo').dialog({
-                title: '账户详情',
-                width: 1000,
+                title: '人员详情',
+                width: '98%',
                 height: 500,
                 closed: false,
                 cache: false,
                 maximizable:false,
-                href: ctx+'user/openUserDetail/${sessionScope.CurrentUser.temp_str1 }' ,
+                href:  'towardMicroServicePage/v1/sys-proj/user,user,' + (JSON.parse($("#currentUser").val())).tempStr1+","+ (JSON.parse($("#currentUser").val())).sessionId +"/"+"sys,pc,system,user,userDetail" ,
                 modal: true
             });
         }
@@ -45,6 +49,9 @@
     <div id="pf-hd">
         <div class="pf-logo">
             <img th:src="@{/pc/cloud/v1/static/lightblue/images/main/main_logo.png}" alt="logo">
+            <form id="zjAddFm">
+                <input name="ac" value="tte0001" type="hidden" />
+            </form>
         </div>
         <div class="pf-user">
             <div class="pf-user-photo">
@@ -57,7 +64,7 @@
                     <li>
                         <a href="javascript:accountInfo();">
                             <i class="iconfont">&#xe60d;</i>
-                            <span class="pf-opt-name" th:text="${session.sessionId }"></span>
+                            <span class="pf-opt-name" id="curentAccountName"></span>
                         </a>
                     </li>
                     <!--                          <li class="pf-modify-pwd"> -->
@@ -82,10 +89,10 @@
             </div>
         </div>
     </div>
-    <input type="hidden" th:value="${session.sessionId}" id="sessionId"/>
+    <input type="hidden" th:value="${session.currentUser}" id="currentUser"/>
+    <input type="hidden" th:value="${sessionId}" id="sessionId"/>
     <div id="pf-bd">
         <div class="pf-sider-wrap">
-
         </div>
 
 
@@ -111,6 +118,7 @@
     <div id="mm-tabcloseall">关闭所有</div>
     <div id="mm-tabcloseother">关闭其他</div>
 </div>
+
 
 <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/menu.js}"></script>
 <script type="text/javascript" th:src="@{/pc/cloud/v1/static/lightblue/js/main.js}"></script>
@@ -168,8 +176,6 @@
     //    $('.panel-body').height($("#pf-page").height()-76)
     // }, 200)
     function replace(doc, style) {
-
-
         $('link', doc).each(function(index, one) {
 
             var path = $(one).attr('href').replace(/(static\/)\w+(\/css)/g, '$1' + style + '$2').replace(/(custom\/)\w+(\/)/g, '$1' + style + '$2'),

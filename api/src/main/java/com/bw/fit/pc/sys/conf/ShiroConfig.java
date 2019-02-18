@@ -51,6 +51,7 @@ public class ShiroConfig {
         // 拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置不会被拦截的链接 顺序判断
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/pc/**", "anon");
         filterChainDefinitionMap.put("/pda/**", "anon");
         filterChainDefinitionMap.put("/sys/**", "anon");

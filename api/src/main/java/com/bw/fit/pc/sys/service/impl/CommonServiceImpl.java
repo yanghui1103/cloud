@@ -1,15 +1,20 @@
 package com.bw.fit.pc.sys.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  * @Description
@@ -65,6 +70,23 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public String getOtherAppReturnString(String url, MultiValueMap<String, Object> paramMap) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(paramMap,headers);
+        ResponseEntity<String> response = restTemplate.getForEntity(url,
+                String.class ,httpEntity);
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public Object getOtherAppReturnObject(String url, MultiValueMap<String, Object> paramMap) {
+        ResponseEntity<Object> response = restTemplate.getForEntity(url+"?sessionId={sessionId}",
+                Object.class ,paramMap);
+        return  response.getBody()  ;
+    }
+
+    @Override
     public JSONObject getOtherAppReturn(String url) {
         ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
                 JSONObject.class );
@@ -72,8 +94,50 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public String getOtherAppJSONAarry(String url) {
+        ResponseEntity<String> response = restTemplate.getForEntity(url,
+                String.class );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject getOtherAppReturn(String url, MultiValueMap<String, Object> params) {
+        ResponseEntity<JSONObject> response = restTemplate.getForEntity(url,
+                JSONObject.class,params );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject postOtherAppReturn(String url,MultiValueMap<String, Object> params) {
+        ResponseEntity<JSONObject> response = restTemplate.postForEntity(url,params,
+                JSONObject.class );
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject putOtherAppReturn(String url, HttpEntity<String> entity) {
+        ResponseEntity<JSONObject> response = restTemplate.exchange(url, HttpMethod.PUT, entity, JSONObject.class);
+        return  response.getBody()  ;
+    }
+
+    @Override
+    public JSONObject deleteOtherAppReturn(String url,Object[] args) {
+        ResponseEntity<JSONObject> response = restTemplate.exchange(url, HttpMethod.PUT, null, JSONObject.class,args);
+        return response.getBody()  ;
+    }
+
+    @Override
     public JSONObject getAccount(String sessionId) {
-        JSONObject accountJSON =  JSONObject.parseObject(getCacheValue(sessionId));
-        return accountJSON;
+        String string = getCacheValue("session:"+sessionId);
+        if(StrUtil.isNotEmpty(string)){
+            JSONObject accountJSON =  JSONObject.parseObject(string);
+            accountJSON.put("res","2");
+            return accountJSON;
+        }else{
+            JSONObject accountJSON = new JSONObject();
+            accountJSON.put("res","1");
+            accountJSON.put("msg","无数据");
+            return accountJSON;
+        }
     }
 }

@@ -1,0 +1,20 @@
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: flow2App
+    prefer-ip-address: true
+
+
+spring:
+  application:
+    name: flow2-proj
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configServer
+      profile: dev

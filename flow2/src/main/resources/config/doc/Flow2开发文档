@@ -1,0 +1,18 @@
+                                            开发文档
+
+
+    一，通用开发
+        1，
+
+    二，Flow2工程开发：
+        1，所有租户的工作流程定义请放置在processes文件夹下。
+        2，所有需要节点处理人处理的节点，请加入（commonSetCandidateUsersListener）bean即可。会在节点create时候就会自动
+        安排处理人，前提是需要在流程定义模块安置完毕。
+        3，其他集成系统通知待办，已办请在节点assignment，delete加上相应节点即可。
+        4，我的待办：getCurrentTasksOfUser；我的已办，getUserhistoryTaskInstance(true)；
+        5，启动流程：启动流程startProcess，vars必须添加：formKey，draftToward。启动意见发起审核[数据字典里为不可选]。意见和说明必须每个节点单独赋值，监听会自动收集数据。
+        6，任务办结监听：每个需要任务办结的节点上加入监听（handledEventListener）Bean。
+        7，SessionCorrectInterceptor  是处理所有发起/××请求的会话id有效性验证，如果request里有名称为sessionId的数据就会拦截，如果没有这个参数就
+              不会拦截。
+        8，自动安排节点处理人，支持按照流程定义key和节点编码安排处理人；也支持，如果流程实例ID，和前俩个字段锁定处理人，并将一个口径查询到的数据
+            并累计这些处理人到目标节点上。

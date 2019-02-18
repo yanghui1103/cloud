@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div style="margin:30px 0px;"></div>
+    <div class="easyui-tabs" style="width:100%;">
+        <div title="基本信息" mapData-options="closable:false" class="basic-info">
+        <table class="kv-table">
+            <tbody>
+            <tr>
+                <td class="kv-label">姓名</td>
+                <td class="kv-content"><span th:text="${mapData['name']}"></span></td>
+                <td class="kv-label">姓名拼音</td>
+                <td class="kv-content"><span id="code"  th:text="${mapData['name_pinyin']}"></span></td>
+                <td class="kv-label">用户编码</td>
+                <td class="kv-content"><span id="simpleName" th:text="${mapData['code']}"></span></td>
+            </tr>
+            <tr>
+                <td class="kv-label">性别</td>
+                <td class="kv-content"><span th:text="${mapData['gender']}"></span></td>
+                <td class="kv-label">身份证号码</td>
+                <td class="kv-content"><span th:text="${mapData['card']}"></span></td>
+                <td class="kv-label">人员类型</td>
+                <td class="kv-content"><span th:text="${mapData['type']}"></span></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div title="联系信息" mapData-options="closable:false" class="basic-info">
+        <table class="kv-table">
+            <tbody>
+
+            <tr>
+                <td class="kv-label">地址薄可见</td>
+                <td class="kv-content"><span th:text="${mapData['isVisible']}"></span></td>
+                <td class="kv-label">电子邮箱</td>
+                <td class="kv-content"><span th:text="${mapData['email']}"></span></td>
+                <td class="kv-label">联系电话</td>
+                <td class="kv-content"><span th:text="${mapData['phone']}"></span></td>
+            </tr>
+            <tr>
+                <td class="kv-label">地址</td>
+                <td class="kv-content"><span th:text="${mapData['address']}"></span></td>
+                <td class="kv-label">邮编</td>
+                <td class="kv-content"><span th:text="${mapData['postCode']}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

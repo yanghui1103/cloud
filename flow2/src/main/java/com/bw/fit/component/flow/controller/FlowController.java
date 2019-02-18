@@ -1,19 +1,21 @@
 package com.bw.fit.component.flow.controller;
 
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.mapper.FlowPlusMapper;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
+import com.bw.fit.component.form.model.BaseModel;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -45,8 +47,10 @@ import com.bw.fit.component.flow.service.FlowPlusService;
  * @author yangh
  *
  */
+@Api("flow提供接口")
 @RequestMapping("flow")
 @Controller
+@EnableEurekaClient
 public class FlowController {
 
 	@Resource
@@ -61,6 +65,8 @@ public class FlowController {
 	private HistoryService historyService;
 	@Autowired
 	private FlowPlusService flowPlusService;
+	@Resource
+	private FlowPlusMapper flowPlusMapper;
 
 	/**
 	 * 打开流程图显示页面
@@ -152,6 +158,75 @@ public class FlowController {
 			throw new RbackException("1", "获取流程图失败！" + e.getMessage());
 		}
 	}
-	
 
+	/*****
+	 * 工作流系统对外提供的流程流转所有操作,前提是该任务存在
+	 * @return
+	 */
+	@GetMapping("handleOpt/{taskId}")
+	@ResponseBody
+	public  String getAllOpts(@PathVariable String taskId){
+		List<Task> tasks = taskService.createTaskQuery().taskId(taskId).list();
+		if(tasks == null || tasks.size()<1){
+			return null;
+		}
+		JSONObject jsonObject = new JSONObject();
+		List<BaseModel> list= new ArrayList<>();
+		BaseModel baseModel= new BaseModel();
+		baseModel.setCode("pass");
+		baseModel.setRemark("通过");
+		list.add(baseModel);
+		baseModel= new BaseModel();
+		baseModel.setCode("reject");
+		baseModel.setRemark("驳回");
+		list.add(baseModel);
+		baseModel= new BaseModel();
+		baseModel.setCode("proxy");
+		baseModel.setRemark("转办");
+		list.add(baseModel);
+		jsonObject.put("total", list.size());
+		jsonObject.put("rows", JSONObject.toJSON(list));
+		return jsonObject.toJSONString();
+	}
+
+	/*****
+	 * 根据流程实例id，查看当前能驳回到哪些节点
+	 * @param pdInstId
+	 * @return
+	 */
+	@GetMapping("backNode/{pdInstId}")
+	@ResponseBody
+	public String canBackNode(@PathVariable String pdInstId){
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(pdInstId).list();
+		if(tasks == null || tasks.size()<1){//流程实例已经结束
+			return null;
+		}
+		JSONObject jsonObject = new JSONObject();
+		List<TFlowExecuteDefinition> tfs = flowPlusService.getCanBackFlowNodes(pdInstId);
+		if(CollectionUtil.isNotEmpty(tfs)){
+			jsonObject = (JSONObject)JSONObject.toJSON(tfs);
+			jsonObject.put("res","2");
+		}else{
+			jsonObject = new JSONObject();
+			jsonObject.put("res","1");
+			jsonObject.put("msg","无数据");
+		}
+		return jsonObject.toJSONString();
+	}
+
+	/*****
+	 * 所有流程执行定义列表
+	 * @return
+	 */
+	@GetMapping("processDefinition")
+	@ResponseBody
+	public String processDefinition(){
+		JSONArray jsonArray = new JSONArray();
+		List<TFlowExecuteDefinition> tFlowExecuteDefinitionList = flowPlusMapper.getAllFlowDefs(null);
+		if(CollectionUtil.isNotEmpty(tFlowExecuteDefinitionList)){
+			jsonArray = (JSONArray)JSONArray.toJSON(tFlowExecuteDefinitionList);
+			return jsonArray.toJSONString();
+		}
+		return  null;
+	}
 }

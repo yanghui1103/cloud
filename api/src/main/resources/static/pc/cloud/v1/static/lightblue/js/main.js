@@ -98,21 +98,30 @@ var mainPlatform = {
 	_createTopMenu: function(){
 		var menuStr = '',
 			currentIndex = 0;
-		$.ajax({url:  getMicroServiceResultV1("sys-proj","account","menus,"+$("#sessionId").val() ),
+		$.ajax({url: "account/menus",
 			type:'get',
+			beforeSend: function(request) {
+				request.setRequestHeader("sessionId", $("#sessionId").val());
+			},
+			data:serializeFormToJSON($("#zjAddFm").serializeArray()),
 			async:false,
+			dataType : "JSON",
 			success:function(data){
 				menus = data ;
 				SystemMenu = [{
-//					title: '系统管理',
-//					icon: '&#xe63f;',
 					title: ' ',
 					icon: ' ',
 					isCurrent: true,
-					menu:  menus 
+					menu:  menus
 				}];
 			}
 		});
+			SystemMenu = [{
+				title: ' ',
+				icon: ' ',
+				isCurrent: true,
+				menu:  menus
+			}];
 		for(var i = 0, len = SystemMenu.length; i < len; i++) {
 			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" data-menu="system_menu_" + i>'+
                       '<a href="javascript:;">'+

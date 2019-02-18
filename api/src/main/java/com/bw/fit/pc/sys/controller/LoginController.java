@@ -2,6 +2,7 @@ package com.bw.fit.pc.sys.controller;
 
 import  static com.bw.fit.pc.sys.util.PubFun.*;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.Account;
 import com.bw.fit.pc.sys.service.CommonService;
@@ -70,9 +71,10 @@ public class LoginController {
         }
         // 如果当前客户会话仍然存在
         sessionId = getCurrentSessionId();
-        if(!"".equals(sessionId)){
-            JSONObject us_first = commonService.getAccount(sessionId);
-            if(us_first!=null||(us_first!=null )){
+        if(StrUtil.isNotEmpty(sessionId)){
+            JSONObject usJson = commonService.getAccount(sessionId);
+            if("2".equals(usJson.get("res").toString())){
+                model.addAttribute("sessionId",sessionId);
                 return indexPage;
             }
         }
@@ -106,12 +108,17 @@ public class LoginController {
          */
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account.getLogName(), JSONObject.class);
         accountJSON.put("sessionId",sessionId);
-        JSONObject jj = commonService.setCacheValue(sessionId,accountJSON);
+        JSONObject jj = commonService.setCacheValue("session:"+sessionId,accountJSON);
         session.setAttribute("sessionId",sessionId);
+        session.setAttribute("currentUser",accountJSON.toJSONString());
         model.addAttribute("sessionId",sessionId);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
         return  indexPage ;
     }
 
+    @PostMapping("logout")
+    public  void logout(){
+        SecurityUtils.getSubject().logout();
+    }
 }

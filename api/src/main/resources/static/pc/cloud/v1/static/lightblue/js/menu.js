@@ -1,12 +1,17 @@
 var menus = '';
 var SystemMenu ='';
 $(function(){
-	$.ajax({url:  getMicroServiceResultV1("sys-proj","account","menus,"+$("#sessionId").val() ),
-			type:'get',
-			async:false,
-			success:function(data){
-				menus = data ;
-			}
+	$.ajax({url: "account/menus" ,
+		type:'get',
+		beforeSend: function(request) {
+			request.setRequestHeader("sessionId", $("#sessionId").val());
+		},
+		data:serializeFormToJSON($("#zjAddFm").serializeArray()),
+		async:false,
+		dataType : "JSON",
+		success:function(data){
+			menus = data ;
+		}
 	});
 });
  SystemMenu = [{

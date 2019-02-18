@@ -2,6 +2,7 @@ package com.bw.fit.component.flow.service;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.pvm.PvmTransition;
@@ -45,10 +46,10 @@ public interface FlowCoreService {
      * 驳回流程 
      * @param procInstId  PINCEID 
      * @param destTaskKey   节点key 
-     * @param messageContent  信息
+     * @param draftToward  驳回后方向：1正向，-1反向【实际都选反向】
      * @throws Exception 
      */  
-    public void rollBack(String procInstId, String destTaskKey, String messageContent)  throws Exception;
+    public void rollBack(String procInstId, String destTaskKey, String draftToward)  throws Exception;
     /*****
      * 挂起流程定义，流程就不能被启动
      * @param defId
@@ -394,12 +395,15 @@ public interface FlowCoreService {
      * @return
      */
     public String getNextNode(String procInstanceId);
-    /*****
-     * 获取下一个userTask任务信息 
-     * @param processInstanceId
-     * @return 下一个用户任务定义信息
-     * @throws Exception
+
+    /****
+     * 办结任务
+     * @param task
+     * @param accountId
+     * @param handleOpt 意见
+     * @param handleRemark 其他说明
+     * @return
      */
-    public TaskDefinition getNextTaskInfo(String processInstanceId) throws Exception  ;
-    
+    public JSONObject handleTask(Task task, String accountId,String handleOpt,String handleRemark);
+
 }

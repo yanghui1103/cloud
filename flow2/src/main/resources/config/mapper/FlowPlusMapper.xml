@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.fit.component.flow.mapper.FlowPlusMapper">
+
+    <select id="getFlowCoExecutions"  parameterType="String" resultType="TCoFlowExecuteDefinition">
+		select * from coflowexecutedefinition a where 1=1  and processId = #{processId,jdbcType=VARCHAR} order by handleTime desc
+	</select>
+
+	<select id="getThisNode" parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
+		select a.* from  flowexecutedefinition a where 1=1
+		and a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
+		and a.taskDefKey = #{taskDefKey,jdbcType=VARCHAR}   order by processdefkey asc
+	</select>
+
+	<select id="getAllFlowDefs" parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
+		select a.* from  flowexecutedefinition a  order by processdefkey asc
+	</select>
+
+
+	<select id="getBeforeNodeByCurtNode"  parameterType="TFlowExecuteDefinition" resultType="TFlowExecuteDefinition">
+		select a.* from  flowexecutedefinition a where a.processdefkey = #{processDefKey,jdbcType=VARCHAR}
+		and a.taskDefKey = #{taskDefKey,jdbcType=VARCHAR}
+		<![CDATA[ and a.executeNum < #{executeNum,jdbcType=INTEGER}  ]]> order by executeNum desc
+	</select>
+
+	<insert id="handledCurrentTask" parameterType="TCoFlowExecuteDefinition">
+		insert into Coflowexecutedefinition(id,processDefkey,Processid,Taskdefkey,Taskid,Handler,Handletime,Handleopt,Remark,Nexttaskdefkey,formkey) values
+		(#{id,jdbcType=VARCHAR},#{processDefKey,jdbcType=VARCHAR},#{processId,jdbcType=VARCHAR},
+		#{taskDefKey,jdbcType=VARCHAR},#{taskId,jdbcType=VARCHAR},#{handler,jdbcType=VARCHAR},
+		sysdate,#{handleOpt,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{nextTaskDefKey,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR})
+	</insert>
+
+
+</mapper>

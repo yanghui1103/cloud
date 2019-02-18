@@ -7,11 +7,15 @@ function addOrg2(){
 			.form('validate')) {
 		return;
 	}
+	alert([[${sessionId}]]);
 	$.ajax({
 		type : 'POST',
 		url : ctx + "org/organization",
 		data : serializeFormToJSON($("#orgAddFm")
 				.serializeArray()),
+		beforeSend: function(request) {
+			request.setRequestHeader("sessionId", [[${sessionId}]]);
+		},
 		success : function(data) {
 			promptMessage(data.res, data.msg );
 		},

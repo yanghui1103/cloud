@@ -1,0 +1,20 @@
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: cacheApp
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: cache-proj
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: configServer
+      profile: dev
+

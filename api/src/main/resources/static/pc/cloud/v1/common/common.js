@@ -4,24 +4,34 @@
 *	2，通用的JS方法
 *	3，其他
 ****/
-var ctx = "http://localhost/";
 var prompt_title = "系统提示框";
+var local = window.location;
+var contextPath = local.pathname.split("/")[1];
+var ctx = local.protocol+"//"+local.host+"/" ;
 
 function getMicroServiceResultV1(serviceName,controllerName,params){
 	var val = "";
+	var controllerPath = "";
+	if(controllerName==''){
+		controllerPath ="";
+	}else {
+		controllerPath = controllerName +"/";
+	}
 	$.ajax({
 		type : 'GET',
-		url : ctx + "getMicroServiceResult/v1/"+serviceName+"/"+controllerName+"/"+params ,
+		url :  ctx + "getMicroServiceResult/v1/"+serviceName+"/"+controllerPath +params ,
 		data : {},
 		async:false,
 		success : function(data) {
-			val =  data ;
+			if(data.res =="2"){
+				val =  data.data ;
+			}
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 			ajaxError(XMLHttpRequest, textStatus, errorThrown);
 			return "";
 		},
-		dataType : "TEXT"
+		dataType : "JSON"
 	});
 	return val ;
 }
@@ -127,6 +137,32 @@ function addExternalTab(title, url) {
 		        obj[v.name] = v.value;
 		    }) 
 		    return  JSON.parse(JSON.stringify(obj));
+	}
+
+	/*****
+ 	* 将一个form表单对象转为一个&间隔的请求串；例如fname=Donald&lname=Duck
+ 	* @param formObj
+ 	* @returns {string|*|jQuery}
+ 	*/
+	function transferFormToString(formObj) {
+		var postData = formObj.serialize();
+		for(var i in postData.split("&")){
+			var row=postData.split("&")[i];
+		}
+		return postData ;
+	}
+
+	/*****
+ 	* 将一个form对象转为json字符串；例如：{fname: "Donald", lname: "Duck"}
+ 	* @param formObj
+ 	*/
+	function transferFormToJson(formObj) {
+		var postData = formObj.serialize();
+		var tmpDic={};
+		for(var i in postData.split("&")){
+			tmpDic[row.split("=")[0]]=decodeURIComponent(row.split("=")[1]);
+		}
+		return tmpDic;
 	}
 	
 	/*****
@@ -255,7 +291,7 @@ function addExternalTab(title, url) {
 	 * 需要根据res值，刷新dgid页的datagrid重新加载
 	 * 并让当前tab做action动作
 	 * @param data
-	 * @param res
+	 * @param resn
 	 * @param dgId treegrid对象
 	 * @param action
 	 */
@@ -341,8 +377,11 @@ function addExternalTab(title, url) {
 		var val = "";
 		$.ajax({
 			type : 'GET',
-			url : ctx + "dict/getDictNameByValue/"+value,
+			url : ctx + "getMicroServiceResult/v1/sys-proj/dict/getDictNameByValue,"+value,
 			data : {},
+			beforeSend: function(request) {
+				request.setRequestHeader("sessionId", $("#sessionId").val() );
+			},
 			async:false,
 			success : function(data) { 
 				val =  data.dictName;

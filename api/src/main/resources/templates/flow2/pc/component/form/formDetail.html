@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/fonts/demo.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+<span th:if="#{msg!=null}" th:text="${msg}"></span>
+    <div th:title="${ea.tabName}" class="easyui-panel"  mapData-options="closable:false" th:each="ea:${data}" th:switch="${ea.attrType}">
+        <table class="kv-table" th:case="string">
+            <tbody>
+            <tr th:each="item:${ea.keySet()}">
+                <td class="kv-label"><span th:text="${item}"></span></td>
+                <td class="kv-content"><span th:text="${ea.getString(item)}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table id="tt" class="easyui-datagrid" style="width:100%;height:auto;" th:case="list">
+            <thead>
+            <tr>
+                <th field="name1" width="20%">Col 1</th>
+                <th field="name2" width="20%">Col 2</th>
+                <th field="name3" width="20%">Col 3</th>
+                <th field="name4" width="20%">Col 4</th>
+                <th field="name5" width="20%">Col 5</th>
+                <th field="name6" width="20%">Col 6</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="kv-table" th:case="attachment">
+            <input id="formAttachment"  value="${formKey }"  type="hidden" >
+            <td class="kv-label">相关附件：</td>
+            <ul id="fileLi" style="margin-top: 5px"></ul>
+        </table>
+
+
+    </div>
+
+</body>
+</html>

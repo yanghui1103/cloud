@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="cloud">
+    <serverData>
+      <paths name="cloud">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/log" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/ai" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/cache" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/api" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/link" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/job" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/bounty" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/eureka" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/flow2" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/calls" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/sys" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/report" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/base" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

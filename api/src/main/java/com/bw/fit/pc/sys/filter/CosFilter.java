@@ -32,7 +32,7 @@ public class CosFilter extends ZuulFilter {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
         return response;
     }
 }

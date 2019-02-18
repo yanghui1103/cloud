@@ -8,6 +8,7 @@
         <activiti:taskListener event="create"/>
         <activiti:executionListener event="start"/>
         <activiti:taskListener delegateExpression="qwe" event="all"/>
+        <activiti:taskListener event="delete"/>
       </extensionElements>
     </userTask>
     <sequenceFlow id="_4" sourceRef="_2" targetRef="_3"/>

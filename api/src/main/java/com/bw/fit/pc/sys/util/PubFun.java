@@ -430,6 +430,9 @@ public class PubFun {
         return SecurityUtils.getSubject().getSession();
     }
 
+    public static JSONObject getCurrentUser(){
+        return JSONObject.parseObject(getCurrentSession().getAttribute("currentUser").toString());
+    }
 
     /****
      * 获取当前会话Id

@@ -12,56 +12,69 @@ import java.util.List;
  */
 public class BaseModel{
 
-	private String tenantId;
-	private String id ;
-	private String code;
-	private String parentId;
-	private String foreignId;
-	private String keyWords="";
-	private String startDate = "1901-12-31";
-	private String endDate = "2101-12-31";
-	private String createTime ;
-	private String versionTime ;
-	private String operator;
-	private String creator;
-	private String creatorName; 
-	private String createOrgId;
-	private String createOrgName;
-	private String logId ;
-	private String logContent;
-	private String sql ;
-	private String isDeleted;
-	private String res ;
-	private String msg ;
-	private String returnInfo ;
-	private String actionName ;
-	private String UUID ;
-	private String status ;
-	private int sortNumber;
-	private String remark;
-	private String description;
-	private String timeStamp;
+	public String tenantId;
+	public String id ;
+	public String code;
+	public String parentId;
+
+	public String xaId;
+	public String foreignId;
+	public String keyWords="";
+	public String startDate = "1901-12-31";
+	public String endDate = "2101-12-31";
+	public String createTime ;
+	public String versionTime ;
+	public String operator;
+	public String creator;
+	public String creatorName; 
+	public String createOrgId;
+	public String createOrgName;
+	public String logId ;
+	public String logContent;
+	public String sql ;
+	public String isDeleted;
+	public String res ;
+	public String msg ;
+	public String returnInfo ;
+	public String actionName ;
+	public String UUID ;
+	public String status ;
+	public int sortNumber;
+	public String remark;
+	public String description;
+	public String timeStamp;
 	/***
 	 * 翻页使用
 	 */
-	private Integer page =1;
-	private Integer rows =10;
-	private Integer rn ;
-	private List<String> haveOrgListAuth; /****拥有组织的数据权限***/
-	private String tempStr;
-	private String tempStr1;
-	private String tempStr2;
-	private String tempStr3;
-	private String tempStr4;
-	private String tempStr5;
-	private String tempStr6;
-	private String tempStr7;
-	private String tempStr8;
-	private String tempStr9;
-	private List<String> tempList;
-	private List<String> tempList1;
-	private List<String> tempList2;
-	private List<String> tempList3;
+	public Integer page =1;
+	public Integer rows =10;
+	public Integer rn ;
+	public List<String> haveOrgListAuth; /****拥有组织的数据权限***/
+	public String tempStr;
+	public String tempStr1;
+	public String tempStr2;
+	public String tempStr3;
+	public String tempStr4;
+	public String tempStr5;
+	public String tempStr6;
+	public String tempStr7;
+	public String tempStr8;
+	public String tempStr9;
+	public List<String> tempList;
+	public List<String> tempList1;
+	public List<String> tempList2;
+	public List<String> tempList3;
+	public String sessionId;
+	public String paginationEnable;
+
+
+	public String getXaId() {
+		return xaId;
+	}
+
+	public void setXaId(String xaId) {
+		this.xaId = xaId;
+	}
 
 	public String getTenantId() {
 		return tenantId;
@@ -431,8 +444,8 @@ public class BaseModel{
 		this.tempList5 = tempList5;
 	}
 
-	private List<String> tempList4;
-	private List<String> tempList5;
+	public List<String> tempList4;
+	public List<String> tempList5;
 
 
 	public String getCode() {
@@ -457,5 +470,21 @@ public class BaseModel{
 
 	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getPaginationEnable() {
+		return paginationEnable;
+	}
+
+	public void setPaginationEnable(String paginationEnable) {
+		this.paginationEnable = paginationEnable;
 	}
 }
