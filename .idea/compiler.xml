@@ -14,6 +14,7 @@
         <module name="calls" />
         <module name="cloud" />
         <module name="config" />
+        <module name="config-server" />
         <module name="eureka" />
         <module name="flow2" />
         <module name="job" />
