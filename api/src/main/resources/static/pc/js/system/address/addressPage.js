@@ -81,7 +81,8 @@ function openAddress(dlgObj,idsObj,namesObj,type,isMultiple){
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'address/openAddressPage/'+o+'/'+p+'/'+a+'/'+ids+'/'+isMultiple,    
+		href: ctx+'towardMicroServicePage/v1/sys-proj/address,openAddressPage,'+o+','+p+','+a+','+ids+','+isMultiple+
+			"/sys,pc,system,address,addressPage",
 	    modal: true   ,
 	    buttons:[{
 			text:'确定',

@@ -16,5 +16,5 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: configServer
+        service-id: config-proj
       profile: dev

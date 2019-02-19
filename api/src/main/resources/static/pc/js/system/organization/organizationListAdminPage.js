@@ -21,12 +21,12 @@ function printOrgDetailInfo(org){
 function addOrgPage(){
 	$('#_loadDialog_orgList').dialog({    
 	    title: '新增组织',    
-	    width: 800,    
+	    width: '98%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'system/gotoIframePage/system/organization/organizationAddPage/-9',    
+	    href: ctx+'gotoIframePage/sys/pc/system/organization/organizationAdd/-9',
 	    modal: true   
 	}); 
 }

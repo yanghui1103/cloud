@@ -41,6 +41,7 @@ public class AddressController {
 	 * @return
 	 */
 	@RequestMapping("openAddressPage/{o}/{p}/{a}/{ids}/{isMultiple}")
+	@ResponseBody
 	public String openAddressPage(Model model, @PathVariable boolean o,
 								  @PathVariable boolean p, @PathVariable boolean a,
 								  @PathVariable(value="ids",required=false) String ids,
