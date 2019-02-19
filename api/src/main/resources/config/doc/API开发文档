@@ -1,5 +1,8 @@
-API网关工程开发手册
+                API网关工程开发手册
 
 通用：1，与其他微服务调用请使用RestTempleteUtil工具类。
 
+API工程：
+    1，towardMicroServicePage方法，可以指定具体哪个微服务去调用哪个方法，然后将该方法返回的JSON数据转为map格式，返回给
+    后面指定的page。
 
