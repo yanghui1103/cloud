@@ -12,7 +12,9 @@ import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /*****
  * 通用的rest工具类
@@ -63,6 +65,11 @@ public class RestTemplateUtil {
         //获取parameter信息
         if(params == null) {
             params = request.getParameterMap();
+        }
+        Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
+        if(!ops.isPresent()){
+            List<String> sessions = (List<String>) params.get("sessionId");
+            requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
         }
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);

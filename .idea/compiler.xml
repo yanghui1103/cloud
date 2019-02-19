@@ -37,7 +37,7 @@
       <module name="bounty" options="-parameters" />
       <module name="cache" options="-parameters" />
       <module name="calls" options="-parameters" />
-      <module name="config" options="" />
+      <module name="config" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />
       <module name="flow2" options="-parameters" />
