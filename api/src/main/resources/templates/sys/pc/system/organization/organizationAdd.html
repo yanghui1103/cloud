@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="addOrg2();" style="width: 150px">保存</button>
+</div>
+
+<div style="margin:30px 0px;"></div>
+<form id="orgAddFm"  class="easyui-form" method="post"
+      data-options="novalidate:false">
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>组织编码</div>
+        <input class="easyui-textbox"  name="code" style="width: 80%;paddding-right:2px"
+               data-options="required:true,validType:['length[0,20]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>组织名称</div>
+        <input class="easyui-textbox" name="name" style="width: 80%;paddding-right:2px"
+               data-options="required:true,validType:['length[0,30]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>组织简称</div>
+        <input class="easyui-textbox" name="simpleName" style="width: 80%;paddding-right:2px"
+               data-options="required:true,validType:['length[0,20]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>类型</div>
+        <select class="easyui-combogrid"  name="type"  editable="false" style="width:80%"  data-options="limitToList:true,
+					panelWidth: 500,
+					idField: 'dict_value',
+					textField: 'dict_name',
+					url: ctx + 'getMicroServiceResult/v1/sys-proj/dict/getDictsByParentValue,dataAuth',
+					method: 'get',
+					columns: [[
+						{field:'dict_value',title:'值',width:50},
+						{field:'dict_name',title:'名称',width:140}
+					]],
+					fitColumns: true,
+					required:true
+				">
+        </select>
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>父组织</div>
+        <input class="easyui-textbox address-select"  style="width: 80%;paddding-right:2px"  editable=false
+               data-options="required:true">
+        <input type="hidden" name="parentId" >
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>地址薄显示与否</div>
+        <select class="easyui-combogrid"  name="isVisible"  editable="false" style="width:80%"  data-options="limitToList:true,
+					panelWidth: 500,
+					idField: 'dict_value',
+					textField: 'dict_name',
+					url: ctx + 'getMicroServiceResult/v1/sys-proj/dict/getDictsByParentValue,10',
+					method: 'get',
+					columns: [[
+						{field:'dict_value',title:'值',width:50},
+						{field:'dict_name',title:'名称',width:140}
+					]],
+					fitColumns: true,
+					required:true
+				">
+        </select>
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>法人/负责人</div>
+        <input class="easyui-textbox" name="adminer" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>联系电话</div>
+        <input class="easyui-textbox" name="phone" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>地址</div>
+        <input class="easyui-textbox" name="address" style="width: 80%;paddding-right:2px"
+               data-options="">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>邮编</div>
+        <input class="easyui-textbox" name="postCode" style="width: 80%;paddding-right:2px"
+               data-options="">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>组织简介</div>
+        <input class="easyui-textbox" name="summary" style="width: 80%;paddding-right:2px"
+               data-options="multiline:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>排序号</div>
+        <input class="easyui-numberbox" name="sortNumber" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+    </div>
+
+</form>
+
+<input type="hidden" th:value="${sessionId}" id="sessionId">
+<div id="_loadDialog_address"></div>
+<script type="text/javascript" th:src="@{/pc/js/system/address/addressPage.js}"></script>
+<script type="text/javascript">
+
+    $(function(){
+        $(".address-select").textbox({
+            icons: [{
+                iconCls:'icon-search',
+                handler: function(e){
+                    openAddress($("#_loadDialog_address"),$("input[name='parentId']"),$(".address-select"),"O",false);
+                }
+            }]
+        })
+    });
+
+    /**
+     * add org
+     */
+
+    function addOrg2(){
+        if (!$("#orgAddFm").form('enableValidation')
+            .form('validate')) {
+            return;
+        }
+        $.ajax({
+            type : 'POST',
+            url : ctx + "org/organization",
+            data : serializeFormToJSON($("#orgAddFm")
+                .serializeArray()),
+            beforeSend: function(request) {
+                request.setRequestHeader("sessionId", $("#sessionId").val());
+            },
+            success : function(data) {
+                promptMessage(data.res, data.msg );
+            },
+            dataType : "JSON"
+        });
+    }
+
+
+</script>
+</body>
+</html>

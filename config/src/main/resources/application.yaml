@@ -13,7 +13,7 @@ eureka:
 
 spring:
   application:
-    name: configServer
+    name: config-proj
   cloud:
     config:
       server:
