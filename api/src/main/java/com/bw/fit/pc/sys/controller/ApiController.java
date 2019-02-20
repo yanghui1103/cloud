@@ -31,6 +31,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 @Api("API网关工程通用接口")
 @Controller
 @EnableEurekaClient
@@ -149,7 +151,47 @@ public class ApiController {
             }
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
             map.add("sessionId", PubFun.getCurrentSessionId());
-            String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            Set<String> keySet = httpServletRequest.getParameterMap().keySet();
+            for (String key : keySet) {
+                String[] values = httpServletRequest.getParameterMap().get(key);
+                for(String value:values){
+                    map.add(key,value);
+                }
+            }
+            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            jsonObject = JSONObject.parseObject(string);
+        }else{
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
+        }
+        return jsonObject;
+    }
+
+
+    @ApiOperation(value = "远程调用微服务的接口，做修改操作" )
+    @GetMapping(value="updateMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @ResponseBody
+    public JSONObject updateMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
+                                            @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = mappingNames.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            Set<String> keySet = httpServletRequest.getParameterMap().keySet();
+            for (String key : keySet) {
+                String[] values = httpServletRequest.getParameterMap().get(key);
+                for(String value:values){
+                    map.add(key,value);
+                }
+            }
+            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
