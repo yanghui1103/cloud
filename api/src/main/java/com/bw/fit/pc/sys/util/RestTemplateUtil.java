@@ -6,15 +6,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /*****
  * 通用的rest工具类
@@ -25,22 +23,22 @@ public class RestTemplateUtil {
     @Resource
     private RestTemplate restTemplate;
 
-    public String post(ServletRequest req, String url, Map<String, ?> params) {
+    public String post(ServletRequest req, String url, MultiValueMap<String, ?> params) {
         ResponseEntity<String> rss = request(req, url, HttpMethod.POST, params);
         return rss.getBody();
     }
 
-    public String get(ServletRequest req, String url, Map<String, ?> params) {
+    public String get(ServletRequest req, String url, MultiValueMap<String, ?> params) {
         ResponseEntity<String> rss = request(req, url, HttpMethod.GET, params);
         return rss.getBody();
     }
 
-    public String delete(ServletRequest req, String url, Map<String, ?> params) {
+    public String delete(ServletRequest req, String url, MultiValueMap<String, ?> params) {
         ResponseEntity<String> rss = request(req, url, HttpMethod.DELETE, params);
         return rss.getBody();
     }
 
-    public String put(ServletRequest req, String url, Map<String, ?> params) {
+    public String put(ServletRequest req, String url, MultiValueMap<String, ?> params) {
         ResponseEntity<String> rss = request(req, url, HttpMethod.PUT, params);
         return rss.getBody();
     }
@@ -52,7 +50,7 @@ public class RestTemplateUtil {
      * @param params maybe null
      * @return
      */
-    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, Map<String, ?> params) {
+    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) {
         HttpServletRequest request = (HttpServletRequest) req;
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -64,7 +62,14 @@ public class RestTemplateUtil {
         }
         //获取parameter信息
         if(params == null) {
-            params = request.getParameterMap();
+//            params = request.getParameterMap();
+//            Set<String> keySet = request.getParameterMap().keySet();
+//            for (String key : keySet) {
+//                List<String> values = request.getParameterMap().get(key);
+//                for (String value : values) {
+//                    System.out.println(key + ": " + value);
+//                }
+//            }
         }
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){

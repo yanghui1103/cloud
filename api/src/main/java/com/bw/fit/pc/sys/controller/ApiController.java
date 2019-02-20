@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -106,9 +107,9 @@ public class ApiController {
 
 
     @ApiOperation(value = "远程调用微服务的接口，做删除操作" )
-    @GetMapping(value="deleteMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
+    @DeleteMapping(value="deleteMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
     @ResponseBody
-    public JSONObject addMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
+    public JSONObject deleteMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
                                               @PathVariable String params ,HttpServletRequest httpServletRequest  ){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = params.split(",");
@@ -121,6 +122,33 @@ public class ApiController {
                 }
             }
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            jsonObject = JSONObject.parseObject(string);
+        }else{
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
+        }
+        return jsonObject;
+    }
+
+
+    @ApiOperation(value = "远程调用微服务的接口，做增加操作" )
+    @GetMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @ResponseBody
+    public JSONObject addMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
+                                            @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = mappingNames.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+//            map = httpServletRequest.getParameterMap();
             map.add("sessionId", PubFun.getCurrentSessionId());
             String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
