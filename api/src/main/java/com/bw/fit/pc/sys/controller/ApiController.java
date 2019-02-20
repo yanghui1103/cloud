@@ -2,6 +2,7 @@ package com.bw.fit.pc.sys.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.RbackException;
 import com.bw.fit.pc.sys.service.CommonService;
@@ -74,6 +75,33 @@ public class ApiController {
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
         return jsonObject;
+    }
+
+
+    @ApiOperation(value = "远程调用微服务的接口,返回jsonarray" )
+    @GetMapping(value="getMicroServiceResult/v2/{serviceName}/{controllerName}/{params}")
+    @ResponseBody
+    public JSONArray getMicroServiceResultV2(@PathVariable String serviceName,@PathVariable String controllerName,
+                                              @PathVariable String params ,HttpServletRequest httpServletRequest  ){
+        JSONArray jsonArray = new JSONArray();
+        String[] paramArray = params.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.get(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            //String string = commonService.getOtherAppReturnString("http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            jsonArray = JSONArray.parseArray(string);
+            return jsonArray;
+        }else{
+            return null;
+        }
     }
 
     @ApiOperation("去往单元微服务系统所指定去往的页面，model[mapData]只支持微服务返回一个JSON对象")
