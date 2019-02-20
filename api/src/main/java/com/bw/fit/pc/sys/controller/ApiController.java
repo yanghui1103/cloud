@@ -104,6 +104,32 @@ public class ApiController {
         }
     }
 
+
+    @ApiOperation(value = "远程调用微服务的接口，做删除操作" )
+    @GetMapping(value="deleteMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
+    @ResponseBody
+    public JSONObject addMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
+                                              @PathVariable String params ,HttpServletRequest httpServletRequest  ){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = params.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            jsonObject = JSONObject.parseObject(string);
+        }else{
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
+        }
+        return jsonObject;
+    }
+
     @ApiOperation("去往单元微服务系统所指定去往的页面，model[mapData]只支持微服务返回一个JSON对象")
     @GetMapping("towardMicroServicePage/v1/{serviceName}/{urlString}/{pageString}")
     public String toward(HttpServletRequest request,@PathVariable String serviceName, @PathVariable(value = "urlString",required = true) String urlString,
