@@ -4,7 +4,7 @@
 function deleteDict(){	 
 	var row = getSingleTreeGridSelectData($("#dataDictTreeGd"));
 	if(row !=null){			
-		var url = ctx + "dict/dict/"+row.id ;
+		var url = ctx + "sys-proj/dict/dict/"+row.id ;
 		$.get(url,function(data){
 			if(data.canDel=="0"){
 				promptMessage("1","不允许删除本节点");		

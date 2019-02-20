@@ -23,7 +23,7 @@ public class DDictJsonTreeHandler {
 		  for (Iterator it = dataList.iterator(); it.hasNext();) {
 		   Map dataRecord = (Map) it.next();
 		   DataDict node = new DataDict();
-		   node.setId((String)dataRecord.get("fdid")); 
+		   node.setId((String)dataRecord.get("id"));
 		   node.setDict_value((String)dataRecord.get("dict_value")); 
 		   node.setDict_name((String)dataRecord.get("dict_name"));
 		   node.setNum((String)dataRecord.get("num"));
