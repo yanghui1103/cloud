@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -62,14 +63,13 @@ public class RestTemplateUtil {
         }
         //获取parameter信息
         if(params == null) {
-//            params = request.getParameterMap();
-//            Set<String> keySet = request.getParameterMap().keySet();
-//            for (String key : keySet) {
-//                List<String> values = request.getParameterMap().get(key);
-//                for (String value : values) {
-//                    System.out.println(key + ": " + value);
-//                }
-//            }
+            Set<String> keySet = request.getParameterMap().keySet();
+            for (String key : keySet) {
+                String[] values = request.getParameterMap().get(key);
+                for(String value:values){
+                    ((LinkedMultiValueMap)params).add(key,value);
+                }
+            }
         }
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){

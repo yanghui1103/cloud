@@ -148,7 +148,6 @@ public class ApiController {
                 }
             }
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-//            map = httpServletRequest.getParameterMap();
             map.add("sessionId", PubFun.getCurrentSessionId());
             String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
