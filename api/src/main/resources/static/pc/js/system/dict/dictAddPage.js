@@ -9,7 +9,7 @@ function addNewDict(){
 	}
 	$.ajax({
 		type : 'POST',
-		url : ctx + "dict/dict",
+		url : ctx + "addMicroServiceResult/v1/sys-proj/dict/dict",
 		data : serializeFormToJSON($("#dictAddFm")
 				.serializeArray()),
 		success : function(data) {

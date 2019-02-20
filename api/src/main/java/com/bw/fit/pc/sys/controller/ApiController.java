@@ -21,10 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -135,7 +132,7 @@ public class ApiController {
 
 
     @ApiOperation(value = "远程调用微服务的接口，做增加操作" )
-    @GetMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @PostMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
     @ResponseBody
     public JSONObject addMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
                                             @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
@@ -168,7 +165,7 @@ public class ApiController {
 
 
     @ApiOperation(value = "远程调用微服务的接口，做修改操作" )
-    @GetMapping(value="updateMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @PutMapping(value="updateMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
     @ResponseBody
     public JSONObject updateMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
                                             @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){

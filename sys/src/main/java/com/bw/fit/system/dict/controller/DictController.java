@@ -92,9 +92,9 @@ public class DictController extends BaseController {
 	
 	@RequestMapping(value="dict/{id}",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject get(@PathVariable String id){		
+	public String get(@PathVariable String id){
 		Dict dict = dictMapper.get(id);
-		return (JSONObject)JSONObject.toJSON(dict) ;
+		return JSONObject.toJSON(dict).toString() ;
 	}
 	
 
@@ -117,14 +117,13 @@ public class DictController extends BaseController {
 	/*****
 	 * 打开新增数据字典页
 	 * @param parentId
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping("openDictAddPage/{parentId}")
-	public String openDictAddPage(@PathVariable String parentId,Model model){
+	@ResponseBody
+	public String openDictAddPage(@PathVariable String parentId){
 		Dict dict = dictMapper.get(parentId);
-		model.addAttribute("parentDict", dict);		
-		return "system/dict/dictAddPage" ;
+		return JSONObject.toJSON(dict).toString() ;
 	}
 
 	/*****
