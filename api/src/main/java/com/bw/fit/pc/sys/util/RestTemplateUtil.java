@@ -63,6 +63,7 @@ public class RestTemplateUtil {
         }
         //获取parameter信息
         if(params == null) {
+            params = new LinkedMultiValueMap<>();
             Set<String> keySet = request.getParameterMap().keySet();
             for (String key : keySet) {
                 String[] values = request.getParameterMap().get(key);
