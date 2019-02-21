@@ -75,7 +75,11 @@ public class LoginController {
             JSONObject usJson = commonService.getAccount(sessionId);
             if("2".equals(usJson.get("res").toString())){
                 model.addAttribute("sessionId",sessionId);
+                commonService.expireKey("session:"+sessionId,1800);
                 return indexPage;
+            }else{
+                model.addAttribute("errorMsg", "无效会话");
+                return loginPage;
             }
         }
         if (result.hasErrors()) {
@@ -109,7 +113,7 @@ public class LoginController {
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account.getLogName(), JSONObject.class);
         accountJSON.put("sessionId",sessionId);
         JSONObject jj = commonService.setCacheValue("session:"+sessionId,accountJSON);
-        commonService.expireKey("session:"+sessionId,600);
+        commonService.expireKey("session:"+sessionId,1800);
         session.setAttribute("sessionId",sessionId);
         session.setAttribute("currentUser",accountJSON.toJSONString());
         model.addAttribute("sessionId",sessionId);
