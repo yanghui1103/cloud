@@ -1,8 +1,19 @@
                 API网关工程开发手册
 
 通用：1，与其他微服务调用请使用RestTempleteUtil工具类。
+     2，项目里注意，controller都是使用restController，因为除了网关服务，其他微服务都只是提供数据接口。
+
 
 API工程：
-    1，towardMicroServicePage方法，可以指定具体哪个微服务去调用哪个方法，然后将该方法返回的JSON数据转为map格式，返回给
+    1，去往指定路径的页面方式：
+        一）towardMicroServicePage方法，可以指定具体哪个微服务去调用哪个方法，然后将该方法返回的JSON数据转为map格式，返回给
     后面指定的page。
+        二）gotoIframePage去往指定的页面，但是不会调用微服务的任何接口，model里会返回sessionId和arg以备扩展使用。
+    2，调用微服务的增删改查四大接口解释：
+        一）getMicroServiceResult/v1是调用其他微服务的查询接口，返回的JSONObject格式字符串。
+           getMicroServiceResult/v2是调用其他微服务的查询接口，返回的JSONArray格式字符串；
+        二）deleteMicroServiceResult/v1调用微服务的删除接口。
+        三）addMicroServiceResult/v1调用其他微服务的新增接口，且formReqString参数需要利用common.js里transferFormToString可以帮助程序员
+        立即拼接完成。例如：新增数据字典方法为案例。
+        四）updateMicroServiceResult/v1调用其他微服务的编辑接口，具体例如：修改数据字典为案例。
 

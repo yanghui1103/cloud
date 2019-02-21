@@ -77,9 +77,6 @@ public class LoginController {
                 model.addAttribute("sessionId",sessionId);
                 commonService.expireKey("session:"+sessionId,1800);
                 return indexPage;
-            }else{
-                model.addAttribute("errorMsg", "无效会话");
-                return loginPage;
             }
         }
         if (result.hasErrors()) {
