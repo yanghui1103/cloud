@@ -133,14 +133,13 @@ public class DictController extends BaseController {
 	/*****
 	 * 打开update数据字典页
 	 * @param id
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping("openDictEditPage/{id}")
-	public String openDictEditPage(@PathVariable String id,Model model){
+	@ResponseBody
+	public String openDictEditPage(@PathVariable String id){
 		Dict dict = dictMapper.get(id);
-		model.addAttribute("dict", dict);		
-		return "system/dict/dictEditPage" ;
+		return JSONObject.toJSON(dict).toString() ;
 	}
 	
 	

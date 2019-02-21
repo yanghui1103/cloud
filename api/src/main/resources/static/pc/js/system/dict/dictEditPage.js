@@ -8,8 +8,8 @@ function updateDict(){
 		return;
 	}
 	$.ajax({
-		type : 'post',
-		url : ctx + "dict/dict",
+		type : 'put',
+		url : ctx + "updateMicroServiceResult/v1/sys-proj/dict/dict/"+transferFormToString($("#dicteditFm")),
 		data : serializeFormToJSON($("#dicteditFm")
 				.serializeArray()),
 		success : function(data) {

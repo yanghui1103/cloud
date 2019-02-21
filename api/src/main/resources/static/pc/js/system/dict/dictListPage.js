@@ -65,7 +65,7 @@ function editDictDlg(){
 				    closed: false,    
 				    cache: false,    
 				    maximizable:true,
-				    href: ctx+'towardMicroServicePage/v1/sys-proj/dict/openDictEditPage,'+row.id,
+				    href: ctx+'towardMicroServicePage/v1/sys-proj/dict,openDictEditPage,'+row.id+'/sys,pc,system,dict,dictEdit',
 				    modal: true   
 				}); 
 

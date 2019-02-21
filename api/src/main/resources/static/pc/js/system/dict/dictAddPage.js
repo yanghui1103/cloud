@@ -7,9 +7,6 @@ function addNewDict(){
 			.form('validate')) {
 		return;
 	}
-
-	console.log(transferFormToString($("#dictAddFm")));
-	debugger;
 	$.ajax({
 		type : 'POST',
 		url : ctx + "addMicroServiceResult/v1/sys-proj/dict/dict/"+transferFormToString($("#dictAddFm")),

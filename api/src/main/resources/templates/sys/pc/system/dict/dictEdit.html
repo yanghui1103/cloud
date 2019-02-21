@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="updateDict();" style="width: 150px">保存</button>
+</div>
+
+<div style="margin:30px 0px;"></div>
+<form id="dicteditFm"  class="easyui-form" method="post"
+      data-options="novalidate:false">
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>名称</div>
+        <input class="easyui-textbox" name="dictName" style="width: 80%;paddding-right:2px"   th:value="${mapData.dictName }"
+               data-options="required:true,validType:['length[0,20]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>编码</div>
+        <input class="easyui-textbox" name="dictValue" style="width: 80%;paddding-right:2px"    th:value="${mapData.dictValue }"
+               data-options="required:true,validType:['length[0,20]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>排序号</div>
+        <input class="easyui-numberbox" name="sortNumber" style="width: 80%;paddding-right:2px"    th:value="${mapData.sortNumber }"
+               data-options="required:true,validType:['length[0,3]']">
+    </div>
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>可增加</div>
+        <select class="easyui-combobox" name="canAdd"   editable=false labelPosition="top" style="width:80%;">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>可修改</div>
+        <select class="easyui-combobox" name="canEdit"   editable=false labelPosition="top" style="width:80%;">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>可删除</div>
+        <select class="easyui-combobox" name="canDel"   editable=false labelPosition="top" style="width:80%;">
+            <option value="0">否</option>
+            <option value="1">是</option>
+        </select>
+    </div>
+    <input type="hidden" name="id" th:value="${mapData.id }" >
+    <input type="hidden" id="canAdd" th:value="${mapData.canAdd }" >
+    <input type="hidden" id="canEdit" th:value="${mapData.canEdit }" >
+    <input type="hidden" id="canDel" th:value="${mapData.canDel }" >
+    <input type="hidden" name="_method" value="put" >
+</form>
+<script type="text/javascript" th:src="@{/pc/js/system/dict/dictEditPage.js}"></script>
+<script type="text/javascript">
+
+    $(function(){
+        $("select[name='canAdd']").val($("#canAdd").val());
+        $("select[name='canEdit']").val($("#canEdit").val());
+        $("select[name='canDel']").val($("#canDel").val());
+    });
+</script>
+</body>
+</html>
