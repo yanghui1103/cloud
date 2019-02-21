@@ -3,9 +3,11 @@ package com.bw.fit.system.dict.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import cn.hutool.core.util.StrUtil;
+import com.bw.fit.system.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,8 @@ public class DictController extends BaseController {
 	private DictMapper dictMapper;
 	@Autowired
 	private DictService dictService;
+	@Autowired
+	private CommonService commonService;
 	
 	/*****
 	 * 根据值获取数据字典名称
@@ -143,9 +147,10 @@ public class DictController extends BaseController {
 
 	@RequestMapping(value="dict",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject insert(@Valid @ModelAttribute Dict dict){
+	public JSONObject insert(@Valid @ModelAttribute Dict dict, HttpServletRequest request){
 		JSONObject json = new JSONObject();
 		try {
+			commonService.fillCommonProptities(dict,request,true);
 			json = dictService.createDict(dict);
 		} catch (RbackException e) { 
 			json = new JSONObject();
@@ -160,9 +165,10 @@ public class DictController extends BaseController {
 
 	@RequestMapping(value="dict",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject update(@ModelAttribute Dict dict){
+	public JSONObject update(@ModelAttribute Dict dict,HttpServletRequest request){
 		JSONObject json = new JSONObject();
 		try {
+			commonService.fillCommonProptities(dict,request,false);
 			json = dictService.updateDict(dict);
 		} catch (RbackException e) { 
 			json = new JSONObject();

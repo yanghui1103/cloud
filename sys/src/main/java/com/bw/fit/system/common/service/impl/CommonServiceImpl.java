@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * @Description
@@ -35,7 +36,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public JSONObject getCurrentAccount(HttpServletRequest request) {
         JSONObject accountJSON = new JSONObject();
-        String sessionId = request.getParameter("sessionId");
+        String sessionId = request.getHeader("sessionId");
         if(StrUtil.isNotEmpty(sessionId)){
             String s = getCacheValue("session:"+sessionId);
             if(StrUtil.isNotEmpty(s)){
@@ -59,12 +60,11 @@ public class CommonServiceImpl implements CommonService {
             if(isFillFdid){
                 baseModel.setId(PubFun.getUUID());
             }
-            Account account = JSONObject.toJavaObject(accountJson,Account.class);
-            baseModel.setCreator(account.getId());
-            baseModel.setCreatorName(account.getName());
-            baseModel.setCreateOrgId(account.getCurrentOrgId());
+            baseModel.setCreator(accountJson.getString("id"));
+            baseModel.setCreatorName(accountJson.getString("name"));
+            baseModel.setCreateOrgId(accountJson.getString("currentOrgId"));
             baseModel.setCreateTime(PubFun.getSysDate());
-            baseModel.setHaveOrgListAuth(account.getHaveOrgListAuth());
+            baseModel.setHaveOrgListAuth(Arrays.asList(accountJson.getString("authCodes").split(",")));
         }
     }
 

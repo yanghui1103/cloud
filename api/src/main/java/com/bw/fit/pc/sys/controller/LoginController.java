@@ -109,7 +109,7 @@ public class LoginController {
         JSONObject accountJSON =  restTemplate.getForObject("http://sys-proj/account/account/"+account.getLogName(), JSONObject.class);
         accountJSON.put("sessionId",sessionId);
         JSONObject jj = commonService.setCacheValue("session:"+sessionId,accountJSON);
-        commonService.expireKey("session:"+sessionId,30);
+        commonService.expireKey("session:"+sessionId,600);
         session.setAttribute("sessionId",sessionId);
         session.setAttribute("currentUser",accountJSON.toJSONString());
         model.addAttribute("sessionId",sessionId);

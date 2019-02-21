@@ -132,10 +132,10 @@ public class ApiController {
 
 
     @ApiOperation(value = "远程调用微服务的接口，做增加操作" )
-    @PostMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @PostMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}/{formReqString}")
     @ResponseBody
     public JSONObject addMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
-                                            @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
+                                            @PathVariable String mappingNames,@PathVariable String formReqString ,HttpServletRequest httpServletRequest  ){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = mappingNames.split(",");
         StringBuffer stringBuffer = new StringBuffer();
@@ -155,7 +155,7 @@ public class ApiController {
                     map.add(key,value);
                 }
             }
-            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
@@ -165,10 +165,10 @@ public class ApiController {
 
 
     @ApiOperation(value = "远程调用微服务的接口，做修改操作" )
-    @PutMapping(value="updateMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @PutMapping(value="updateMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}/{formReqString}")
     @ResponseBody
     public JSONObject updateMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
-                                            @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
+                                            @PathVariable String mappingNames ,@PathVariable String formReqString ,HttpServletRequest httpServletRequest  ){
         JSONObject jsonObject = new JSONObject();
         String[] paramArray = mappingNames.split(",");
         StringBuffer stringBuffer = new StringBuffer();
@@ -188,7 +188,7 @@ public class ApiController {
                     map.add(key,value);
                 }
             }
-            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
