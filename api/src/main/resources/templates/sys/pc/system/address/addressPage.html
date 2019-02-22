@@ -15,7 +15,8 @@
         <div class="zTreeDemoBackground left">
             <ul id="addrOrgTree" class="ztree"></ul>
         </div>
-        <input type="text" th:value="${mapData. }"  id="addr_org_id">
+
+        <input type="hidden"  th:value="${session.currentUserMap['currentOrgId']}" id="addr_org_id">
     </div>
     <div class="content" style="height:100%">
         <div align="center" style="height:60px;padding-top: 10px">
@@ -69,5 +70,6 @@
 <script type="text/javascript" th:src="@{/pc/js/system/address/organizationListPage.js}"></script>
 <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.core.js}"></script>
 <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.excheck.js}"></script>
+
 </body>
 </html>

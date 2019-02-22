@@ -113,6 +113,7 @@ public class LoginController {
         commonService.expireKey("session:"+sessionId,1800);
         session.setAttribute("sessionId",sessionId);
         session.setAttribute("currentUser",accountJSON.toJSONString());
+        session.setAttribute("currentUserMap",JSONObject.toJavaObject(accountJSON, Map.class));
         model.addAttribute("sessionId",sessionId);
         logger.info(sessionId);
         logger.info(accountJSON.toJSONString());
