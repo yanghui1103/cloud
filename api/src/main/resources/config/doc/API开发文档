@@ -16,4 +16,7 @@ API工程：
         三）addMicroServiceResult/v1调用其他微服务的新增接口，且formReqString参数需要利用common.js里transferFormToString可以帮助程序员
         立即拼接完成。例如：新增数据字典方法为案例。
         四）updateMicroServiceResult/v1调用其他微服务的编辑接口，具体例如：修改数据字典为案例。
+    3，API工程里如果页面或者后端调用sessio里的当前账户信息currentUser信息；
+        一）可以直接调用会话里的currentUser，这个里的数据是Json格式。
+        二）可以调用会话里的currentUserMap，这个是Map格式的。
 
