@@ -46,8 +46,8 @@ public class AddressController {
 								  @PathVariable boolean p, @PathVariable boolean a,
 								  @PathVariable(value="ids",required=false) String ids,
 								  @PathVariable boolean isMultiple, HttpServletRequest request){
-		Account account = JSONObject.toJavaObject(commonService.getCurrentAccount(request),Account.class);
-		String orgId = account.getCurrentOrgId();
+		JSONObject accountJson = commonService.getCurrentAccount(request) ;
+		String orgId = accountJson.get("currentOrgId").toString() ;
 		//待选列表
 		model.addAttribute("selectList", addressService.getSelectAddr(o, p, a, orgId,false));
 		//已选列表
