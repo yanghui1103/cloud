@@ -3,20 +3,6 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
-    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
-    <link th:href="@{/pc/cloud/v1/static/lightblue/fonts/demo.css}" rel="stylesheet">
-    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
-    <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}" rel="stylesheet">
-    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
-    <link rel="stylesheet" th:href="@{/pc/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
-    <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.core.js}"></script>
-    <script type="text/javascript" src="@{/pc/js/system/address/organizationListPage.js}"></script>
 </head>
 <body>
 <div class="container" style="height: 99%">
@@ -29,7 +15,7 @@
         <div class="zTreeDemoBackground left">
             <ul id="addrOrgTree" class="ztree"></ul>
         </div>
-        <input type="hidden" value="${sessionScope.CurrentUser.currentOrgId}" id="addr_org_id">
+        <input type="text" th:value="${mapData. }"  id="addr_org_id">
     </div>
     <div class="content" style="height:100%">
         <div align="center" style="height:60px;padding-top: 10px">
@@ -37,15 +23,9 @@
             <input type="text" name="keyWords" id="keyWords" value="" class="empty" />
             <input type="button" onclick="changeConstraintTerm('-9')" value="查找" />
             <br>
-            <c:if test="${ifshow_org }">
-                <input onclick="checkboxClick()" id="select_org" type="checkbox" checked="checked"><label for="select_org" class="kv-label">组织</label>
-            </c:if>
-            <c:if test="${ifshow_position }">
-                <input onclick="checkboxClick()" id="select_position" type="checkbox" checked="checked"><label for="select_position" class="kv-label">岗位</label>
-            </c:if>
-            <c:if test="${ifshow_account }">
-                <input onclick="checkboxClick()" id="select_account" type="checkbox" checked="checked"><label for="select_account" class="kv-label">账户</label>
-            </c:if>
+            <span th:if="${mapData.ifshow_org }"><input onclick="checkboxClick()" id="select_org" type="checkbox" checked="checked"><label for="select_org" class="kv-label">组织</label></span>
+            <span th:if="${mapData.ifshow_position }"><input onclick="checkboxClick()" id="select_position" type="checkbox" checked="checked"><label for="select_position" class="kv-label">岗位</label></span>
+            <span th:if="${mapData.ifshow_account }"><input  onclick="checkboxClick()" id="select_account" type="checkbox" checked="checked"><label for="select_account" class="kv-label">账户</label></span>
         </div>
         <form name="myform" style="height:80%;">
             <table width="100%" height="100%" border="1" rules="all">
@@ -56,23 +36,19 @@
                 </tr>
                 <tr>
                     <td>
-                        <select id="dxlb_select" style="WIDTH:100%;height: 100%" ${isMultiple } name="list1" size="12" onclick="showDetail(this)" ondblclick="moveOption(document.myform.list1, document.myform.list2)">
-                            <c:forEach items="${selectList }" var="sm">
-                                <option value="${sm.value }" data-val="${sm.tmp }" >${sm.text }</option>
-                            </c:forEach>
+                        <select id="dxlb_select" style="WIDTH:100%;height: 100%" th:multiple="${mapData.isMultiple}" name="list1" size="12" onclick="showDetail(this)" ondblclick="moveOption(document.myform.list1, document.myform.list2)">
+                            <option th:if="${!#lists.isEmpty(mapData.selectList)}" th:each="sm : ${mapData.selectList}" th:value="${sm.value}" th:data-val="${sm.tmp }" th:text="${sm.text}"></option>
                         </select>
                     </td>
                     <td>
-                        <input style="margin-left: 5px" type="button" value="添加" onclick="moveOption(document.myform.list1, document.myform.list2)">
+                        <input style="margin-left: 5px" type="button" value="添加"  onclick="moveOption(document.myform.list1, document.myform.list2)">
                         <br/>
                         <br/>
                         <input style="margin-left: 5px" type="button" value="删除" onclick="moveOption(document.myform.list2, document.myform.list1)">
                     </td>
                     <td >
-                        <select style="WIDTH:100%;height: 100%" name="list2" size="12" ${isMultiple } onclick="showDetail(this)" ondblclick="moveOption(document.myform.list2, document.myform.list1)">
-                            <c:forEach items="${selectedList }" var="sdm">
-                                <option value="${sdm.value }" data-val="${sdm.tmp }" >${sdm.text }</option>
-                            </c:forEach>
+                        <select style="WIDTH:100%;height: 100%" name="list2" size="12" th:multiple="${mapData.isMultiple}" onclick="showDetail(this)" ondblclick="moveOption(document.myform.list2, document.myform.list1)">
+                            <option th:if="${!#lists.isEmpty(mapData.selectedList)}" th:each="sdm : ${mapData.selectedList}" th:value="${sdm.value}" th:data-val="${sdm.tmp }" th:text="${sdm.text}"></option>
                         </select>
                     </td>
                 </tr>
@@ -90,6 +66,7 @@
 
 <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/pc/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+<script type="text/javascript" th:src="@{/pc/js/system/address/organizationListPage.js}"></script>
 <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.core.js}"></script>
 <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.excheck.js}"></script>
 </body>

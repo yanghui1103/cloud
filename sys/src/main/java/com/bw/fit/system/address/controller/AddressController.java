@@ -4,7 +4,11 @@ import static com.bw.fit.system.common.util.PubFun.returnSuccessJson;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.bw.fit.system.address.model.Address;
 import com.bw.fit.system.common.service.CommonService;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,6 @@ public class AddressController {
 	
 	/***
 	 * 打开地址本页面
-	 * @param model
 	 * @param o 是否查询组织
 	 * @param p 是否查询岗位
 	 * @param a 是否查询账户
@@ -42,25 +45,30 @@ public class AddressController {
 	 */
 	@RequestMapping("openAddressPage/{o}/{p}/{a}/{ids}/{isMultiple}")
 	@ResponseBody
-	public String openAddressPage(Model model, @PathVariable boolean o,
+	public String openAddressPage(@PathVariable boolean o,
 								  @PathVariable boolean p, @PathVariable boolean a,
 								  @PathVariable(value="ids",required=false) String ids,
 								  @PathVariable boolean isMultiple, HttpServletRequest request){
 		JSONObject accountJson = commonService.getCurrentAccount(request) ;
 		String orgId = accountJson.get("currentOrgId").toString() ;
+		Map<String,Object> map = new HashMap<>();
 		//待选列表
-		model.addAttribute("selectList", addressService.getSelectAddr(o, p, a, orgId,false));
+		map.put("selectList", addressService.getSelectAddr(o, p, a, orgId,false));
 		//已选列表
 		if(!"-9".equals(ids)) {
-			model.addAttribute("selectedList", addressService.getSelectedAddr(ids));
+			map.put("selectedList", addressService.getSelectedAddr(ids));
+		}else{
+			map.put("selectedList", new ArrayList<Address>());
 		}
-		model.addAttribute("ifshow_org", o);
-		model.addAttribute("ifshow_position", p);
-		model.addAttribute("ifshow_account", a);
+		map.put("ifshow_org", o);
+		map.put("ifshow_position", p);
+		map.put("ifshow_account", a);
 		if(isMultiple) {
-			model.addAttribute("isMultiple", "multiple");
+			map.put("isMultiple", true);
+		}else{
+			map.put("isMultiple", false);
 		}
-		return "system/address/addressPage" ;
+		return JSONObject.toJSON(map).toString() ;
 	}
 	
 	/*****
@@ -69,7 +77,7 @@ public class AddressController {
 	 */
 	@RequestMapping(value="address/{keyWords}/{o}/{p}/{a}/{type}",method=RequestMethod.GET,produces="application/json;charset=UTF8")
 	@ResponseBody
-	public JSONObject get(@PathVariable String keyWords,@PathVariable boolean o,@PathVariable boolean p,@PathVariable boolean a,@PathVariable boolean type){
+	public String get(@PathVariable String keyWords,@PathVariable boolean o,@PathVariable boolean p,@PathVariable boolean a,@PathVariable boolean type){
 		JSONObject json = new JSONObject();
 		try {
 			keyWords = (URLDecoder.decode(keyWords, "UTF-8"));
@@ -82,17 +90,17 @@ public class AddressController {
 		json.put("addressList",JSONObject
 				.toJSON(addressService
 						.getSelectAddr(o, p, a, keyWords,type)));
-		return json ;
+		return json.toString() ;
 	}
 	
 	@RequestMapping(value="addressDetail/{id}",method=RequestMethod.GET,produces="application/json;charset=UTF8")
 	@ResponseBody
-	public JSONObject addressDetail(@PathVariable String id){
+	public String addressDetail(@PathVariable String id){
 		JSONObject json  = new JSONObject();
 		if(id!=null&&id.indexOf("_")!=-1) {
 			json.put("detali",addressService.getDetali(id.split("_")[0], id.split("_")[1]));
 		}
 		returnSuccessJson(json);
-		return json;
+		return json.toString();
 	}
 }

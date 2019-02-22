@@ -109,12 +109,12 @@ function checkboxClick(){
  * @returns
  */
 function showDetail(e1){
-	for(var i=0;i<e1.options.length;i++){ 
- 	   if(e1.options[i].selected){ 
- 		   var id = e1.options[i].value;
+	for(var i=0;i<e1.options.length;i++){
+ 	   if(e1.options[i].selected){
+		   var id = e1.options[i].getAttribute("data-val");
  		  $.ajax({
  				type : 'GET',
- 				url : ctx + "address/addressDetail/"+id,
+ 				url : ctx + "getMicroServiceResult/v1/sys-proj/address/addressDetail,"+id,
  				data : {},
  				success : function(data) {
  					if(data.res=="2"){
@@ -164,16 +164,16 @@ function changeConstraintTerm(keyWords){
 	}
 	$.ajax({
 		type : 'GET',
-		url : ctx + "address/address/"+encodeURI(encodeURI(keyWords))+"/"+isOrg+"/"+isPosition+"/"+isAccount+"/"+isFind,
+		url : ctx + "getMicroServiceResult/v1/sys-proj/address/address,"+encodeURI(encodeURI(keyWords))+","+isOrg+","+isPosition+","+isAccount+","+isFind,
 		data : {},
 		success : function(data) {
 			if(data.res=="2"){
 				//console.info(data.addressMap);
 				$("#dxlb_select").empty();
-				$.each(data.addressMap, function(key,values){     
-					var option = "<option value='"+key+"'>"+values+"</option>"
+				$(data.addressList).each(function(index,item){
+					var option = "<option value='"+item.value+"' data-val='"+item.tmp+"'>"+item.text+"</option>"
 					$("#dxlb_select").append(option);
-				 });
+				});
 			}else{
 				promptMessage(data.res,data.msg) ;
 			}
