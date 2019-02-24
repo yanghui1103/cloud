@@ -18,8 +18,10 @@ spring:
   application:
     name: api-proj
 
-
 zuul:
+  SendErrorFilter:
+    post:
+      disable: true
   routes:
     api-sys:
       path: /api-sys/**
