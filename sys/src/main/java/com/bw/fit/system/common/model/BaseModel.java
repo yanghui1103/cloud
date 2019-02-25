@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class BaseModel{
 
-	public String tenantId;
+	public String tenant;
 	public String id ;
 	public String code;
 	public String parentId;
@@ -77,11 +77,11 @@ public class BaseModel{
 	}
 
 	public String getTenantId() {
-		return tenantId;
+		return tenant;
 	}
 
 	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
+		this.tenant = tenantId;
 	}
 
 	public String getId() {

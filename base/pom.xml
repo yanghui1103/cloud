@@ -9,6 +9,7 @@
     <name>base</name>
     <description>Demo project for Spring Boot</description>
 
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -131,6 +132,12 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>4.2.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.mail/mailapi -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>mailapi</artifactId>
+            <version>1.6.3</version>
         </dependency>
 
 
