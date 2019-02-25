@@ -1,6 +1,7 @@
 package com.bw.fit.system.address.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bw.fit.system.address.entity.VAddress;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,23 +10,21 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AddressMapper {
 	/***
 	 * 根据underOrgId和addressType获取地址
-	 * @param addressType类型
-	 * @param underOrgId组织id
+	 * @param map 入参，addressType类型 underOrgId所属组织id
 	 * @return
 	 */
-	public List<VAddress> getAddressByOrgId(String addressType,String underOrgId);
+	public List<VAddress> getAddressByOrgId(Map<String,String> map);
 	
 	/***
 	 * 根据underOrgId和key获取地址
-	 * @param addressType类型
-	 * @param keyWords关键词
+	 * @param map 入参，addressType类型 keyWord关键词
 	 * @return
 	 */
-	public List<VAddress> getAddressByKey(String addressType,String keyWords);
+	public List<VAddress> getAddressByKey(Map<String,String> map);
 	
 	/***
 	 * 根据id获取地址
-	 * @param id
+	 * @param addr
 	 * @return
 	 */
 	public VAddress get (VAddress addr);

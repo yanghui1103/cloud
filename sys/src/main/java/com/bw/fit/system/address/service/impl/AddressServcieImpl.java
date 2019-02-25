@@ -1,7 +1,9 @@
 package com.bw.fit.system.address.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,13 +73,55 @@ public class AddressServcieImpl implements AddressService{
 		List<VAddress> accountList = new ArrayList<>();
 		
 		if(type) {
-			orgList = o? addressMapper.getAddressByKey("organization", keyWords):null;
-			positionList = p? addressMapper.getAddressByKey("position", keyWords):null;
-			accountList = a? addressMapper.getAddressByKey("account", keyWords):null;
+			if(o){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","organization");
+				map.put("keyWords",keyWords);
+				orgList = addressMapper.getAddressByKey(map);
+			}else{
+				orgList = null;
+			}
+			if(p){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","position");
+				map.put("keyWords",keyWords);
+				positionList = addressMapper.getAddressByKey(map);
+			}else{
+				positionList = null;
+			}
+			if(a){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","account");
+				map.put("keyWords",keyWords);
+				accountList = addressMapper.getAddressByKey(map);
+			}else{
+				accountList = null;
+			}
 		}else {
-			orgList = o? addressMapper.getAddressByOrgId("organization", keyWords):null;
-			positionList = p? addressMapper.getAddressByOrgId("position", keyWords):null;
-			accountList = a? addressMapper.getAddressByOrgId("account", keyWords):null;
+			if(o){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","organization");
+				map.put("underOrgId",keyWords);
+				orgList = addressMapper.getAddressByOrgId(map);
+			}else{
+				orgList = null;
+			}
+			if(p){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","position");
+				map.put("underOrgId",keyWords);
+				positionList = addressMapper.getAddressByOrgId(map);
+			}else{
+				positionList = null;
+			}
+			if(a){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("addressType","account");
+				map.put("underOrgId",keyWords);
+				accountList = addressMapper.getAddressByOrgId(map);
+			}else{
+				accountList = null;
+			}
 		}
 		
 		if(orgList!=null&&orgList.size()>0) {
