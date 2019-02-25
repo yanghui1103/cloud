@@ -19,7 +19,7 @@ function printOrgDetailInfo(org){
 
 
 function addOrgPage(){
-	$('#_loadDialog_orgList').dialog({    
+	$('#_loadDialog_orgList').dialog({
 	    title: '新增组织',    
 	    width: '98%',
 	    height: 500,    
@@ -31,22 +31,26 @@ function addOrgPage(){
 	}); 
 }
 
-function removeOrg(){
+function fRemoveOrganazition2() {
+	debugger;
+    deleteOrg();
+}
+function fRemoveOrganazition(){
 	var id = ($("#id").val());
 	if(id!='' && id!='undefined'){
 		promptMessageCallBack("3","是否确认删除该组织?",function(){
-			$.ajax({
-				type : 'DELETE',
-				url : ctx + "org/organization/"+id,
-				data : {},
-				beforeSend: function(request) {
-					request.setRequestHeader("sessionId",  $("#sessionId").val() );
-				},
-				success : function(data) {
-					promptMessage(data.res, data.msg );
-				},
-				dataType : "JSON"
-			});
+            $.ajax({
+                type : 'DELETE',
+                url : ctx + "deleteMicroServiceResult/v1/sys-proj/org/organization,"+id,
+                data : {},
+                beforeSend: function(request) {
+                    request.setRequestHeader("sessionId", $("#sessionId").val());
+                },
+                success : function(data) {
+                    promptMessage(data.res, data.msg );
+                },
+                dataType : "JSON"
+            });
 		})
 	}
 }

@@ -87,8 +87,7 @@
             <input type="hidden" th:value="${sessionId}" id="sessionId">
             <a href="javascript:addOrgPage();" class="easyui-linkbutton" iconCls="icon-add"
                data-options="selected:true">新增</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit">编辑(未做)</a>
-            <a href="javascript:removeOrg();" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
+            <a href="javascript:fRemoveOrganazition();" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
         </div>
     </div>
 </div>
@@ -114,11 +113,15 @@
     function resizeTabs() {
         var $body = $('body'),
             $window = $(window);
-
         if ($window.height() > $body.height()) {
-
             $('.panel-body').height($window.height() - 44);
-
         }
+    }
+
+    function deleteOrg(){
+
+        var id = $("#id").val();
+
+
     }
 </script>

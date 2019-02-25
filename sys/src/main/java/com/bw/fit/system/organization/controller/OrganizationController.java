@@ -1,12 +1,16 @@
 package com.bw.fit.system.organization.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.system.common.service.CommonService;
+import com.bw.fit.system.common.util.PubFun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -80,6 +84,16 @@ public class OrganizationController extends BaseController {
 	public JSONObject delete(@PathVariable String id){
 		JSONObject json = new JSONObject();
 		try {
+			List<Organization> orgs = organizationService.getChildrenAndCurt(id);
+			if(CollectionUtil.isNotEmpty(orgs) && orgs.size()>1){ // 因为orgs里包含当前id这个组织
+				/***如果有子孙组织***/
+				Optional<Organization> forgs = orgs.parallelStream().filter(x->x.getIsDeleted().equals("0")).findAny();
+				if(forgs.isPresent()){
+					json = new JSONObject();
+					PubFun.returnFailJson(json,"尚存在有效的子组织，故不得删除此组织");
+					return json;
+				}
+			}
 			json = organizationService.delete(id);
 		} catch (RbackException e) {
 			e.printStackTrace();
