@@ -1,0 +1,20 @@
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    instance-id: commonApp
+    prefer-ip-address: true
+
+
+spring:
+  application:
+    name: common-proj
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-proj
+      profile: dev

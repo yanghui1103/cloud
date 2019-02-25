@@ -13,7 +13,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/innerzuul/pom.xml" />
         <option value="$PROJECT_DIR$/sys/pom.xml" />
-        <option value="$PROJECT_DIR$/base/pom.xml" />
         <option value="$PROJECT_DIR$/link/pom.xml" />
         <option value="$PROJECT_DIR$/log/pom.xml" />
         <option value="$PROJECT_DIR$/report/pom.xml" />
@@ -26,6 +25,7 @@
         <option value="$PROJECT_DIR$/flow2/pom.xml" />
         <option value="$PROJECT_DIR$/calls/pom.xml" />
         <option value="$PROJECT_DIR$/config/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
       </list>
     </option>
   </component>
