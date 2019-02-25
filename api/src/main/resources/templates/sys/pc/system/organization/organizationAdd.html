@@ -17,7 +17,7 @@
 <body>
 <div style="float: right;margin-right:30px;margin-top:5px" >
     <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
-            onclick="addOrg2();" style="width: 150px">保存</button>
+            onclick="createOrg();" style="width: 150px">保存</button>
 </div>
 
 <div style="margin:30px 0px;"></div>
@@ -82,8 +82,9 @@
 
     <div style="margin-bottom: 20px;margin-left: 90px">
         <div>法人/负责人</div>
-        <input class="easyui-textbox" name="adminer" style="width: 80%;paddding-right:2px"
+        <input class="easyui-textbox address-select-account"  style="width: 80%;paddding-right:2px"  editable=false
                data-options="required:true">
+        <input type="hidden" name="adminer" >
     </div>
 
     <div style="margin-bottom: 20px;margin-left: 90px">
@@ -131,21 +132,29 @@
                     openAddress($("#_loadDialog_address"),$("input[name='parentId']"),$(".address-select"),"O",false);
                 }
             }]
-        })
+        });
+        $(".address-select-account").textbox({
+            icons: [{
+                iconCls:'icon-search',
+                handler: function(e){
+                    openAddress($("#_loadDialog_address"),$("input[name='adminer']"),$(".address-select-account"),"A",false);
+                }
+            }]
+        });
     });
 
     /**
      * add org
      */
 
-    function addOrg2(){
+    function createOrg(){
         if (!$("#orgAddFm").form('enableValidation')
             .form('validate')) {
             return;
         }
         $.ajax({
             type : 'POST',
-            url : ctx + "org/organization",
+            url : ctx + "addMicroServiceResult/v1/sys-proj/org/organization/"+transferFormToString($("#orgAddFm")),
             data : serializeFormToJSON($("#orgAddFm")
                 .serializeArray()),
             beforeSend: function(request) {

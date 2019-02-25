@@ -3,8 +3,10 @@ package com.bw.fit.system.organization.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.bw.fit.system.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,8 @@ public class OrganizationController extends BaseController {
 	private OrganizationService organizationService;
 	@Resource
 	private OrganizationMapper organizationMapper;
+	@Autowired
+	private CommonService commonService;
 	/******
 	 * 增加组织
 	 * @param org
@@ -45,16 +49,16 @@ public class OrganizationController extends BaseController {
 	 */
 	@RequestMapping(value="organization",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject add(@Valid @ModelAttribute Organization org,BindingResult result){
+	public JSONObject add(@Valid @ModelAttribute Organization org, BindingResult result, HttpServletRequest httpServletRequest){
 		JSONObject json = new JSONObject();
 		if (result.hasErrors()) {
-			FieldError error = result.getFieldError();
+			FieldError error = result.getFieldError()                                                                                                                                                    ;
 			json.put("res", "1");
 			returnFailJson(json, error.getDefaultMessage());
 			return json ;
 		}
 		try {
-			//PubFun.fillCommonProptities(org, true,session);
+			commonService.fillCommonProptities(org,httpServletRequest,true);
 			org.setId(getUUID());
 			json = organizationService.add(org);
 		} catch (RbackException e) {
