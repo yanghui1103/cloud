@@ -51,7 +51,7 @@ public class InnerMsgSender {
      * @return
      */
     public TInform get(String id) {
-        return null;
+        return informMapper.get(id);
     }
 
     /*****
@@ -60,6 +60,6 @@ public class InnerMsgSender {
      * @return
      */
     public List<TInform> select(String accountId) {
-        return null;
+        return informMapper.selectByAccount(accountId);
     }
 }
