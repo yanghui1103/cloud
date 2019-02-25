@@ -20,13 +20,13 @@ function moveOption(e1, e2){
 	       			   }
 	       		   }
 	       		   if(flag){
-	       			   e2.options.add(new Option(e.text, e.value)); 
+	       			   e2.options.add(e);
 	       		   }
 	       		   e1.remove(i);
     		  }else{
 				  e2.options.length=0; 
 				  var e = e1.options[i];
-				  e2.options.add(new Option(e.text, e.value));
+				  e2.options.add(e);
 				  e1.remove(i);
     		  }
 	       } 
