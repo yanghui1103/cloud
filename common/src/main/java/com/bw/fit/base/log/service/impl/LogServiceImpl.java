@@ -11,6 +11,7 @@ import com.bw.fit.base.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 
@@ -30,7 +31,7 @@ public class LogServiceImpl implements LogService {
     @Resource
     private LogMapper logMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class,RbackException.class})
     @Override
     public JSONObject log(Log log)  throws RbackException {
         JSONObject jsonObject = new JSONObject();
