@@ -1,5 +1,6 @@
 package com.bw.fit.base.log.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.log.model.Log;
@@ -19,4 +20,10 @@ public interface LogService {
      * @return
      */
     JSONObject log(Log log) throws RbackException;
+
+    /*****
+     * 所有的日志记录
+     * @return
+     */
+    JSONArray all(Log log);
 }

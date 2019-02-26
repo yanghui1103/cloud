@@ -1,5 +1,6 @@
 package com.bw.fit.base.log.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.common.service.CommonService;
@@ -9,12 +10,14 @@ import com.bw.fit.base.log.entity.TLog;
 import com.bw.fit.base.log.mapper.LogMapper;
 import com.bw.fit.base.log.model.Log;
 import com.bw.fit.base.log.service.LogService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description
@@ -47,5 +50,14 @@ public class LogServiceImpl implements LogService {
         }
         PubFun.returnSuccessJson(jsonObject);
         return jsonObject;
+    }
+
+    @Override
+    public JSONArray all(Log log) {
+        PageHelper.startPage(log.getPage(),log.getRows());
+        TLog tLog = new TLog();
+        PubFun.copyProperties(tLog,log);
+        List<TLog> tLogs = logMapper.selectAll(tLog);
+        return (JSONArray)JSONArray.toJSON(tLogs);
     }
 }

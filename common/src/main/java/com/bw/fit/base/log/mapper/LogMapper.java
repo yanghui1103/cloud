@@ -3,6 +3,8 @@ package com.bw.fit.base.log.mapper;
 import com.bw.fit.base.log.entity.TLog;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author yangh
@@ -18,4 +20,11 @@ public interface LogMapper {
      * @param tLog
      */
     void insert(TLog tLog);
+
+    /*****
+     * 翻页日志
+     * @param tLog
+     * @return
+     */
+    List<TLog> selectAll(TLog tLog);
 }

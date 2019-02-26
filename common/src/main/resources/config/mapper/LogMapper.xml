@@ -9,4 +9,8 @@
         #{ip,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{params,jdbcType=CLOB} )
     </insert>
 
+    <select id="selectAll" parameterType="tlog" resultType="tlog">
+        select * from t_loginfo
+    </select>
+
 </mapper>
