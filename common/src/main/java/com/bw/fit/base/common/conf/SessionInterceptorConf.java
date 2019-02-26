@@ -2,15 +2,12 @@ package com.bw.fit.base.common.conf;
 
 import com.bw.fit.base.common.interceptor.SessionCorrectInterceptor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @Description
@@ -21,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @VERSION
  */
 @Configuration
-public class SessionInterceptorConf extends WebMvcConfigurerAdapter {
+public class SessionInterceptorConf extends WebMvcConfigurationSupport {
     @Bean
     SessionCorrectInterceptor getSessionCorrectInterceptor(){
         return new SessionCorrectInterceptor();
@@ -29,6 +26,7 @@ public class SessionInterceptorConf extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getSessionCorrectInterceptor())
+                .addPathPatterns("/log/**")
                 .addPathPatterns("/inform/**");
         super.addInterceptors(registry);
     }

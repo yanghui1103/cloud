@@ -7,6 +7,12 @@ server:
 spring:
   application:
     name: sys-proj
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+
   datasource:
     name: sys_db
     type: com.alibaba.druid.pool.DruidDataSource

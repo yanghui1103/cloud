@@ -18,3 +18,8 @@ spring:
         enabled: true
         service-id: config-proj
       profile: dev
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true

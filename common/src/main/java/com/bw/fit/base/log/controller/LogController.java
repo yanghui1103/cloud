@@ -3,6 +3,7 @@ package com.bw.fit.base.log.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.controller.BaseController;
 import com.bw.fit.base.common.entity.RbackException;
+import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.log.model.Log;
 import com.bw.fit.base.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static com.bw.fit.base.common.util.PubFun.returnFailJson;
@@ -33,6 +35,8 @@ public class LogController extends BaseController {
 
     @Autowired
     private LogService logService;
+    @Autowired
+    private CommonService commonService;
 
     /*****
      * 记录日志接口
@@ -42,7 +46,7 @@ public class LogController extends BaseController {
      * @throws RbackException
      */
     @PostMapping("log")
-    public JSONObject create(@Valid @ModelAttribute Log log, BindingResult bindingResult) throws RbackException {
+    public JSONObject create(@Valid @ModelAttribute Log log, BindingResult bindingResult, HttpServletRequest httpServletRequest) throws RbackException {
         JSONObject jsonObject = new JSONObject();
         if (bindingResult.hasErrors()) {
             FieldError error = bindingResult.getFieldError();
@@ -50,6 +54,7 @@ public class LogController extends BaseController {
             returnFailJson(jsonObject, error.getDefaultMessage());
             return jsonObject;
         }
+        commonService.fillCommonProptities(log,httpServletRequest,true);
         jsonObject = logService.log(log);
         return  jsonObject;
     }

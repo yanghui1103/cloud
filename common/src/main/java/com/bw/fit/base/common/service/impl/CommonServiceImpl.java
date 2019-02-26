@@ -2,6 +2,7 @@ package com.bw.fit.base.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.base.common.entity.BaseEntity;
 import com.bw.fit.base.common.model.BaseModel;
 import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.common.util.PubFun;
@@ -67,6 +68,21 @@ public class CommonServiceImpl implements CommonService {
             baseModel.setHaveOrgListAuth(Arrays.asList(accountJson.getString("authCodes").split(",")));
         }
     }
+
+    @Override
+    public void fillCommonProptities(BaseEntity baseEntity, HttpServletRequest request, boolean isFillFdid) {
+        JSONObject accountJson = getCurrentAccount(request);
+        if("2".equals(accountJson.get("res"))){
+            if(isFillFdid){
+                baseEntity.setId(PubFun.getUUID());
+            }
+            baseEntity.setCreator(accountJson.getString("id"));
+            baseEntity.setCreatorName(accountJson.getString("name"));
+            baseEntity.setCreateOrgId(accountJson.getString("currentOrgId"));
+            baseEntity.setCreateTime(PubFun.getSysDate());
+        }
+    }
+
 
     @Override
     public JSONObject checkSessionValid(String sessionId) {
