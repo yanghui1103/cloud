@@ -2,6 +2,7 @@ package com.bw.fit.base.log.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
+import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.common.util.PubFun;
 import com.bw.fit.base.inform.service.InformService;
 import com.bw.fit.base.log.entity.TLog;

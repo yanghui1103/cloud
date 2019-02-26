@@ -1,6 +1,7 @@
 package com.bw.fit.base.inform.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.common.util.PubFun;
 import com.bw.fit.base.inform.entity.TInform;
 import com.bw.fit.base.inform.model.Inform;
@@ -9,6 +10,7 @@ import com.bw.fit.base.inform.util.InnerMsgSender;
 import com.bw.fit.base.inform.util.MailTool;
 import com.bw.fit.base.inform.util.SmsSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -26,6 +28,7 @@ public class InformServiceImpl implements InformService {
     @Resource
     private InnerMsgSender innerMsgSender;
 
+    @Transactional(rollbackFor = {Exception.class, RbackException.class})
     @Override
     public JSONObject send(Inform inform) {
         JSONObject jsonObject = new JSONObject();

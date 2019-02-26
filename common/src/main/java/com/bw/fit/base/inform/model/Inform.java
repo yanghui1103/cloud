@@ -2,6 +2,8 @@ package com.bw.fit.base.inform.model;
 
 import com.bw.fit.base.common.model.BaseModel;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @Description 信息通知模型，通知给其他主体，可能是短信，微信，公众号，
  * 邮件，站内信(待阅)
@@ -12,12 +14,17 @@ import com.bw.fit.base.common.model.BaseModel;
  * @VERSION
  */
 public class Inform extends BaseModel {
+    @NotEmpty(message = "主题不得为空")
     private String title;
+    @NotEmpty(message = "信息内容不得为空")
     private String content;
+    @NotEmpty(message = "内容类型不得为空")
     private String contentType; //数据字典：文本，url
+    @NotEmpty(message = "接收者不得为空")
     private String receiver;
     private String sender;
     private String affair; // 事务 例如INSTORE:ID号
+    @NotEmpty(message = "发送方式不得为空")
     private String way; //方式：短信，邮件，站内信
 
 
