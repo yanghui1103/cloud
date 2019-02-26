@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ai" />
         <module name="api" />
-        <module name="base" />
         <module name="bounty" />
         <module name="cache" />
         <module name="calls" />
@@ -40,9 +39,9 @@
       <module name="base" options="-parameters" />
       <module name="base2" options="-parameters" />
       <module name="bounty" options="-parameters" />
-      <module name="cache" options="-parameters" />
+      <module name="cache" options="" />
       <module name="calls" options="-parameters" />
-      <module name="common" options="-parameters" />
+      <module name="common" options="" />
       <module name="config" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />

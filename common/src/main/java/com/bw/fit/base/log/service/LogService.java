@@ -1,5 +1,9 @@
 package com.bw.fit.base.log.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.base.common.entity.RbackException;
+import com.bw.fit.base.log.model.Log;
+
 /**
  * @Description
  * @Author yangh
@@ -9,4 +13,10 @@ package com.bw.fit.base.log.service;
  * @VERSION
  */
 public interface LogService {
+    /****
+     * 记录日志，并且如果有需要可以发起相应信息提醒
+     * @param log
+     * @return
+     */
+    JSONObject log(Log log) throws RbackException;
 }
