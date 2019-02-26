@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import cn.hutool.core.util.StrUtil;
 import com.bw.fit.system.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,8 +32,9 @@ import com.bw.fit.system.dict.service.DictService;
  * @author yangh
  *
  */
-@RequestMapping("dict")
+@RequestMapping(value="dict",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class DictController extends BaseController {
 
 	@Resource

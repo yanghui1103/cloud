@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.bw.fit.system.organization.mapper.OrganizationMapper;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,8 +26,9 @@ import com.bw.fit.system.position.mapper.PositionMapper;
 import com.bw.fit.system.position.model.Position;
 import com.bw.fit.system.position.service.PositionService;
 
-@RequestMapping("position")
+@RequestMapping(value="position",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class PositionController {
 	@Resource
 	private PositionMapper positionMapper;

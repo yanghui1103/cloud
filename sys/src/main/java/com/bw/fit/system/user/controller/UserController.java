@@ -13,6 +13,7 @@ import com.bw.fit.system.user.mapper.UserMapper;
 import com.bw.fit.system.user.model.User;
 import com.bw.fit.system.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +33,9 @@ import static com.bw.fit.system.common.util.PubFun.returnFailJson;
  * @author yangh
  *
  */
-@RequestMapping("user")
+@RequestMapping(value="user",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class UserController  extends BaseController {
 
     @Resource

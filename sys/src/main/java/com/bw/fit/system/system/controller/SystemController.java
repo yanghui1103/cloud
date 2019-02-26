@@ -25,7 +25,7 @@ import com.bw.fit.system.organization.model.Organization;
 
 import static com.bw.fit.system.common.util.PubFun.*;
 
-@RequestMapping("system")
+@RequestMapping(value="system",produces = "application/json; charset=utf-8")
 @Controller
 @EnableEurekaClient
 public class SystemController extends BaseController {

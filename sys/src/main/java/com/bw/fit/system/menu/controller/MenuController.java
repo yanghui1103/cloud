@@ -3,6 +3,7 @@ package com.bw.fit.system.menu.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,9 @@ import com.bw.fit.system.menu.model.Menu;
 
 import javax.annotation.Resource;
 
-@RequestMapping("menu")
+@RequestMapping(value="menu",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class MenuController extends BaseController {
 
 	@Resource

@@ -55,7 +55,7 @@ import static com.bw.fit.system.common.util.PubFun.returnFailJson;
  */
 @Api("账户模块提供的接口")
 @Controller
-@RequestMapping(value="account")
+@RequestMapping(value="account",produces = "application/json; charset=utf-8")
 @EnableEurekaClient
 public class AccountController extends BaseController {
 

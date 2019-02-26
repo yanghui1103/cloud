@@ -12,6 +12,7 @@ import com.bw.fit.system.authority.mapper.AuthorityMapper;
 import com.bw.fit.system.dict.mapper.DictMapper;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,8 +45,9 @@ import com.bw.fit.system.user.service.UserService;
  * @author yangh
  *
  */
-@RequestMapping("role")
+@RequestMapping(value="role",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class RoleController extends BaseController {
 
 	@Autowired

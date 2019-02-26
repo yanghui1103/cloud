@@ -44,7 +44,7 @@ public class ApiController {
 
 
     @ApiOperation(value = "根据微服务名称获取Url" )
-    @GetMapping("getMicroServiceUrl/{serviceName}")
+    @GetMapping(value="getMicroServiceUrl/{serviceName}")
     @ResponseBody
     public String getMicroServiceUrl(@PathVariable String serviceName){
         String url = env.getProperty("zuul.routes." + serviceName + ".url").toString();

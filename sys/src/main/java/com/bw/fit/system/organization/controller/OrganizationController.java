@@ -34,7 +34,7 @@ import com.bw.fit.system.organization.service.OrganizationService;
  * @author yangh
  *
  */
-@RequestMapping("org")
+@RequestMapping(value="org",produces = "application/json; charset=utf-8")
 @EnableEurekaClient
 @Controller
 public class OrganizationController extends BaseController {

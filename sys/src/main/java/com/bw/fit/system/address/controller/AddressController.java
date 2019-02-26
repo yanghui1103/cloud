@@ -12,6 +12,7 @@ import com.bw.fit.system.address.model.Address;
 import com.bw.fit.system.common.service.CommonService;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +26,9 @@ import com.bw.fit.system.address.service.AddressService;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RequestMapping("address")
+@RequestMapping(value="address",produces = "application/json; charset=utf-8")
 @Controller
+@EnableEurekaClient
 public class AddressController {
 	
 	@Autowired
