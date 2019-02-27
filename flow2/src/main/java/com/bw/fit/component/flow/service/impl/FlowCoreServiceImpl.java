@@ -522,7 +522,6 @@ public class FlowCoreServiceImpl implements FlowCoreService {
 	public List<HistoricIdentityLink> getDealersOfTheTask(String taskId) {
 		// TODO Auto-generated method stub
 		List<HistoricIdentityLink> list = historyService.getHistoricIdentityLinksForTask(taskId);//taskService.getIdentityLinksForTask(taskId);
-		
 		return list;
 	}
 

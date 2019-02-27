@@ -36,7 +36,7 @@ public class FormController {
     private CommonService commonService;
 
     @ApiOperation("打开表单")
-    @GetMapping("openFormDetail/{formKey}")
+    @GetMapping(value="openFormDetail/{formKey}",produces = "application/json; charset=utf-8")
     public String formDetail(@PathVariable String formKey, Model model){
         Session session = PubFun.getCurrentSession();
 

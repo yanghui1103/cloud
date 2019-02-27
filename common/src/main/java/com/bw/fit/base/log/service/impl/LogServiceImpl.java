@@ -61,12 +61,12 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public JSONArray all(Log log) {
+    public List<TLog> all(Log log) {
         PageHelper.startPage(log.getPage(),log.getRows());
         TLog tLog = new TLog();
         PubFun.copyProperties(tLog,log);
         List<TLog> tLogs = logMapper.selectAll(tLog);
-        return (JSONArray)JSONArray.toJSON(tLogs);
+        return tLogs;
     }
 
     @Override

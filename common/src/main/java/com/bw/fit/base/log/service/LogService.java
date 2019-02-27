@@ -3,9 +3,11 @@ package com.bw.fit.base.log.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
+import com.bw.fit.base.log.entity.TLog;
 import com.bw.fit.base.log.model.Log;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Description
@@ -27,7 +29,7 @@ public interface LogService {
      * 所有的日志记录
      * @return
      */
-    JSONArray all(Log log);
+    List<TLog> all(Log log);
 
     /****
      * 单笔详情

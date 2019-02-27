@@ -48,7 +48,7 @@ import com.bw.fit.component.flow.service.FlowPlusService;
  *
  */
 @Api("flow提供接口")
-@RequestMapping("flow")
+@RequestMapping(value="flow",produces = "application/json; charset=utf-8")
 @Controller
 @EnableEurekaClient
 public class FlowController {

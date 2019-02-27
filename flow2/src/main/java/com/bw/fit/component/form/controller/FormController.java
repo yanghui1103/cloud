@@ -30,7 +30,7 @@ import java.util.Map;
  * @VERSION
  */
 @Controller
-@RequestMapping(value="form")
+@RequestMapping(value="form",produces = "application/json; charset=utf-8")
 @EnableEurekaClient
 public class FormController {
     @Autowired

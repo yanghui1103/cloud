@@ -139,7 +139,6 @@ public class ApiController {
         return jsonObject;
     }
 
-
     @ApiOperation(value = "远程调用微服务的接口，做增加操作" )
     @PostMapping(value="addMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}/{formReqString}")
     @ResponseBody
