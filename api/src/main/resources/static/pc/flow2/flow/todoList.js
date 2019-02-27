@@ -13,13 +13,10 @@ function query(){
         remoteSort: false,
         columns: [[
             { field: 'id',  hidden:true  },
-            { field: 'formKey',  hidden:true  },
-            { field: 'creator', title: '操作者', width: '10%'   },
-            { field: 'ip', title: 'IP'  , width: '20%' },
-            { field: 'url', title: 'url'  , width: '20%' },
-            { field: 'logType', title: '日志类型' , width: '20%'  },
-            { field: 'result', title: '返回结果'  , width: '20%' },
-            { field: 'createTime', title: '采集时间'  , width: '10%' }
+            { field: 'flowId',  hidden:true  },
+            { field: 'title', title: '主题'  , width: '70%' },
+            { field: 'drafter', title: '发起人', width: '10%'   },
+            { field: 'createTime', title: '时间'  , width: '20%' }
         ]],
         fit: true ,
         idField: "id",

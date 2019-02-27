@@ -49,6 +49,11 @@ public class PubFun {
         return sdf.format(date);
     }
 
+    public static String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
     public static boolean checkSessionValidate(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

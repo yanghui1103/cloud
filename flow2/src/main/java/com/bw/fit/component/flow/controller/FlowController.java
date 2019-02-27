@@ -260,6 +260,7 @@ public class FlowController {
 				TFlowRegister tFlowRegister = flowPlusMapper.getFlowRegsByFlowId(task.getProcessInstanceId()).get(0);
 				PubFun.copyProperties(todo,tFlowRegister);
 				todo.setTaskId(task.getId());
+				todo.setCreateTime(PubFun.formatDate(task.getCreateTime()));
 				todos.add(todo);
 			}
 			jsonObject.put("total",todos.size());
