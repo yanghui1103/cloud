@@ -3,19 +3,22 @@ package com.bw.fit.component.flow.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
 import com.bw.fit.component.flow.model.RbackException;
+import com.bw.fit.component.flow.model.Todo;
+import com.bw.fit.component.flow.service.CommonService;
+import com.bw.fit.component.flow.service.FlowCoreService;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
+import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.model.BaseModel;
 import io.swagger.annotations.Api;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -34,7 +37,6 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.task.Task;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -67,6 +69,10 @@ public class FlowController {
 	private FlowPlusService flowPlusService;
 	@Resource
 	private FlowPlusMapper flowPlusMapper;
+	@Autowired
+	private FlowCoreService flowCoreService;
+	@Autowired
+	private CommonService commonService;
 
 	/**
 	 * 打开流程图显示页面
@@ -215,7 +221,7 @@ public class FlowController {
 	}
 
 	/*****
-	 * 所有流程执行定义列表
+	 * 所有流程执行定义列表,处理人及执行顺序等
 	 * @return
 	 */
 	@GetMapping("processDefinition")
@@ -228,5 +234,37 @@ public class FlowController {
 			return jsonArray.toJSONString();
 		}
 		return  null;
+	}
+
+	/****
+	 * 该账户的待办
+	 * @param httpServletRequest
+	 * @return
+	 */
+	@GetMapping("todoTasks")
+	@ResponseBody
+	public String todoTasks(HttpServletRequest httpServletRequest, @ModelAttribute BaseModel baseModel){
+		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
+		JSONObject jsonObject = new JSONObject();
+		List<Task> tasks = new ArrayList<>();
+		List<Todo> todos = new ArrayList<>();
+		List<Task> tasks1 = flowCoreService.getTasksOfTheUser(accountJson.getString("id"));
+		List<Task> tasks2 = flowCoreService.getTasksOfTheAssginee(accountJson.getString("id"));
+		tasks.addAll(tasks1);
+		tasks.addAll(tasks2);
+
+
+		if(CollectionUtil.isNotEmpty(tasks)){
+			for(Task task:tasks){
+				Todo todo = new Todo();
+				TFlowRegister tFlowRegister = flowPlusMapper.getFlowRegsByFlowId(task.getProcessInstanceId()).get(0);
+				PubFun.copyProperties(todo,tFlowRegister);
+				todo.setTaskId(task.getId());
+				todos.add(todo);
+			}
+			jsonObject.put("total",todos.size());
+			jsonObject.put("rows",JSONObject.toJSONString(todos.subList(baseModel.getPage()*baseModel.getRows(),baseModel.getPage()*baseModel.getRows()+baseModel.getRows())));
+		}
+		return jsonObject.toJSONString();
 	}
 }

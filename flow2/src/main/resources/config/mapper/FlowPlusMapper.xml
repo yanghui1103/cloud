@@ -30,5 +30,9 @@
 		sysdate,#{handleOpt,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{nextTaskDefKey,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR})
 	</insert>
 
+	<select id="getFlowRegsByFlowId" parameterType="String" resultType="TFlowRegister">
+		select * from T_flowRegister a where a.flowId = #{flowId,jdbcType=VARCHAR}
+	</select>
+
 
 </mapper>

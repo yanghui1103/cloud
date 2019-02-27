@@ -14,12 +14,14 @@
     <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
-    <script type="text/javascript" th:src="@{/pc/flow2/flow/requestList.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/flow2/flow/todoList.js}"></script>
 </head>
 <body>
-<input type="hidden" th:value="${sessionId}" id="sessionId">
-<table title="我的待办列表" id="logList"  class="easyui-datagrid" >
+<form id="todofm">
+<input type="hidden" th:value="${sessionId}" id="sessionId" name="sessionId">
+</form>
+<table title="我的待办列表" id="todolist"  class="easyui-datagrid" >
 </table>
-<div id="_loadDialog_loglist"></div>
+<div id="_loadDialog_todolist"></div>
 </body>
 </html>

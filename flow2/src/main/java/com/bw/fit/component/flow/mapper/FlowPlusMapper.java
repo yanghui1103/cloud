@@ -2,6 +2,7 @@ package com.bw.fit.component.flow.mapper;
 
 import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.entity.TFlowRegister;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -38,5 +39,12 @@ public interface FlowPlusMapper {
      * @return
      */
     List<TFlowExecuteDefinition> getAllFlowDefs(TFlowExecuteDefinition tFlowExecuteDefinition);
+
+    /****
+     * 流程实例id，查询出登记情况
+     * @param flowId
+     * @return
+     */
+    List<TFlowRegister> getFlowRegsByFlowId(String flowId);
 
 }

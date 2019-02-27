@@ -36,9 +36,9 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public JSONObject getCurrentAccount(HttpServletRequest request) {
         JSONObject accountJSON = new JSONObject();
-        String sessionId = request.getParameter("sessionId");
+        String sessionId = request.getHeader("sessionId");
         if(StrUtil.isNotEmpty(sessionId)){
-            String s = getCacheValue(sessionId);
+            String s = getCacheValue("session:"+sessionId);
             if(StrUtil.isNotEmpty(s)){
                 return JSONObject.parseObject(s);
             }else{
