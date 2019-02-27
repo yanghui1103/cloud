@@ -33,13 +33,13 @@ public class LogPickUtil {
             MultiValueMap<String, Object> mapForLog = new LinkedMultiValueMap<String, Object>();
             mapForLog.add("sessionId", PubFun.getCurrentSessionId());
             mapForLog.add("creator",PubFun.getCurrentUser().getString("id"));
-            mapForLog.add("ip","ip");
+            mapForLog.add("ip",PubFun.getIpAddr(httpServletRequest));
             mapForLog.add("url",targetMsUrl);
             mapForLog.add("logType",httpServletRequest.getMethod());
             mapForLog.add("operateFunction",operateFunction);
             mapForLog.add("resourceId",resourceId);
             mapForLog.add("params",formReqString);
-            String string = restTemplateUtil.post(httpServletRequest,"http://common-proj/log/log?creator="+PubFun.getCurrentUser().getString("id")+"&ip=ip&url="+targetMsUrl+"&logType="+httpServletRequest.getMethod()+"&operateFunction="+operateFunction+"&resourceId="+resourceId
+            String string = restTemplateUtil.post(httpServletRequest,"http://common-proj/log/log?creator="+PubFun.getCurrentUser().getString("id")+"&ip="+PubFun.getIpAddr(httpServletRequest)+"&url="+targetMsUrl+"&logType="+httpServletRequest.getMethod()+"&operateFunction="+operateFunction+"&resourceId="+resourceId
                     +"&params="+formReqString,
                     mapForLog);
             System.out.println(string);
