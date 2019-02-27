@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.model.RbackException;
 import com.bw.fit.pc.sys.service.CommonService;
+import com.bw.fit.pc.sys.util.LogPickUtil;
 import com.bw.fit.pc.sys.util.PubFun;
 import com.bw.fit.pc.sys.util.RestTemplateUtil;
 import io.swagger.annotations.Api;
@@ -41,6 +42,8 @@ public class ApiController {
     private Environment env;
     @Autowired
     private CommonService commonService;
+    @Resource
+    private LogPickUtil logPickUtil;
 
 
     @ApiOperation(value = "根据微服务名称获取Url" )
@@ -124,6 +127,12 @@ public class ApiController {
             map.add("sessionId", PubFun.getCurrentSessionId());
             String string = restTemplateUtil.delete(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
+            /****
+             * 增加日志采集
+             */
+            String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),params);
+
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
@@ -155,8 +164,14 @@ public class ApiController {
                     map.add(key,value);
                 }
             }
+            String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
             String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
+
+            /****
+             * 增加日志采集
+             */
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
@@ -189,6 +204,12 @@ public class ApiController {
             }
             String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
+
+            /****
+             * 增加日志采集
+             */
+            String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
