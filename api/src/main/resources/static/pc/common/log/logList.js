@@ -30,7 +30,20 @@ function query(){
         pageList: [ 10,20, 30, 40, 50],
         striped: true, //奇偶行是否区分
         onDblClickRow: function (index, row) {
-            console.log(row.id);
+            openDetail(row.id);
         }
+    });
+}
+
+function openDetail(id) {
+    $('#_loadDialog_loglist').dialog({
+        title: '日志详情',
+        width: '99%',
+        height: 500,
+        closed: false,
+        cache: false,
+        maximizable:true,
+        href: ctx+'towardMicroServicePage/v1/common-proj/log,log,'+id+'/common,pc,base,log,logDetail' ,
+        modal: true
     });
 }

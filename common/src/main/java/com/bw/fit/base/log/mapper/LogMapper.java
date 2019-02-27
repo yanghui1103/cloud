@@ -27,4 +27,11 @@ public interface LogMapper {
      * @return
      */
     List<TLog> selectAll(TLog tLog);
+
+    /****
+     * 单笔详情
+     * @param id
+     * @return
+     */
+    TLog get(String id);
 }

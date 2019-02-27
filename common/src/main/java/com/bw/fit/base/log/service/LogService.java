@@ -26,4 +26,11 @@ public interface LogService {
      * @return
      */
     JSONArray all(Log log);
+
+    /****
+     * 单笔详情
+     * @param id
+     * @return
+     */
+    JSONObject get(String id);
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/fonts/demo.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/index.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/basic_info.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+    <link rel="stylesheet" th:href="@{/pc/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.core.js}"></script>
+</head>
+<body>
+<div class="easyui-tabs" style="width: 100%;">
+    <div title="操作日志详情" data-options="closable:false" class="basic-info">
+        <form>
+            <table class="kv-table">
+                <tbody>
+                <tr>
+                    <td class="kv-label">操作者</td>
+                    <td class="kv-content"><span th:text="${mapData['creator']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">操作时间</td>
+                    <td class="kv-content"><span th:text="${mapData['createTime']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">URL</td>
+                    <td class="kv-content"><span th:text="${mapData['url']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">IP</td>
+                    <td class="kv-content"><span th:text="${mapData['ip']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">HTTP请求</td>
+                    <td class="kv-content"><span th:text="${mapData['operateFunction']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">返回值</td>
+                    <td class="kv-content"><span th:text="${mapData['result']}"></span></td>
+                </tr>
+                <tr>
+                    <td class="kv-label">请求参数</td>
+                    <td class="kv-content"><span th:text="${mapData['params']}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

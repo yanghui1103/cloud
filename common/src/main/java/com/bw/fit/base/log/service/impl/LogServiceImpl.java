@@ -60,4 +60,9 @@ public class LogServiceImpl implements LogService {
         List<TLog> tLogs = logMapper.selectAll(tLog);
         return (JSONArray)JSONArray.toJSON(tLogs);
     }
+
+    @Override
+    public JSONObject get(String id) {
+        return (JSONObject)JSONObject.toJSON(logMapper.get(id));
+    }
 }

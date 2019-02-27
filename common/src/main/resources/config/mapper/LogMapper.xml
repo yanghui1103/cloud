@@ -13,4 +13,8 @@
         select * from t_loginfo
     </select>
 
+    <select id="get" parameterType="String" resultType="tlog">
+        select * from t_loginfo a where a.id = #{id,jdbcType=VARCHAR}
+    </select>
+
 </mapper>
