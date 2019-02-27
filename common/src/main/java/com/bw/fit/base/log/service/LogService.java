@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.log.model.Log;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Description
  * @Author yangh
@@ -32,5 +34,5 @@ public interface LogService {
      * @param id
      * @return
      */
-    JSONObject get(String id);
+    JSONObject get(String id, HttpServletRequest httpServletRequest);
 }

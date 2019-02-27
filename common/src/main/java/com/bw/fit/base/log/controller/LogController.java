@@ -67,8 +67,8 @@ public class LogController extends BaseController {
     }
 
     @GetMapping(value="log/{id}")
-    public String get(@PathVariable String id){
-        return logService.get(id).toJSONString();
+    public String get(@PathVariable String id,HttpServletRequest httpServletRequest){
+        return logService.get(id,httpServletRequest).toJSONString();
     }
 
 }

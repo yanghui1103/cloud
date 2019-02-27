@@ -171,6 +171,13 @@ public class AccountController extends BaseController {
         return js ;
     }
 
+    @GetMapping(value="account/id/{id}",produces="application/json;charset=UTF-8")
+    @ResponseBody
+    public String getOne(@PathVariable String id){
+        Account account = accountService.get(id);
+        return JSONObject.toJSONString(account);
+    }
+
     @RequestMapping(value="account/{id}",method=RequestMethod.DELETE,produces="application/json;charset=UTF-8")
     @ResponseBody
     public JSONObject delete(@PathVariable String id){

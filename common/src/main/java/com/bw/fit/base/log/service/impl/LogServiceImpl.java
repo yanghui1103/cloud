@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.common.util.PubFun;
+import com.bw.fit.base.common.util.RestTemplateUtil;
 import com.bw.fit.base.inform.service.InformService;
 import com.bw.fit.base.log.entity.TLog;
 import com.bw.fit.base.log.mapper.LogMapper;
@@ -15,9 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description
@@ -34,6 +40,8 @@ public class LogServiceImpl implements LogService {
     private InformService informService;
     @Resource
     private LogMapper logMapper;
+    @Resource
+    private RestTemplateUtil restTemplateUtill;
 
     @Transactional(rollbackFor = {Exception.class,RbackException.class})
     @Override
@@ -62,7 +70,12 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public JSONObject get(String id) {
-        return (JSONObject)JSONObject.toJSON(logMapper.get(id));
+    public JSONObject get(String id, HttpServletRequest httpServletRequest) {
+        TLog tLog = logMapper.get(id);
+        MultiValueMap<String, ?>  map = new LinkedMultiValueMap<>();
+        String accountString =restTemplateUtill.get(httpServletRequest,"http://sys-proj/account/account/id/"+tLog.getCreator(),map);
+        JSONObject jsonObject = JSONObject.parseObject(accountString);
+        tLog.setCreator(jsonObject.getString("name"));
+        return (JSONObject)JSONObject.toJSON(tLog);
     }
 }
