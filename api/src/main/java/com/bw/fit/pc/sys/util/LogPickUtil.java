@@ -28,7 +28,7 @@ public class LogPickUtil {
      * @param resourceId   资源id
      * @param formReqString  表单拼接的字符串
      */
-    public void  collect(HttpServletRequest httpServletRequest,String targetMsUrl, String operateFunction, String resourceId, String formReqString){
+    public void  collect(HttpServletRequest httpServletRequest,String targetMsUrl, String operateFunction, String resourceId, String formReqString,String result){
         try {
             MultiValueMap<String, Object> mapForLog = new LinkedMultiValueMap<String, Object>();
             mapForLog.add("sessionId", PubFun.getCurrentSessionId());
@@ -39,8 +39,9 @@ public class LogPickUtil {
             mapForLog.add("operateFunction",operateFunction);
             mapForLog.add("resourceId",resourceId);
             mapForLog.add("params",formReqString);
+            mapForLog.add("result",result);
             String string = restTemplateUtil.post(httpServletRequest,"http://common-proj/log/log?creator="+PubFun.getCurrentUser().getString("id")+"&ip="+PubFun.getIpAddr(httpServletRequest)+"&url="+targetMsUrl+"&logType="+httpServletRequest.getMethod()+"&operateFunction="+operateFunction+"&resourceId="+resourceId
-                    +"&params="+formReqString,
+                    +"&params="+formReqString+"&result="+result,
                     mapForLog);
             System.out.println(string);
         }catch (Exception ex){

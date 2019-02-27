@@ -131,7 +131,7 @@ public class ApiController {
              * 增加日志采集
              */
             String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
-            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),params);
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),params,string);
 
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
@@ -170,7 +170,7 @@ public class ApiController {
             /****
              * 增加日志采集
              */
-            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString);
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString,string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
@@ -208,7 +208,7 @@ public class ApiController {
              * 增加日志采集
              */
             String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
-            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString);
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString,string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
