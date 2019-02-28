@@ -34,7 +34,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-#系统统一分隔符
+#系统统一字符串的分隔符
 cutFlag: CUTFLAG
 
 #pagehelper

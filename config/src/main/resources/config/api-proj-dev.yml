@@ -72,3 +72,7 @@ zuul:
       path: /api-bounty/**
       serviceId: bounty-proj
       url: http://localhost:8011/bounty/
+
+
+#系统统一字符串的分隔符
+cutFlag: CUTFLAG

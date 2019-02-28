@@ -42,3 +42,6 @@ pagehelper:
   params: count=countSql
   returnPageInfo: check
 
+
+#系统统一字符串的分隔符
+cutFlag: CUTFLAG
