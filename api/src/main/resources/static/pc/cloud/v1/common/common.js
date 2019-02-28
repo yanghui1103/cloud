@@ -5,6 +5,7 @@
 *	3，其他
 ****/
 var prompt_title = "系统提示框";
+var cutFlag = "CUTFLAG";
 var local = window.location;
 var contextPath = local.pathname.split("/")[1];
 var ctx = local.protocol+"//"+local.host+"/" ;
