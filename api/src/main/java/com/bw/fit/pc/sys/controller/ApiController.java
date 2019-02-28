@@ -203,7 +203,6 @@ public class ApiController {
             }
             String string = restTemplateUtil.put(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
-
             /****
              * 增加日志采集
              */
