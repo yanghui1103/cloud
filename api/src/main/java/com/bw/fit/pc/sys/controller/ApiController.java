@@ -201,7 +201,7 @@ public class ApiController {
                     map.add(key,value);
                 }
             }
-            String string = restTemplateUtil.post(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
+            String string = restTemplateUtil.put(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString()+"?"+formReqString,map);
             jsonObject = JSONObject.parseObject(string);
 
             /****

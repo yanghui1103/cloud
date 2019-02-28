@@ -39,11 +39,10 @@ public class LogPickUtil {
             mapForLog.add("operateFunction",operateFunction);
             mapForLog.add("resourceId",resourceId);
             mapForLog.add("params",formReqString);
-            mapForLog.add("result",result);
+            mapForLog.add("result",result.replace("{","").replace("}",""));
             String string = restTemplateUtil.post(httpServletRequest,"http://common-proj/log/log?creator="+PubFun.getCurrentUser().getString("id")+"&ip="+PubFun.getIpAddr(httpServletRequest)+"&url="+targetMsUrl+"&logType="+httpServletRequest.getMethod()+"&operateFunction="+operateFunction+"&resourceId="+resourceId
-                    +"&params="+formReqString+"&result="+result,
+                    +"&params="+formReqString+"&result="+result.replace("{","").replace("}",""),
                     mapForLog);
-            System.out.println(string);
         }catch (Exception ex){
             ex.printStackTrace();
         }
