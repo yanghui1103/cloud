@@ -3,7 +3,7 @@ package com.bw.fit.system.common.model;
 
 import java.util.List;
 
- 
+
 
 /*****
  * 顶级模型
@@ -26,7 +26,7 @@ public class BaseModel{
 	public String versionTime ;
 	public String operator;
 	public String creator;
-	public String creatorName; 
+	public String creatorName;
 	public String createOrgId;
 	public String createOrgName;
 	public String logId ;

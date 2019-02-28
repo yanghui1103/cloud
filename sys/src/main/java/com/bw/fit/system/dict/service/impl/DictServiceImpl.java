@@ -14,6 +14,7 @@ import com.bw.fit.system.dict.entity.TdataDict;
 import com.bw.fit.system.dict.model.DataDict;
 import com.bw.fit.system.dict.model.Dict;
 import com.bw.fit.system.dict.service.DictService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -60,7 +61,7 @@ public class DictServiceImpl implements DictService {
 		DataDict node = DDictJsonTreeHandler.getJSONTree(dataList);
 		return node;
 	}
-
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject createDict(Dict dict) throws RbackException {
 		JSONObject json = new JSONObject();		
@@ -75,7 +76,7 @@ public class DictServiceImpl implements DictService {
 			return json ;
 		}
 	}
-
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject updateDict(Dict dict) throws RbackException {
 		JSONObject json = new JSONObject();		

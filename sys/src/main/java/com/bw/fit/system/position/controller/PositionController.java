@@ -1,12 +1,18 @@
 package com.bw.fit.system.position.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.alibaba.fastjson.JSON;
+import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.organization.mapper.OrganizationMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -36,26 +42,24 @@ public class PositionController {
 	private PositionService positionService ;
 	@Resource
 	private OrganizationMapper organizationMapper;
+	@Autowired
+	private CommonService commonService;
 	/*****
 	 * 查询岗位管理列表
-	 * 
-	 * @param params
-	 * @param model
+	 *
 	 *            UI-Model
 	 * @param p
 	 *            岗位
 	 * @param request
 	 *            请求
-	 * @param session
-	 *            会话
 	 * @return
 	 */
 	@RequestMapping(value="positions/{orgId}",method=RequestMethod.GET)
 	@ResponseBody
 	public JSONObject companyList(@ModelAttribute Position p, HttpServletRequest request,@PathVariable String orgId) {
 		JSONObject json = new JSONObject();
-		p.setPaginationEnable("1");
-		List<Position> list = positionMapper.getPositions(p,orgId);
+		p.setTempStr(orgId);
+		Page<Position> list = positionService.all(p);
 		if(list!=null&&list.size()>0) {
 			for(Position tmp : list) {
 				String orgNames="";
@@ -68,45 +72,45 @@ public class PositionController {
 					tmp.setTempStr1(orgNames);
 				}
 			}
-			p.setPaginationEnable("0");
-			List<Position> listTotal = positionMapper.getPositions(p,orgId);
-			json.put("total",(listTotal != null && listTotal.size() > 0)?listTotal.size() : 0);
-			json.put("rows", JSONObject.toJSON(list));
-			return json;
+			json.put("total",list.getTotal());
+			json.put("rows",  JSONObject.toJSON(list));
+			return  json;
 		}else {
 			json.put("total",0);
-			json.put("rows", 0);
+			json.put("rows", null);
 			return json;
 		}
-		
+
 	}
-	
+
 	/***
 	 * 打开新增岗位页
 	 * @param orgIds
-	 * @param orgNames
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("openPositionAddPage/{orgIds}")
+	@ResponseBody
 	public String openPositionAddPage(@PathVariable String orgIds,Model model){
-		model.addAttribute("orgIds", orgIds);
 		String orgNames="";
 		for(String id : orgIds.split(",")) {
 			orgNames += organizationMapper.get(id).getName()+";";
 		}
-		model.addAttribute("orgNames", orgNames);
-		return "system/position/positionAddPage" ;
+		Map<String,String> map = new HashMap<>();
+		map.put("orgIds", orgIds);
+		map.put("orgNames", orgNames);
+		return JSONObject.toJSON(map).toString() ;
 	}
 	
 	/*****
 	 * 打开update岗位页
-	 * @param parentId
+	 * @param id
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("openPositionEditPage/{id}")
-	public String openPositionEditPage(@PathVariable String id,Model model){
+	@ResponseBody
+	public JSONObject openPositionEditPage(@PathVariable String id,Model model){
 		Position p = positionMapper.get(id);
 		List<Organization> orgList = positionMapper.getOrgByPositionId(id);
 		String ids = "";
@@ -115,18 +119,21 @@ public class PositionController {
 			ids += o.getId()+',';
 			names += o.getName()+',';
 		}
-		model.addAttribute("position", p);
-		model.addAttribute("orgIds", ids);
-		model.addAttribute("orgNames", names);
-		
-		return "system/position/positionEditPage" ;
+		Map<String,Object> map = new HashMap<>();
+		map.put("position", p);
+		map.put("orgIds", ids);
+		map.put("orgNames", names);
+		map.put("item", null);
+		JSONObject postionJson = (JSONObject) JSONObject.toJSON(map);
+		return  postionJson ;
 	}
 	
 	@RequestMapping(value="position",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject insert(@Valid @ModelAttribute Position p){
+	public JSONObject insert(@Valid @ModelAttribute Position p, HttpServletRequest request){
 		JSONObject json = new JSONObject();
 		try {
+			commonService.fillCommonProptities(p,request,true);
 			json = positionService.createPosition(p);
 		} catch (RbackException e) { 
 			json = new JSONObject();
@@ -138,9 +145,10 @@ public class PositionController {
 	
 	@RequestMapping(value="position",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject update(@Valid @ModelAttribute Position p){
+	public JSONObject update(@Valid @ModelAttribute Position p, HttpServletRequest request){
 		JSONObject json = new JSONObject();
 		try {
+			commonService.fillCommonProptities(p,request,false);
 			json = positionService.updatePosition(p);
 		} catch (RbackException e) { 
 			json = new JSONObject();

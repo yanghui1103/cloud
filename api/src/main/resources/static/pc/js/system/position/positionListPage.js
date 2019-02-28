@@ -14,18 +14,17 @@ function positionlistquery(){
 	$('#positionLiDg').datagrid({ 
 		pagination:true,
 		method:"get",
-	    url:ctx+'position/positions/'+orgId,   
-      //  queryParams:   serializeFormToJSON($("#userlistFM").serializeArray()),
-	    remoteSort: false, 
+	    url:ctx+'getMicroServiceResult/v1/sys-proj/position/positions,'+orgId,
+	    remoteSort: false,
         columns: [[
                    { field: 'id', title: 'ID' ,hidden:true  },
                    { field: 'code', title: '编码', width: '20%',fixed:true  },
                    { field: 'name', title: '名称', width: '20%' },
                    { field: 'simpleName', title: '简称', width: '15%' },
                    { field: 'grade', title: '等级', width: '15%' },
-                   { field: 'temp_str1', title: '所属组织', width: '30%'  }
+                   { field: 'tempStr1', title: '所属组织', width: '30%'  }
                ]],
-             fit: false ,    
+             fit: true ,
              idField: "id",
              pagination: true,
              singleSelect:true,
@@ -56,8 +55,8 @@ function addPositionPage(){
 		    closed: false,    
 		    cache: false,    
 		    maximizable:true,
-		    href: ctx+'position/openPositionAddPage/'+ids,    
-		    modal: true   
+		    href: ctx+'towardMicroServicePage/v1/sys-proj/position,openPositionAddPage,'+ids+'/sys,pc,system,position,positionAdd',
+		    modal: true
 		});
 	}
 }
@@ -70,7 +69,7 @@ function deletePosition(){
 		promptMessageCallBack("3","是否确认删除该记录",function(){					
 			$.ajax({
 				type : 'DELETE',
-				url : ctx + "position/position/"+row.id+"/"+orgId,
+				url : ctx + "deleteMicroServiceResult/v1/sys-proj/position/position,"+row.id+","+orgId,
 				data : {},
 				success : function(data) {
 					promptMessageCallBack(data.res, data.msg,function(){
@@ -93,8 +92,8 @@ function openEditPosition(){
 		    closed: false,    
 		    cache: false,    
 		    maximizable:true,
-		    href: ctx+'position/openPositionEditPage/'+row.id,    
-		    modal: true   
+		    href: ctx+'towardMicroServicePage/v1/sys-proj/position,openPositionEditPage,'+row.id+'/sys,pc,system,position,positionEdit',
+		    modal: true
 		});
 	}
 }

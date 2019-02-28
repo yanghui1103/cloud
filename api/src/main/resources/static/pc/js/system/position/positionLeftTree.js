@@ -115,8 +115,8 @@ var setting = {
 	}
 
 	var key;
-	$(document).ready(function(){			
-		$.get(ctx+"org/organizations",function(data){ 
+	$(document).ready(function(){
+		$.get(ctx + "getMicroServiceResult/v1/sys-proj/org/organizations",function(data){
 			if(data.res =="2"){ 
 				zNodes = (data.list) ; 					
 				$.fn.zTree.init($("#positionTree"), setting, zNodes);

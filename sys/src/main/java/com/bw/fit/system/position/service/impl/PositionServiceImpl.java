@@ -1,7 +1,13 @@
 package com.bw.fit.system.position.service.impl;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,9 +90,12 @@ public class PositionServiceImpl implements PositionService{
 	public JSONObject deletePosition(String id,String orgId) throws RbackException {
 		JSONObject json = new JSONObject();		
 		try {
-			positionMapper.deleteO2P(id,orgId);
-			List<TOrganization2Position> aaa= positionMapper.checkO2P(id);
-			if(aaa==null||aaa.size()<=0) {
+			Map<String,String> map = new HashMap<>();
+			map.put("id", id);
+			map.put("orgId", orgId);
+			positionMapper.deleteO2P(map);
+			List<TOrganization2Position> list= positionMapper.checkO2P(id);
+			if(list==null||list.size()<=0) {
 				positionMapper.delete(id);
 			}
 			PubFun.returnSuccessJson(json);
@@ -103,6 +112,14 @@ public class PositionServiceImpl implements PositionService{
 	@Override
 	public Position get(String id) {
 		return positionMapper.get(id);
+	}
+
+	@Override
+	public Page<Position> all(Position position) {
+		PageHelper.startPage(position.getPage(),position.getRows());
+		Page<Position> pages = positionMapper.getPositions(position);
+		pages.setTotal(pages.size());
+		return pages;
 	}
 
 	@Override

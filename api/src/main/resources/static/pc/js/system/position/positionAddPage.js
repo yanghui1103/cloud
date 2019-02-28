@@ -1,24 +1,24 @@
 /**
- * 
+ *
  */
 
-function addNewPosition(){	 
+function addNewPosition(){
 	if (!$("#positionAddFm").form('enableValidation')
-			.form('validate')) {
+		.form('validate')) {
 		return;
 	}
 	$.ajax({
 		type : 'POST',
-		url : ctx + "position/position",
+		url : ctx + "addMicroServiceResult/v1/sys-proj/position/position/"+transferFormToString($("#positionAddFm")),
 		data : serializeFormToJSON($("#positionAddFm")
-				.serializeArray()),
+			.serializeArray()),
 		success : function(data) {
 			promptMessageCallBack(data.res, data.msg,function(){
-				 $('#positionLiDg').datagrid('reload');  
+				$('#positionLiDg').datagrid('reload');
 			} );
 		},
 		dataType : "JSON"
 	});
 
-	
+
 }
