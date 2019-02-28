@@ -13,6 +13,7 @@ import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.model.BaseModel;
 import io.swagger.annotations.Api;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -273,10 +274,25 @@ public class FlowController {
 	 * @return
 	 */
 	@GetMapping("doneTasks")
-	public String doneTasks(HttpServletRequest httpServletRequest, @ModelAttribute BaseModel baseModel){
+	@ResponseBody
+	public JSONObject doneTasks(HttpServletRequest httpServletRequest, @ModelAttribute BaseModel baseModel){
+		JSONObject jsonObject = new JSONObject();
 		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
-		flowCoreService.getUserhistoryTaskInstance(accountJson.getString("id"),true);
-		return null;
+		List<Todo> historyTasks = new ArrayList<>();
+		List<HistoricTaskInstance> historicTaskInstancess = flowCoreService.getUserhistoryTaskInstance(accountJson.getString("id"),true);
+		if(CollectionUtil.isNotEmpty(historicTaskInstancess)){
+			for(HistoricTaskInstance task:historicTaskInstancess){
+				Todo todo = new Todo();
+				TFlowRegister tFlowRegister = flowPlusMapper.getFlowRegsByFlowId(task.getProcessInstanceId()).get(0);
+				PubFun.copyProperties(todo,tFlowRegister);
+				todo.setTaskId(task.getId());
+				todo.setCreateTime(PubFun.formatDate(task.getCreateTime()));
+				historyTasks.add(todo);
+			}
+			jsonObject.put("rows",JSONObject.toJSONString(historyTasks.subList(baseModel.getPage()*baseModel.getRows(),baseModel.getPage()*baseModel.getRows()+baseModel.getRows())));
+		}
+		jsonObject.put("total",historyTasks.size());
+		return jsonObject;
 	}
 
 
