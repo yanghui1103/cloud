@@ -38,7 +38,7 @@ public class BaseModel{
      * 翻页使用
      */
     private Integer page =1;
-    private Integer rows =10;
+    private Integer rows =20;
     private Integer rn ;
     private List<String> haveOrgListAuth; /****拥有组织的数据权限***/
     private String tempStr;

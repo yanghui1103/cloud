@@ -265,6 +265,9 @@ public class FlowController {
 			}
 			jsonObject.put("total",todos.size());
 			jsonObject.put("rows",JSONObject.toJSONString(todos.subList(baseModel.getPage()*baseModel.getRows(),baseModel.getPage()*baseModel.getRows()+baseModel.getRows())));
+		}else{
+			jsonObject.put("total",12);
+			jsonObject.put("rows",null);
 		}
 		return jsonObject.toJSONString();
 	}
