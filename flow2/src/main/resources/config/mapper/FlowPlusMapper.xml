@@ -40,5 +40,9 @@
 		#{drafter,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{createOrgId,jdbcType=VARCHAR},sysdate,sysdate)
 	</insert>
 
+	<select id="getPInstanceOfDrafter" parameterType="String" resultType="TFlowRegister">
+		select * from T_FLOWREGISTER a where a.drafter = #{drafter,jdbcType=VARCHAR}
+	</select>
+
 
 </mapper>

@@ -3,6 +3,7 @@ package com.bw.fit.component.flow.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.bw.fit.component.flow.entity.BaseEntity;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
@@ -13,6 +14,8 @@ import com.bw.fit.component.flow.service.FlowCoreService;
 import com.bw.fit.component.flow.util.ProcessDiagramGenerator;
 import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.model.BaseModel;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -330,5 +333,23 @@ public class FlowController {
 		}
 		return jsonObject;
 	}
+
+	/*****
+	 * 某个发起者的所有发起的申请，翻页
+	 * @param drafter
+	 * @param baseEntity
+	 * @return
+	 */
+	@GetMapping("flow/drafter/{drafter}")
+	@ResponseBody
+	public JSONObject getFlowsOfDrafter(@PathVariable String drafter, @ModelAttribute BaseEntity baseEntity){
+		PageHelper.startPage(baseEntity.getPage(),baseEntity.getRows());
+		Page<TFlowRegister> tFlowRegisters = flowPlusMapper.getPInstanceOfDrafter(drafter);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("total",tFlowRegisters.getTotal());
+		jsonObject.put("rows",(JSONObject)JSONObject.toJSON(tFlowRegisters));
+		return jsonObject ;
+	}
+
 
 }
