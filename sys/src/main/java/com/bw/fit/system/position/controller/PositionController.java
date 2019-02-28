@@ -15,6 +15,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,8 @@ public class PositionController {
 	private OrganizationMapper organizationMapper;
 	@Autowired
 	private CommonService commonService;
+    @Value("${cutFlag}")
+    private String cutFlag;
 	/*****
 	 * 查询岗位管理列表
 	 *
@@ -93,7 +96,7 @@ public class PositionController {
 	@ResponseBody
 	public String openPositionAddPage(@PathVariable String orgIds,Model model){
 		String orgNames="";
-		for(String id : orgIds.split(",")) {
+		for(String id : orgIds.split(cutFlag)) {
 			orgNames += organizationMapper.get(id).getName()+";";
 		}
 		Map<String,String> map = new HashMap<>();
@@ -116,8 +119,8 @@ public class PositionController {
 		String ids = "";
 		String names = "";
 		for(Organization o : orgList) {
-			ids += o.getId()+',';
-			names += o.getName()+',';
+			ids += o.getId()+cutFlag;
+			names += o.getName()+';';
 		}
 		Map<String,Object> map = new HashMap<>();
 		map.put("position", p);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bw.fit.system.account.model.Account;
@@ -32,11 +33,12 @@ public class AddressServcieImpl implements AddressService{
 	private DictService dictService;
 	@Resource
 	private AddressMapper addressMapper;
-	
+	@Value("${cutFlag}")
+	private String cutFlag;
 	@Override
 	public List<Address> getSelectedAddr(String ids) {
 		List<Address> list = new ArrayList<Address>();
-		String ids2[] = ids.split(",");
+		String ids2[] = ids.split(cutFlag);
 		if(ids2.length>0) {
 			for(String id : ids2) {
 				VAddress va = new VAddress();

@@ -2,7 +2,7 @@
  * 组织管理JS
  */
 
-var zNodes ='';
+var addrNodes ='';
 
 var setting = {
 			data: {
@@ -102,9 +102,9 @@ var setting = {
 		$(document).ready(function(){
 			$.get(ctx+"getMicroServiceResult/v1/sys-proj/org/organizations",function(data){
 				if(data.res =="2"){
-					zNodes = (data.list) ;
+					addrNodes = (data.list) ;
 					console.info(data.list);
-					$.fn.zTree.init($("#addrOrgTree"), setting, zNodes);
+					$.fn.zTree.init($("#addrOrgTree"), setting, addrNodes);
 					key = $("#key");
 					key.bind("focus", focusKey)
 					.bind("blur", blurKey)

@@ -4,8 +4,6 @@
 
 $(function(){
 	positionlistquery();
-	
-
 });
 
 
@@ -83,6 +81,8 @@ function deletePosition(){
 }
 
 function openEditPosition(){
+	var zTree = $.fn.zTree.getZTreeObj("positionTree");
+	console.log('1111'+zTree);
 	var row = getSingleGridSelectData($("#positionLiDg"));
 	if(row !=null){				
 		$('#_loadDialog_positionList').dialog({    

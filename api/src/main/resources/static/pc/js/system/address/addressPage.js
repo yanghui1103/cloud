@@ -43,7 +43,7 @@ function getvalue(geto){
     	allvalue = geto.options[0].value.split("-")[0];
     }else{
     	for(var i=0;i<geto.options.length;i++){ 
-    		allvalue +=geto.options[i].value.split("-")[0] + ";";
+    		allvalue +=geto.options[i].value.split("-")[0] + cutFlag;
     	}
     }
     return allvalue; 

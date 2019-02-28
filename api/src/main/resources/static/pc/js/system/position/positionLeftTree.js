@@ -28,11 +28,12 @@ var setting = {
 
 	function onCheck(e, treeId, treeNode) {
 		var zTree = $.fn.zTree.getZTreeObj("positionTree");
+		console.log(zTree);
 		var arr = zTree.getCheckedNodes(true);
 		var ids='';
 		var names='';
 		$.each(arr,function(i,value){
-			ids += value.id+',';
+			ids += value.id+cutFlag;
 		});
 		$("#org_ids").val(ids);
 	}
