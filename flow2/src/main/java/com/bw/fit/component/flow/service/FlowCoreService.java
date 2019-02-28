@@ -344,7 +344,7 @@ public interface FlowCoreService {
      */
     public List<Task> getCurrentTasksOfUser(String userId);
     /***
-     * 获取用户参与过的历史任务,finished:true 只查询已经完成的历史任务，false为全部历史任务
+     * 获取用户参与过的历史任务,finished:true 只查询[实例已经完成]的历史任务，false为全部历史任务
      * @param userId
      * @param finished
      * @return

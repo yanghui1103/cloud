@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.entity.TFlowRegister;
+import com.bw.fit.component.flow.model.RbackException;
 import org.activiti.engine.runtime.ProcessInstance;
 
 import com.alibaba.fastjson.JSONObject;
@@ -29,4 +31,11 @@ public interface FlowPlusService {
      */
     List<TFlowExecuteDefinition> getCanBackFlowNodes(String processId);
 
+    /****
+     * 流程登记
+     * @param tFlowRegister
+     * @return
+     * @throws RbackException
+     */
+    JSONObject createRegisterPInstance(TFlowRegister tFlowRegister) throws RbackException;
 }

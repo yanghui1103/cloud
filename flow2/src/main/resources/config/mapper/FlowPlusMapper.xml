@@ -34,5 +34,11 @@
 		select * from T_flowRegister a where a.flowId = #{flowId,jdbcType=VARCHAR}
 	</select>
 
+	<insert id="createRegisterPInstance" parameterType="TFlowRegister">
+		insert into T_FLOWREGISTER (id,FLOWID,TITLE,DRAFTER,creator,CREATEORGID,CREATETIME,VERSIONTIME) values
+		(#{id,jdbcType=VARCHAR},#{flowId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
+		#{drafter,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{createOrgId,jdbcType=VARCHAR},sysdate,sysdate)
+	</insert>
+
 
 </mapper>

@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 import cn.hutool.core.util.ObjectUtil;
 import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
+import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
+import com.bw.fit.component.flow.model.RbackException;
+import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.component.flow.service.FlowCoreService;
 import com.bw.fit.component.flow.service.FlowPlusService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -58,5 +62,20 @@ public class FlowPlusServiceImpl implements FlowPlusService {
 			return tfs;
 		}
 		return  null;
+	}
+
+	@Transactional(rollbackFor ={Exception.class,RbackException.class})
+	@Override
+	public JSONObject createRegisterPInstance(TFlowRegister tFlowRegister) throws RbackException {
+		JSONObject jsonObject = new JSONObject();
+		try{
+			flowPlusMapper.createRegisterPInstance(tFlowRegister);
+			PubFun.returnSuccessJson(jsonObject);
+		}catch (Exception e){
+			PubFun.returnFailJson(jsonObject,"流程登记异常");
+			throw  new RbackException("1","流程登记异常");
+		}finally {
+			return jsonObject;
+		}
 	}
 }

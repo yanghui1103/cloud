@@ -47,4 +47,10 @@ public interface FlowPlusMapper {
      */
     List<TFlowRegister> getFlowRegsByFlowId(String flowId);
 
+    /*****
+     * 登记流程，发起时候登记
+     * @param tFlowRegister
+     */
+    void createRegisterPInstance(TFlowRegister tFlowRegister);
+
 }

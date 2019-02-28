@@ -2,6 +2,7 @@ package com.bw.fit.component.flow.controller;
 
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
@@ -14,6 +15,7 @@ import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.model.BaseModel;
 import io.swagger.annotations.Api;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -24,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -279,7 +282,7 @@ public class FlowController {
 		JSONObject jsonObject = new JSONObject();
 		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
 		List<Todo> historyTasks = new ArrayList<>();
-		List<HistoricTaskInstance> historicTaskInstancess = flowCoreService.getUserhistoryTaskInstance(accountJson.getString("id"),true);
+		List<HistoricTaskInstance> historicTaskInstancess = flowCoreService.getUserhistoryTaskInstance(accountJson.getString("id"),false);
 		if(CollectionUtil.isNotEmpty(historicTaskInstancess)){
 			for(HistoricTaskInstance task:historicTaskInstancess){
 				Todo todo = new Todo();
@@ -295,5 +298,37 @@ public class FlowController {
 		return jsonObject;
 	}
 
+	/*****
+	 * 启动流程
+	 * @param processDefinitionKey 定义key
+	 * @param title 主题
+	 * @param vars 键值对，格式是jsonstring
+	 * @return 返回流程实例id：pInstanceId
+	 */
+	@PostMapping("start/processDefinitionKey/{processDefinitionKey}/{title}/{vars}")
+	@ResponseBody
+	public JSONObject startFlow(HttpServletRequest httpServletRequest, @PathVariable String title, @PathVariable String processDefinitionKey,@PathVariable String vars) throws RbackException {
+		JSONObject jsonObject = new JSONObject();
+		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
+		Map map = JSONObject.toJavaObject((JSONObject)JSONObject.toJSON(vars),Map.class);
+		map.put("drafter",accountJson.getString("id"));
+		ProcessInstance pInstance=processEngine.getRuntimeService()
+				.startProcessInstanceByKey(processDefinitionKey,map);
+
+		if(ObjectUtil.isNotNull(pInstance)){
+			jsonObject.put("pInstanceId",pInstance.getId());
+			// 流程登记
+			TFlowRegister tFlowRegister = new TFlowRegister();
+			tFlowRegister.setTitle(title);
+			tFlowRegister.setFlowId(pInstance.getId());
+			tFlowRegister.setDrafter(accountJson.getString("id"));
+			commonService.fillCommonProptities(tFlowRegister,httpServletRequest,true);
+			jsonObject = flowPlusService.createRegisterPInstance(tFlowRegister);
+		}else{
+			jsonObject = new JSONObject();
+			PubFun.returnFailJson(jsonObject,"启动失败");
+		}
+		return jsonObject;
+	}
 
 }
