@@ -5,4 +5,4 @@
 2,如果需要手工事务:
     TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
             transactionManager.commit(status);transactionManager.rollback(status);
-3,
+3,微服务返回数据统一位JSONObject或者JSONArray; (*)

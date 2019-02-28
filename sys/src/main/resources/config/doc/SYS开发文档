@@ -5,7 +5,7 @@
     1，多数据源动态切换：
         首先做好配置，然后增加dynamicdatasource文件夹下的代码；其次，注意service/mapper的方法参数列表里必须要有
     BaseModel或BaseEntity对象，而且里面的租户字段也必须要有数据。
-    2,微服务返回数据统一位JSON格式的string。[如果返回的是JsonArray那么就必须要转位String返回。前提不建议返回jsonarray];
+    2,微服务返回数据统一位JSONObject或者JSONArray;
     3,解除对swagger的屏蔽，请去SessionCorrectInterceptor里的白名单添加即可。
     4,凡是service中涉及事务[增删改]就需要在方法名上增加注解@Transactional(rollbackFor = {Exception.class,RbackException.class})
         如果需要手工事务:
