@@ -43,7 +43,7 @@ function getvalue(geto){
     	allvalue = geto.options[0].value.split("-")[0];
     }else{
     	for(var i=0;i<geto.options.length;i++){ 
-    		allvalue +=geto.options[i].value.split("-")[0] + ","; 
+    		allvalue +=geto.options[i].value.split("-")[0] + ";";
     	}
     }
     return allvalue; 
@@ -54,7 +54,7 @@ function getname(geto){
     	allname = geto.options[0].text;
     }else{
     	for(var i=0;i<geto.options.length;i++){ 
-        	allname +=geto.options[i].text + ","; 
+        	allname +=geto.options[i].text + ";";
         } 
     }
     return allname; 
