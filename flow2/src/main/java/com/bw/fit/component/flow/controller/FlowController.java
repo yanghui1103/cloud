@@ -253,7 +253,6 @@ public class FlowController {
 		tasks.addAll(tasks1);
 		tasks.addAll(tasks2);
 
-
 		if(CollectionUtil.isNotEmpty(tasks)){
 			for(Task task:tasks){
 				Todo todo = new Todo();
@@ -263,12 +262,22 @@ public class FlowController {
 				todo.setCreateTime(PubFun.formatDate(task.getCreateTime()));
 				todos.add(todo);
 			}
-			jsonObject.put("total",todos.size());
 			jsonObject.put("rows",JSONObject.toJSONString(todos.subList(baseModel.getPage()*baseModel.getRows(),baseModel.getPage()*baseModel.getRows()+baseModel.getRows())));
-		}else{
-			jsonObject.put("total",12);
-			jsonObject.put("rows",null);
 		}
+		jsonObject.put("total",todos.size());
 		return jsonObject.toJSONString();
 	}
+
+	/****
+	 * 该账户的已办列表
+	 * @return
+	 */
+	@GetMapping("doneTasks")
+	public String doneTasks(HttpServletRequest httpServletRequest, @ModelAttribute BaseModel baseModel){
+		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
+		flowCoreService.getUserhistoryTaskInstance(accountJson.getString("id"),true);
+		return null;
+	}
+
+
 }

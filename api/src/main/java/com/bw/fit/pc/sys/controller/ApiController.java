@@ -249,6 +249,39 @@ public class ApiController {
         return stringBuffer.toString();
     }
 
+
+    @ApiOperation("去往单元微服务系统所指定去往的页面，model[mapData]只支持微服务返回一个JSON对象")
+    @GetMapping("towardMicroServicePage/v2/{serviceName}/{urlString}/{pageString}")
+    public String towardv2(HttpServletRequest request,@PathVariable String serviceName, @PathVariable(value = "urlString",required = true) String urlString,
+                         @PathVariable(value = "pageString",required = true) String pageString, Model model){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = urlString.split(",");
+        String[] paramArray2 = pageString.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if (paramArray != null) {
+            for (int i = 0; i < paramArray.length; i++) {
+                stringBuffer.append(paramArray[i]);
+                if (i != paramArray.length - 1) {
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.get(request,"http://" + serviceName + "/" + stringBuffer.toString() ,map);
+            model.addAttribute("stringData", string);
+        }
+        stringBuffer = new StringBuffer();
+        if (paramArray2 != null) {
+            for (int i = 0; i < paramArray2.length; i++) {
+                stringBuffer.append(paramArray2[i]);
+                if (i != paramArray2.length - 1) {
+                    stringBuffer.append("/");
+                }
+            }
+        }
+        return stringBuffer.toString();
+    }
+
     @ApiOperation("跳转到对应的页面统一方法")
     @GetMapping("gotoIframePage/{path1}/{path2}/{path3}/{path4}/{pageName}/{arg}")
     public  String gotoframe(@PathVariable(value="path1") String path1,@PathVariable(value="path2") String path2,
