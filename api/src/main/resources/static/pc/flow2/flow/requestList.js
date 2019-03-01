@@ -8,7 +8,7 @@ function query(){
         pagination:true,
         method:"get",
         url: ctx+'getMicroServiceResult/v3/flow2-proj/flow/flow,drafter,'+ currentAccountId,
-        queryParams:  $("#requestDgFm").serialize(),
+        queryParams:  serializeFormToJSON($("#requestDgFm").serializeArray()),
         remoteSort: false,
         columns: [[
             { field: 'id',  hidden:true  },

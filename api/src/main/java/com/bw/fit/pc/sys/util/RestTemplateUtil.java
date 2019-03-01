@@ -4,10 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -156,31 +153,30 @@ public class RestTemplateUtil {
             String value = request.getHeader(key);
             requestHeaders.add(key, value);
         }
-//获取parameter信息,并拼接request串formString
-//        StringBuffer formString =  new StringBuffer();
-        if(params == null || params!=null) {
+        //获取parameter信息
+        StringBuffer formBuffer = new StringBuffer();
+        if(params == null||params != null) {
             params = new LinkedMultiValueMap<>();
-            Map<String,String[]> maps = request.getParameterMap() ;
-            if(CollectionUtil.isNotEmpty(maps)){
-                Set<String> keySet = maps.keySet();
+            Map<String,?> paramterMap = request.getParameterMap();
+            if(CollectionUtil.isNotEmpty(paramterMap)){
+                Set<String> keySet = paramterMap.keySet();
                 for (String key : keySet) {
                     String[] values = request.getParameterMap().get(key);
                     for(String value:values){
                         ((LinkedMultiValueMap)params).add(key,value);
+                        formBuffer.append("&"+key+"="+value);
                     }
                 }
             }
+
         }
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){
             List<String> sessions = (List<String>) params.get("sessionId");
             requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
         }
-
-        //  最好通过bean注入的方式获取ObjectMapper
-        ObjectMapper mapper = new ObjectMapper();
-        String value = mapper.writeValueAsString(params);
-        HttpEntity<String> requestEntity = new HttpEntity<String>(value, requestHeaders);
+        url = url+"?"+formBuffer.substring(1,formBuffer.length());
+        HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, method, requestEntity, String.class, params);
         return rss;
     }

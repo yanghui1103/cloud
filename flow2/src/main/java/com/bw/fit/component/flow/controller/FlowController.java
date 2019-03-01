@@ -16,6 +16,7 @@ import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.model.BaseModel;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import io.swagger.annotations.Api;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -337,15 +338,14 @@ public class FlowController {
 	/*****
 	 * 某个发起者的所有发起的申请，翻页
 	 * @param drafter
-	 * @param baseEntity
 	 * @return
 	 */
 	@GetMapping("flow/drafter/{drafter}")
 	@ResponseBody
-	public JSONObject getFlowsOfDrafter(@PathVariable String drafter, @ModelAttribute BaseEntity baseEntity){
+	public JSONObject getFlowsOfDrafter(@PathVariable String drafter,@ModelAttribute BaseEntity baseEntity, @RequestParam(name = "tt") String tt, HttpServletRequest request){
+		JSONObject jsonObject = new JSONObject();
 		PageHelper.startPage(baseEntity.getPage(),baseEntity.getRows());
 		Page<TFlowRegister> tFlowRegisters = flowPlusMapper.getPInstanceOfDrafter(drafter);
-		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("total",tFlowRegisters.getTotal());
 		if(CollectionUtil.isNotEmpty(tFlowRegisters)){
 			jsonObject.put("rows",(JSONObject)JSONObject.toJSON(tFlowRegisters));
