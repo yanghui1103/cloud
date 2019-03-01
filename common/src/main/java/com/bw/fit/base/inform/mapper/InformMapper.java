@@ -45,6 +45,6 @@ public interface InformMapper {
      * @param tInform
      * @return
      */
-    Page<TInform> getInnerMsgs(Inform tInform);
+    List<TInform> getInnerMsgs(Inform tInform);
 
 }

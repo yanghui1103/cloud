@@ -58,15 +58,16 @@ public class InformServiceImpl implements InformService {
 
     @Override
     public List<Inform> selectInnerInform(Inform inform) {
-        List<Inform> ins = new ArrayList<>();
+        Page<Inform> ins = new Page<>();
         PageHelper.startPage(inform.getPage(),inform.getRows());
-        Page<TInform> tInforms = informMapper.getInnerMsgs(inform);
+        List<TInform> tInforms = informMapper.getInnerMsgs(inform);
         if(CollectionUtil.isNotEmpty(tInforms)){
             tInforms.parallelStream().forEach(x->{
                 Inform inform1 = new Inform();
                 PubFun.copyProperties(inform1,x);
                 ins.add(inform1);
             });
+            ins.setTotal(((Page)tInforms).getTotal());
         }
         return ins;
     }

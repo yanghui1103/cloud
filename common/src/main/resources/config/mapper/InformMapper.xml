@@ -19,7 +19,7 @@
 
     <select id="getInnerMsgs" parameterType="Inform" resultType="tinform">
         select * from t_inform a where receiver = #{receiver,jdbcType=VARCHAR}
-        <if test="isRead !=''.toString()">
+        <if test="isRead !=''.toString() and isRead!=null">
             and isread = #{isRead,jdbcType=VARCHAR}
         </if>
     </select>

@@ -6,8 +6,8 @@ function query(){
     $('#innermsgList').datagrid({
         pagination:true,
         method:"get",
-        url: ctx+'getMicroServiceResult/v1/common-proj/inform/innerMsg' ,
-        queryParams:   {},
+        url: ctx+'getMicroServiceResult/v3/common-proj/inform/innerMsg' ,
+        queryParams:   serializeFormToJSON($("#imermsgfm").serializeArray()),
         remoteSort: false,
         columns: [[
             { field: 'id', title: 'ID' ,hidden:true  },
@@ -39,7 +39,7 @@ function openDetail(id) {
         closed: false,
         cache: false,
         maximizable:true,
-        href: ctx+'towardMicroServicePage/v1/common-proj/log,log,'+id+'/common,pc,base,log,logDetail' ,
+        href: ctx+'towardMicroServicePage/v1/common-proj/inform,innerMsg,'+id+'/common,pc,base,inform,innerMsgDetail' ,
         modal: true
     });
 }

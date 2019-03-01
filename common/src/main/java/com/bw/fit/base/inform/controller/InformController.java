@@ -1,10 +1,14 @@
 package com.bw.fit.base.inform.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.controller.BaseController;
 import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.common.util.PubFun;
+import com.bw.fit.base.inform.entity.TInform;
+import com.bw.fit.base.inform.mapper.InformMapper;
 import com.bw.fit.base.inform.model.Inform;
 import com.bw.fit.base.inform.service.InformService;
 import com.github.pagehelper.Page;
@@ -18,6 +22,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import static com.bw.fit.base.common.util.PubFun.*;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.sound.sampled.Line;
 import javax.validation.Valid;
@@ -40,6 +46,8 @@ public class InformController extends BaseController {
     private InformService informService;
     @Autowired
     private CommonService commonService;
+    @Resource
+    private InformMapper informMapper;
 
     /******
      * 发送消息
@@ -76,8 +84,20 @@ public class InformController extends BaseController {
         JSONObject jsonObject = new JSONObject();
         List<Inform> list = informService.selectInnerInform(inform);
         jsonObject.put("total",((Page)list).getTotal());
-        jsonObject.put("rows",(JSONObject) JSONObject.toJSON(list));
+        jsonObject.put("rows",(JSONArray) JSONObject.toJSON(list));
         return jsonObject;
+    }
+
+    @GetMapping("innerMsg/{id}")
+    public String getOne(@PathVariable String id){
+        JSONObject jsonObject = new JSONObject();
+        TInform tInform = informMapper.get(id);
+        if(ObjectUtil.isNotNull(tInform)){
+            jsonObject = (JSONObject)JSONObject.toJSON(tInform);
+            PubFun.returnSuccessJson(jsonObject);
+        }
+        PubFun.returnFailJson(jsonObject,"不存在数据");
+        return jsonObject.toJSONString();
     }
 
 }
