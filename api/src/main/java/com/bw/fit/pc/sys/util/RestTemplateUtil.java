@@ -175,7 +175,7 @@ public class RestTemplateUtil {
             List<String> sessions = (List<String>) params.get("sessionId");
             requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
         }
-        url = url+"?"+formBuffer.substring(1,formBuffer.length());
+        url = ("".equals(formBuffer.toString()))?url+"?"+formBuffer.substring(1,formBuffer.length()):url;
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, method, requestEntity, String.class, params);
         return rss;
