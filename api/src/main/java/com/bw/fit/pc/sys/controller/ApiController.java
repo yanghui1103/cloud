@@ -108,31 +108,29 @@ public class ApiController {
     }
 
     @ApiOperation(value = "远程调用微服务的接口,Form方式查询" )
-    @GetMapping(value="getMicroServiceResult/v3/{serviceName}/{controllerName}/{requestUrl}/{params}")
+    @GetMapping(value="getMicroServiceResult/v3/{serviceName}/{controllerName}/{requestUrl}")
     @ResponseBody
     public JSONObject getMicroServiceResultV3(@PathVariable String serviceName,@PathVariable String controllerName,
-                                              @PathVariable String requestUrl,@PathVariable String params ,HttpServletRequest httpServletRequest  ){
+                                              @PathVariable String requestUrl,HttpServletRequest httpServletRequest  ){
         JSONObject jsonObject = new JSONObject();
-        String[] paramArray = params.split(",");
-        StringBuffer stringBuffer = new StringBuffer();
-        if(paramArray !=null ){
-            for(int i=0;i<paramArray.length;i++){
-                stringBuffer.append(paramArray[i]);
-                if(i!=paramArray.length-1){
-                    stringBuffer.append("/");
+        String[] requestUrlArray = requestUrl.split(",");
+        StringBuffer requestUrlBuffer = new StringBuffer();
+        if(StrUtil.isNotEmpty(requestUrl)){
+            for(int i=0;i<requestUrlArray.length;i++){
+                requestUrlBuffer.append(requestUrlArray[i]);
+                if(i!=requestUrlArray.length-1){
+                    requestUrlBuffer.append("/");
                 }
             }
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
             map.add("sessionId", PubFun.getCurrentSessionId());
-            String string = restTemplateUtil.get(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            String string = restTemplateUtil.getByForm(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+requestUrlBuffer.toString(),map);
             jsonObject = JSONObject.parseObject(string);
         }else{
             PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
         }
         return jsonObject;
     }
-
-
 
     @ApiOperation(value = "远程调用微服务的接口，做删除操作" )
     @DeleteMapping(value="deleteMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
