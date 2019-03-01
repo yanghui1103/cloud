@@ -9,6 +9,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -25,14 +26,15 @@ import javax.annotation.Resource;
 public class PositionServiceImpl implements PositionService{
 	@Resource
 	private PositionMapper positionMapper;
-
+	@Value("${cutFlag}")
+	private String cutFlag;
 	@Override
 	public JSONObject createPosition(Position position) throws RbackException {
 		JSONObject json = new JSONObject();		
 		try {
 			positionMapper.insert(position);
 			PubFun.returnSuccessJson(json);
-			String [] ids = position.getTempStr1().split(",");
+			String [] ids = position.getTempStr1().split(cutFlag);
 			if(ids.length>0) {
 				for(String orgId : ids) {
 					TOrganization2Position to2p = new TOrganization2Position();
@@ -58,8 +60,8 @@ public class PositionServiceImpl implements PositionService{
 			positionMapper.update(position);
 			positionMapper.deleteO2PByPid(position.getId());
 			String tmpIds = position.getTempStr1();
-			if(tmpIds.indexOf(",")!=-1) {
-				String [] ids = tmpIds.split(",");
+			if(tmpIds.indexOf(cutFlag)!=-1) {
+				String [] ids = tmpIds.split(cutFlag);
 				if(ids.length>0) {
 					for(String orgId : ids) {
 						TOrganization2Position to2p = new TOrganization2Position();

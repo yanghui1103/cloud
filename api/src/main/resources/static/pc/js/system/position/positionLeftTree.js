@@ -1,34 +1,10 @@
 /**
  * 岗位管理JS
  */
-var zNodes ='';
-
-var setting = {
-			check: {
-				enable: true,
-				chkStyle: "checkbox",
-			chkboxType: { "Y": "", "N": "" }
-		},
-		data: {
-			key: {
-				title: "t"
-			},
-			simpleData: {
-				enable: true
-			}				
-		},
-		view: {
-			fontCss: getFontCss
-		},
-		callback: {
-			onClick: this.onClick,
-			onCheck: this.onCheck
-		}
-	};
+var gwNodes ='';
 
 	function onCheck(e, treeId, treeNode) {
 		var zTree = $.fn.zTree.getZTreeObj("positionTree");
-		console.log(zTree);
 		var arr = zTree.getCheckedNodes(true);
 		var ids='';
 		var names='';
@@ -116,22 +92,48 @@ var setting = {
 	}
 
 	var key;
-	$(document).ready(function(){
+
+	function initTree(){
+		var gwsetting = {
+			check: {
+				enable: true,
+				chkStyle: "checkbox",
+				chkboxType: { "Y": "", "N": "" }
+			},
+			data: {
+				key: {
+					title: "t"
+				},
+				simpleData: {
+					enable: true
+				}
+			},
+			view: {
+				fontCss: getFontCss
+			},
+			callback: {
+				onClick: this.onClick,
+				onCheck: this.onCheck
+			}
+		};
 		$.get(ctx + "getMicroServiceResult/v1/sys-proj/org/organizations",function(data){
-			if(data.res =="2"){ 
-				zNodes = (data.list) ; 					
-				$.fn.zTree.init($("#positionTree"), setting, zNodes);
+			if(data.res =="2"){
+				gwNodes = (data.list) ;
+				$.fn.zTree.init($("#positionTree"), gwsetting, gwNodes);
 				key = $("#key");
 				key.bind("focus", focusKey)
-				.bind("blur", blurKey)
-				.bind("propertychange", searchNode)
-				.bind("input", searchNode);
+					.bind("blur", blurKey)
+					.bind("propertychange", searchNode)
+					.bind("input", searchNode);
 				$("#name").bind("change", clickRadio);
 				$("#level").bind("change", clickRadio);
-				$("#id").bind("change", clickRadio); 
-				$("#getNodesByParamFuzzy").bind("change", clickRadio); 
+				$("#id").bind("change", clickRadio);
+				$("#getNodesByParamFuzzy").bind("change", clickRadio);
 			}
 		});
+	}
+	$(document).ready(function(){
+		initTree();
 		
 	});
 		

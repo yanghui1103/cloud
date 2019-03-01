@@ -116,5 +116,4 @@ var setting = {
 					$("#getNodesByParamFuzzy").bind("change", clickRadio); 
 				}
 			});
-			
 		});

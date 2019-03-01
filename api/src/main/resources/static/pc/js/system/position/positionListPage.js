@@ -43,7 +43,7 @@ function positionReloadgrid() {
 
 function addPositionPage(){
 	var ids = $("#org_ids").val();
-	if(ids =='-1'){			
+	if(ids =='-1'||ids ==''){
 		promptMessage("1","请选择组织机构");
 	}else{
 		$('#_loadDialog_positionList').dialog({    
@@ -81,8 +81,6 @@ function deletePosition(){
 }
 
 function openEditPosition(){
-	var zTree = $.fn.zTree.getZTreeObj("positionTree");
-	console.log('1111'+zTree);
 	var row = getSingleGridSelectData($("#positionLiDg"));
 	if(row !=null){				
 		$('#_loadDialog_positionList').dialog({    

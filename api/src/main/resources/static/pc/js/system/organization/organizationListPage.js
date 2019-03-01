@@ -39,7 +39,6 @@ var setting = {
 
 		function onClick(e, treeId, node) {
 			var orgId = node.id;
-
 			$.ajax({
 				type : 'GET',
 				url : ctx + "getMicroServiceResult/v1/sys-proj/org/organization,"+orgId,
