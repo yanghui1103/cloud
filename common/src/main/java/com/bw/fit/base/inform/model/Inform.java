@@ -26,6 +26,7 @@ public class Inform extends BaseModel {
     private String affair; // 事务 例如INSTORE:ID号
     @NotEmpty(message = "发送方式不得为空")
     private String way; //方式：短信，邮件，站内信
+    private String isRead;
 
 
     public String getTitle() {
@@ -82,5 +83,13 @@ public class Inform extends BaseModel {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(String isRead) {
+        this.isRead = isRead;
     }
 }

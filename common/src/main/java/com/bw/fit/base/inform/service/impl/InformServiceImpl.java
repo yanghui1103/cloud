@@ -1,18 +1,24 @@
 package com.bw.fit.base.inform.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.common.util.PubFun;
 import com.bw.fit.base.inform.entity.TInform;
+import com.bw.fit.base.inform.mapper.InformMapper;
 import com.bw.fit.base.inform.model.Inform;
 import com.bw.fit.base.inform.service.InformService;
 import com.bw.fit.base.inform.util.InnerMsgSender;
 import com.bw.fit.base.inform.util.MailTool;
 import com.bw.fit.base.inform.util.SmsSender;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description
@@ -27,6 +33,8 @@ public class InformServiceImpl implements InformService {
 
     @Resource
     private InnerMsgSender innerMsgSender;
+    @Resource
+    private InformMapper informMapper;
 
     @Transactional(rollbackFor = {Exception.class, RbackException.class})
     @Override
@@ -46,5 +54,20 @@ public class InformServiceImpl implements InformService {
                 jsonObject = innerMsgSender.send(tInform);
                 return jsonObject;
         }
+    }
+
+    @Override
+    public List<Inform> selectInnerInform(Inform inform) {
+        List<Inform> ins = new ArrayList<>();
+        PageHelper.startPage(inform.getPage(),inform.getRows());
+        Page<TInform> tInforms = informMapper.getInnerMsgs(inform);
+        if(CollectionUtil.isNotEmpty(tInforms)){
+            tInforms.parallelStream().forEach(x->{
+                Inform inform1 = new Inform();
+                PubFun.copyProperties(inform1,x);
+                ins.add(inform1);
+            });
+        }
+        return ins;
     }
 }

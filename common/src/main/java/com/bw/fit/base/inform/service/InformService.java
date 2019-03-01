@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.inform.entity.TInform;
 import com.bw.fit.base.inform.model.Inform;
 
+import java.util.List;
+
 /**
  * @Description 消息服务
  * @Author yangh
@@ -21,5 +23,11 @@ public interface InformService {
      */
     public JSONObject send(Inform inform);
 
+    /*****
+     * 查询站内信
+     * @param inform
+     * @return
+     */
+    public List<Inform> selectInnerInform(Inform inform);
 
 }

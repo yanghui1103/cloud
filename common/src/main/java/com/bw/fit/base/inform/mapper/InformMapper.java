@@ -2,6 +2,7 @@ package com.bw.fit.base.inform.mapper;
 
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.inform.entity.TInform;
+import com.bw.fit.base.inform.model.Inform;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -39,5 +40,11 @@ public interface InformMapper {
      */
     public List<TInform> selectByAccount(String accountId);
 
+    /****
+     * 站内信记录
+     * @param tInform
+     * @return
+     */
+    Page<TInform> getInnerMsgs(Inform tInform);
 
 }

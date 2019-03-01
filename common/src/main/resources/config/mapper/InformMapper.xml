@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bw.fit.base.inform.mapper.InformMapper">
 
-
     <insert id="insert" parameterType="TInform">
         insert into t_inform(id,title,contenttype,content,sender,receiver,isread,createtime,createorgid)
         values (#{id,jdbcType=VARCHAR},#{titile,jdbcType=VARCHAR},#{contentType,jdbcType=VARCHAR},
@@ -15,7 +14,14 @@
     </select>
 
     <select id="selectByAccount" parameterType="String" resultType="TInform">
-        select * from t_inform a where receiver = #{accountId,jdbcType=VARCHAR}
+        select * from t_inform a where 1=1 and receiver = #{accountId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getInnerMsgs" parameterType="Inform" resultType="tinform">
+        select * from t_inform a where receiver = #{receiver,jdbcType=VARCHAR}
+        <if test="isRead !=''.toString()">
+            and isread = #{isRead,jdbcType=VARCHAR}
+        </if>
     </select>
 
 </mapper>
