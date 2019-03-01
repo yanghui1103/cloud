@@ -7,7 +7,7 @@ function query(){
     $('#requestDg').datagrid({
         pagination:true,
         method:"get",
-        url: ctx+'getMicroServiceResult/v1/flow2-proj/flow/flow,drafter,'+ currentAccountId,
+        url: ctx+'getMicroServiceResult/v3/flow2-proj/flow/flow,drafter,'+ currentAccountId,
         queryParams:  $("#requestDgFm").serialize(),
         remoteSort: false,
         columns: [[

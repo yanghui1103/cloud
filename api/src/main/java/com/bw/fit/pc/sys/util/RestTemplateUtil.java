@@ -28,8 +28,14 @@ public class RestTemplateUtil {
     private RestTemplate restTemplate;
 
     public String post(ServletRequest req, String url, MultiValueMap<String, ?> params) {
-        ResponseEntity<String> rss = request(req, url, HttpMethod.POST, params);
-        return rss.getBody();
+        ResponseEntity<String> rss = null;
+        try {
+            rss = requestv2(req, url, HttpMethod.POST, params);
+            return rss.getBody();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /*****
@@ -40,8 +46,14 @@ public class RestTemplateUtil {
      * @return
      */
     public String get(ServletRequest req, String url, MultiValueMap<String, ?> params) {
-        ResponseEntity<String> rss = request(req, url, HttpMethod.GET, params);
-        return rss.getBody();
+        ResponseEntity<String> rss = null;
+        try {
+            rss = request(req, url, HttpMethod.GET, params);
+            return rss.getBody();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /*****
@@ -63,13 +75,25 @@ public class RestTemplateUtil {
     }
 
     public String delete(ServletRequest req, String url, MultiValueMap<String, ?> params) {
-        ResponseEntity<String> rss = request(req, url, HttpMethod.DELETE, params);
-        return rss.getBody();
+        ResponseEntity<String> rss = null;
+        try {
+            rss = request(req, url, HttpMethod.DELETE, params);
+            return rss.getBody();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String put(ServletRequest req, String url, MultiValueMap<String, ?> params) {
-        ResponseEntity<String> rss = request(req, url, HttpMethod.PUT, params);
-        return rss.getBody();
+        ResponseEntity<String> rss = null;
+        try {
+            rss = request(req, url, HttpMethod.PUT, params);
+            return rss.getBody();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -79,7 +103,7 @@ public class RestTemplateUtil {
      * @param params maybe null
      * @return
      */
-    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) {
+    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) throws JsonProcessingException {
         HttpServletRequest request = (HttpServletRequest) req;
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -90,7 +114,7 @@ public class RestTemplateUtil {
             requestHeaders.add(key, value);
         }
         //获取parameter信息
-        if(params == null) {
+        if(params == null||params != null) {
             params = new LinkedMultiValueMap<>();
             Set<String> keySet = request.getParameterMap().keySet();
             for (String key : keySet) {
@@ -106,7 +130,10 @@ public class RestTemplateUtil {
             requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
         }
 
-        HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
+        //  最好通过bean注入的方式获取ObjectMapper
+        ObjectMapper mapper = new ObjectMapper();
+        String value = mapper.writeValueAsString(params);
+        HttpEntity<String> requestEntity = new HttpEntity<String>(value, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, method, requestEntity, String.class, params);
         return rss;
     }
@@ -131,20 +158,19 @@ public class RestTemplateUtil {
         }
 //获取parameter信息,并拼接request串formString
 //        StringBuffer formString =  new StringBuffer();
-//        if(params == null || params!=null) {
-//            params = new LinkedMultiValueMap<>();
-//            Map<String,String[]> maps = request.getParameterMap() ;
-//            if(CollectionUtil.isNotEmpty(maps)){
-//                Set<String> keySet = maps.keySet();
-//                for (String key : keySet) {
-//                    String[] values = request.getParameterMap().get(key);
-//                    for(String value:values){
-//                        ((LinkedMultiValueMap)params).add(key,value);
-//                        formString.append("&"+key +"="+value);
-//                    }
-//                }
-//            }
-//        }
+        if(params == null || params!=null) {
+            params = new LinkedMultiValueMap<>();
+            Map<String,String[]> maps = request.getParameterMap() ;
+            if(CollectionUtil.isNotEmpty(maps)){
+                Set<String> keySet = maps.keySet();
+                for (String key : keySet) {
+                    String[] values = request.getParameterMap().get(key);
+                    for(String value:values){
+                        ((LinkedMultiValueMap)params).add(key,value);
+                    }
+                }
+            }
+        }
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){
             List<String> sessions = (List<String>) params.get("sessionId");
