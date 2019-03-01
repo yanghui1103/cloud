@@ -8,8 +8,8 @@ function query(){
     $('#logList').datagrid({
         pagination:true,
         method:"get",
-        url: ctx+'getMicroServiceResult/v1/common-proj/log/log' ,
-        queryParams:   {},
+        url: ctx+'getMicroServiceResult/v3/common-proj/log/log' ,
+        queryParams:  serializeFormToJSON($("#requestDgFm").serializeArray()),
         remoteSort: false,
         columns: [[
             { field: 'id', title: 'ID' ,hidden:true  },

@@ -66,12 +66,12 @@ public class LogController extends BaseController {
      * @return
      */
     @GetMapping("log")
-    public String list(@ModelAttribute Log log){
+    public JSONObject list(@ModelAttribute Log log){
         JSONObject js = new JSONObject();
         List<TLog> logs = logService.all(log);
         js.put("total",((Page)logs).getTotal());
         js.put("rows",  JSONObject.toJSON(logs));
-        return  js.toJSONString();
+        return  js ;
     }
 
     @GetMapping(value="log/{id}")

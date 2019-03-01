@@ -52,10 +52,8 @@ public class BaseEntity {
     /***
      * 翻页使用
      */
-    public Integer page = 1;
-    public Integer rows = 20;
-    public Integer start_num;
-    public Integer end_num;
+    public Integer page ;
+    public Integer rows;
     public String paginationEnable;
     public Integer rn;
     public List<String> createOrgIds;
@@ -222,13 +220,6 @@ public class BaseEntity {
         this.rows = rows;
     }
 
-    public Integer getStart_num() {
-        return (page - 1) * rows;
-    }
-
-    public Integer getEnd_num() {
-        return (page - 1) * rows + rows;
-    }
 
     public String getStatus() {
         return status;

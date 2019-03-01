@@ -55,8 +55,6 @@ public class BaseEntity {
      */
     public Integer page ;
     public Integer rows  ;
-    public Integer start_num;
-    public Integer end_num;
     public String paginationEnable;
     public Integer rn ;
     public List<String> createOrgIds;
@@ -185,12 +183,6 @@ public class BaseEntity {
     }
     public void setRows(Integer rows) {
         this.rows = rows;
-    }
-    public Integer getStart_num() {
-        return (page-1)*rows;
-    }
-    public Integer getEnd_num() {
-        return (page-1)*rows + rows;
     }
     public String getStatus() {
         return status;

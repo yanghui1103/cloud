@@ -143,8 +143,9 @@ public class RestTemplateUtil {
      * @auther: yangh
      * @date: 2019-3-1 9:48
      */
-    private ResponseEntity<String> requestv2(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) throws JsonProcessingException {
+    private ResponseEntity<String> requestv2(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> paramsStart) throws JsonProcessingException {
         HttpServletRequest request = (HttpServletRequest) req;
+        MultiValueMap<String, ?> params = new LinkedMultiValueMap<>();
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
         Enumeration<String> headerNames = request.getHeaderNames();
@@ -155,8 +156,8 @@ public class RestTemplateUtil {
         }
         //获取parameter信息
         StringBuffer formBuffer = new StringBuffer();
-        if(params == null||params != null) {
-            params = new LinkedMultiValueMap<>();
+        if(paramsStart == null||paramsStart != null) {
+            params = paramsStart;
             Map<String,?> paramterMap = request.getParameterMap();
             if(CollectionUtil.isNotEmpty(paramterMap)){
                 Set<String> keySet = paramterMap.keySet();
@@ -175,7 +176,7 @@ public class RestTemplateUtil {
             List<String> sessions = (List<String>) params.get("sessionId");
             requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
         }
-        url = ("".equals(formBuffer.toString()))?url+"?"+formBuffer.substring(1,formBuffer.length()):url;
+        url = (!"".equals(formBuffer.toString()))?url+"?"+formBuffer.substring(1,formBuffer.length()):url;
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, method, requestEntity, String.class, params);
         return rss;
