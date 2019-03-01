@@ -111,7 +111,7 @@ public class RestTemplateUtil {
             requestHeaders.add(key, value);
         }
         //获取parameter信息
-        if(params == null||params != null) {
+        if(params == null) {
             params = new LinkedMultiValueMap<>();
             Set<String> keySet = request.getParameterMap().keySet();
             for (String key : keySet) {

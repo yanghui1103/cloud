@@ -2,6 +2,7 @@ package com.bw.fit.base.inform.mapper;
 
 import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.inform.entity.TInform;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,5 +38,6 @@ public interface InformMapper {
      * @return
      */
     public List<TInform> selectByAccount(String accountId);
+
 
 }
