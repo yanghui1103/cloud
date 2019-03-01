@@ -17,9 +17,15 @@
     <script type="text/javascript" th:src="@{/pc/flow2/flow/requestList.js}"></script>
 </head>
 <body>
-<input type="hidden" th:value="${sessionId}" id="sessionId">
-<table title="我的申请列表" id="logList"  class="easyui-datagrid" >
+<form id="requestDgFm">
+    <input type="hidden" th:value="${sessionId}" id="sessionId">
+</form>
+<table title="我的申请列表" id="requestDg"  class="easyui-datagrid" >
 </table>
-    <div id="_loadDialog_loglist"></div>
+    <div id="_loadDialog_requestlist"></div>
+<script th:inline="javascript">
+    var currentAccountId = [[${currentAccountId}]];
+    console.log(currentAccountId);
+</script>
 </body>
 </html>

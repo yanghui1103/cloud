@@ -245,6 +245,9 @@ public class ApiController {
                 }
             }
         }
+
+        JSONObject accountJson = commonService.getAccount(PubFun.getCurrentSessionId());
+        model.addAttribute("currentAccountId",accountJson.getString("id"));
         return stringBuffer.toString();
     }
 
@@ -278,6 +281,8 @@ public class ApiController {
                 }
             }
         }
+        JSONObject accountJson = commonService.getAccount(PubFun.getCurrentSessionId());
+        model.addAttribute("currentAccountId",accountJson.getString("id"));
         return stringBuffer.toString();
     }
 
@@ -294,6 +299,9 @@ public class ApiController {
             }
         }
 
+
+        JSONObject accountJson = commonService.getAccount(PubFun.getCurrentSessionId());
+        model.addAttribute("currentAccountId",accountJson.getString("id"));
         model.addAttribute("sessionId",PubFun.getCurrentSessionId());
         model.addAttribute("arg",arg);
         return path1+"/"+path2+"/"+path3+"/"+path4+"/"+pageName  ;

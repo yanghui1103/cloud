@@ -53,8 +53,8 @@ public class BaseEntity {
     /***
      * 翻页使用
      */
-    public Integer page =1;
-    public Integer rows =20;
+    public Integer page ;
+    public Integer rows  ;
     public Integer start_num;
     public Integer end_num;
     public String paginationEnable;

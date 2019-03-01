@@ -347,7 +347,9 @@ public class FlowController {
 		Page<TFlowRegister> tFlowRegisters = flowPlusMapper.getPInstanceOfDrafter(drafter);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("total",tFlowRegisters.getTotal());
-		jsonObject.put("rows",(JSONObject)JSONObject.toJSON(tFlowRegisters));
+		if(CollectionUtil.isNotEmpty(tFlowRegisters)){
+			jsonObject.put("rows",(JSONObject)JSONObject.toJSON(tFlowRegisters));
+		}
 		return jsonObject ;
 	}
 

@@ -1,24 +1,21 @@
 $(function(){
 
-
     query();
 });
 
 function query(){
-    $('#logList').datagrid({
+    $('#requestDg').datagrid({
         pagination:true,
         method:"get",
-        url: ctx+'getMicroServiceResult/v1/common-proj/log/log' ,
-        queryParams:   {},
+        url: ctx+'getMicroServiceResult/v1/flow2-proj/flow/flow,drafter,'+ currentAccountId,
+        queryParams:  $("#requestDgFm").serialize(),
         remoteSort: false,
         columns: [[
-            { field: 'id', title: 'ID' ,hidden:true  },
-            { field: 'creator', title: '操作者', width: '10%'   },
-            { field: 'ip', title: 'IP'  , width: '20%' },
-            { field: 'url', title: 'url'  , width: '20%' },
-            { field: 'logType', title: '日志类型' , width: '20%'  },
-            { field: 'result', title: '返回结果'  , width: '20%' },
-            { field: 'createTime', title: '采集时间'  , width: '10%' }
+            { field: 'id',  hidden:true  },
+            { field: 'flowId',  hidden:true  },
+            { field: 'title', title: '主题'  , width: '70%' },
+            { field: 'drafter', title: '发起人', width: '10%'   },
+            { field: 'createTime', title: '时间'  , width: '20%' }
         ]],
         fit: true ,
         idField: "id",
@@ -36,7 +33,7 @@ function query(){
 }
 
 function openDetail(id) {
-    $('#_loadDialog_loglist').dialog({
+    $('#_loadDialog_requestlist').dialog({
         title: '日志详情',
         width: '99%',
         height: 500,
