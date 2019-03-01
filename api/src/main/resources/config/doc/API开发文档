@@ -12,6 +12,7 @@ API工程：
     2，调用微服务的增删改查四大接口解释：
         一）getMicroServiceResult/v1是调用其他微服务的查询接口，返回的JSONObject格式字符串。
            getMicroServiceResult/v2是调用其他微服务的查询接口，返回的JSONArray格式字符串；
+           getMicroServiceResult/v3是调用其他微服务的查询接口，传入参数为表单序列化为json键值对，返回的JSONObject格式字符串；
         二）deleteMicroServiceResult/v1调用微服务的删除接口。
         三）addMicroServiceResult/v1调用其他微服务的新增接口，且formReqString参数需要利用common.js里transferFormToString可以帮助程序员
         立即拼接完成。例如：新增数据字典方法为案例。
