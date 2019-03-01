@@ -42,5 +42,27 @@
         </form>
     </div>
 </div>
+<form id="yiyueFm">
+    <input id="id" name="id" th:value="${mapData['id']}" type="hidden" >
+</form>
+<div style="float: right; margin-right: 30px; margin-top: 5px">
+    <button class="easyui-linkbutton" type=button iconCls="icon-add"
+            data-options="selected:true" onclick="biaoYiYue();"
+            style="width: 150px">标记为已阅</button>
+</div>
+<script type="text/javascript">
+    function biaoYiYue(){
+        var id = $("#id").val();
+        $.ajax({
+            type : 'put',
+            url : ctx + "updateMicroServiceResult/v1/common-proj/inform/innerMsg,"+id +"/"+transferFormToString($("#yiyueFm")),
+            data : {},
+            success : function(data) {
+                promptMessage(data.res, data.msg );
+            },
+            dataType : "JSON"
+        });
+    }
+</script>
 </body>
 </html>

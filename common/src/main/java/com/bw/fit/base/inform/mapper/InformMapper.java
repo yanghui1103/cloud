@@ -47,4 +47,10 @@ public interface InformMapper {
      */
     List<TInform> getInnerMsgs(Inform tInform);
 
+    /*****
+     * 标记已阅
+     * @param id
+     */
+    void updateReadInnerMsg(String id);
+
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.base.common.controller.BaseController;
+import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.common.service.CommonService;
 import com.bw.fit.base.common.util.PubFun;
 import com.bw.fit.base.inform.entity.TInform;
@@ -98,6 +99,12 @@ public class InformController extends BaseController {
         }
         PubFun.returnFailJson(jsonObject,"不存在数据");
         return jsonObject.toJSONString();
+    }
+
+    @PutMapping("innerMsg/{id}")
+    public JSONObject yiyue(@PathVariable String id) throws RbackException {
+        JSONObject jsonObject = informService.updateReadInnerMsg(id);
+        return jsonObject;
     }
 
 }

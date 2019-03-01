@@ -24,4 +24,8 @@
         </if>
     </select>
 
+    <update id="updateReadInnerMsg" parameterType="String">
+        update  t_inform set isread='1' where id = #{id,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.bw.fit.base.inform.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.base.common.entity.RbackException;
 import com.bw.fit.base.inform.entity.TInform;
 import com.bw.fit.base.inform.model.Inform;
 
@@ -29,5 +30,12 @@ public interface InformService {
      * @return
      */
     public List<Inform> selectInnerInform(Inform inform);
+
+    /****
+     * 标记已阅
+     * @param id
+     * @return
+     */
+    JSONObject updateReadInnerMsg(String id) throws RbackException;
 
 }
