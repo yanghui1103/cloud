@@ -54,7 +54,7 @@
     function biaoYiYue(){
         var id = $("#id").val();
         $.ajax({
-            type : 'put',
+            type : 'PUT',
             url : ctx + "updateMicroServiceResult/v1/common-proj/inform/innerMsg,"+id +"/"+transferFormToString($("#yiyueFm")),
             data : {},
             success : function(data) {
