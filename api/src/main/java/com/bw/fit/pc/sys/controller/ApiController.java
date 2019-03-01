@@ -54,7 +54,7 @@ public class ApiController {
         return  url!=null?url:"";
     }
 
-    @ApiOperation(value = "远程调用微服务的接口" )
+    @ApiOperation(value = "远程调用微服务的接口,URL方法查询" )
     @GetMapping(value="getMicroServiceResult/v1/{serviceName}/{controllerName}/{params}")
     @ResponseBody
     public JSONObject getMicroServiceResultV1(@PathVariable String serviceName,@PathVariable String controllerName,
@@ -81,7 +81,7 @@ public class ApiController {
     }
 
 
-    @ApiOperation(value = "远程调用微服务的接口,返回jsonarray" )
+    @ApiOperation(value = "远程调用微服务的接口,URL方法查询,返回jsonarray" )
     @GetMapping(value="getMicroServiceResult/v2/{serviceName}/{controllerName}/{params}")
     @ResponseBody
     public JSONArray getMicroServiceResultV2(@PathVariable String serviceName,@PathVariable String controllerName,
@@ -106,6 +106,32 @@ public class ApiController {
             return null;
         }
     }
+
+    @ApiOperation(value = "远程调用微服务的接口,Form方式查询" )
+    @GetMapping(value="getMicroServiceResult/v3/{serviceName}/{controllerName}/{requestUrl}/{params}")
+    @ResponseBody
+    public JSONObject getMicroServiceResultV3(@PathVariable String serviceName,@PathVariable String controllerName,
+                                              @PathVariable String requestUrl,@PathVariable String params ,HttpServletRequest httpServletRequest  ){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = params.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            String string = restTemplateUtil.get(httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString(),map);
+            jsonObject = JSONObject.parseObject(string);
+        }else{
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
+        }
+        return jsonObject;
+    }
+
 
 
     @ApiOperation(value = "远程调用微服务的接口，做删除操作" )
