@@ -365,7 +365,7 @@ public class FlowController {
 	 */
 	@PostMapping("handle")
 	@ResponseBody
-	public JSONObject handle(@Valid @ModelAttribute FlowHandle flowHandle, BindingResult bindingResult, HttpServletRequest httpServletRequest){
+	public JSONObject handle(@Valid @ModelAttribute FlowHandle flowHandle, BindingResult bindingResult, HttpServletRequest httpServletRequest) throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		if (bindingResult.hasErrors()) {
 			FieldError error = bindingResult.getFieldError();
@@ -373,7 +373,8 @@ public class FlowController {
 			returnFailJson(jsonObject, error.getDefaultMessage());
 			return jsonObject ;
 		}
-		return  null;
+		jsonObject = flowPlusService.createHandleFlow(flowHandle);
+		return  jsonObject;
 	}
 
 }
