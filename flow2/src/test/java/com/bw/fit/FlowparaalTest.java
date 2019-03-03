@@ -2,6 +2,7 @@ package com.bw.fit;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.bw.fit.component.flow.conf.FlowHandleWays;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.service.FlowCoreService;
 import com.bw.fit.component.form.entity.TForm;
@@ -42,6 +43,8 @@ public class FlowparaalTest{
     FormMapper formMapper;
     @Resource
     RepositoryService repositoryService;
+    @Resource
+    FlowHandleWays flowHandleWays;
 
     @Test
     public void processes() {
@@ -106,4 +109,10 @@ public class FlowparaalTest{
     public void get(){
         List<TForm> tFormList = formMapper.getFormInfo("001");
     }
+
+    @Test
+    public void gettest(){
+        System.out.println(flowHandleWays.getListMap().get(1).keySet());
+    }
+
 }

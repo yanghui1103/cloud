@@ -3,10 +3,12 @@ package com.bw.fit.component.flow.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.bw.fit.component.flow.conf.FlowHandleWays;
 import com.bw.fit.component.flow.entity.BaseEntity;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
+import com.bw.fit.component.flow.model.FlowHandle;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.model.Todo;
 import com.bw.fit.component.flow.service.CommonService;
@@ -24,6 +26,8 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -34,6 +38,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
@@ -50,6 +55,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.component.flow.service.FlowPlusService;
+
+import static com.bw.fit.component.flow.util.PubFun.returnFailJson;
 
 
 /*****
@@ -81,6 +88,8 @@ public class FlowController {
 	private FlowCoreService flowCoreService;
 	@Autowired
 	private CommonService commonService;
+	@Resource
+	FlowHandleWays flowHandleWays;
 
 	/**
 	 * 打开流程图显示页面
@@ -186,18 +195,16 @@ public class FlowController {
 		}
 		JSONObject jsonObject = new JSONObject();
 		List<BaseModel> list= new ArrayList<>();
-		BaseModel baseModel= new BaseModel();
-		baseModel.setCode("pass");
-		baseModel.setRemark("通过");
-		list.add(baseModel);
-		baseModel= new BaseModel();
-		baseModel.setCode("reject");
-		baseModel.setRemark("驳回");
-		list.add(baseModel);
-		baseModel= new BaseModel();
-		baseModel.setCode("proxy");
-		baseModel.setRemark("转办");
-		list.add(baseModel);
+		List<Map<String,String>> listMap = flowHandleWays.getListMap();
+		if(CollectionUtil.isNotEmpty(listMap)){
+			listMap.parallelStream().forEach(x->{
+				BaseModel baseModel= new BaseModel();
+				baseModel.setCode(x.get("code"));
+				baseModel.setRemark(x.get("name"));
+				list.add(baseModel);
+			});
+		}
+
 		jsonObject.put("total", list.size());
 		jsonObject.put("rows", JSONObject.toJSON(list));
 		return jsonObject.toJSONString();
@@ -330,7 +337,7 @@ public class FlowController {
 			jsonObject = flowPlusService.createRegisterPInstance(tFlowRegister);
 		}else{
 			jsonObject = new JSONObject();
-			PubFun.returnFailJson(jsonObject,"启动失败");
+			returnFailJson(jsonObject,"启动失败");
 		}
 		return jsonObject;
 	}
@@ -356,5 +363,17 @@ public class FlowController {
 	/******
 	 * 流程办理
 	 */
+	@PostMapping("handle")
+	@ResponseBody
+	public JSONObject handle(@Valid @ModelAttribute FlowHandle flowHandle, BindingResult bindingResult, HttpServletRequest httpServletRequest){
+		JSONObject jsonObject = new JSONObject();
+		if (bindingResult.hasErrors()) {
+			FieldError error = bindingResult.getFieldError();
+			jsonObject.put("res", "1");
+			returnFailJson(jsonObject, error.getDefaultMessage());
+			return jsonObject ;
+		}
+		return  null;
+	}
 
 }

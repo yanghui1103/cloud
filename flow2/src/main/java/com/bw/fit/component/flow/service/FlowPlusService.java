@@ -6,6 +6,7 @@ import java.util.Map;
 import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
+import com.bw.fit.component.flow.model.FlowHandle;
 import com.bw.fit.component.flow.model.RbackException;
 import org.activiti.engine.runtime.ProcessInstance;
 
@@ -38,4 +39,12 @@ public interface FlowPlusService {
      * @throws RbackException
      */
     JSONObject createRegisterPInstance(TFlowRegister tFlowRegister) throws RbackException;
+
+    /****
+     * 流程办理
+     * @param flowHandle
+     * @return
+     * @throws RbackException
+     */
+    JSONObject createHandleFlow(FlowHandle flowHandle)  throws Exception;
 }

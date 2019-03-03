@@ -9,6 +9,7 @@ import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
+import com.bw.fit.component.flow.model.FlowHandle;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.RuntimeService;
@@ -77,5 +78,34 @@ public class FlowPlusServiceImpl implements FlowPlusService {
 		}finally {
 			return jsonObject;
 		}
+	}
+
+	@Override
+	public JSONObject createHandleFlow(FlowHandle flowHandle) throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		Task currentTask =taskService.createTaskQuery().taskId(flowHandle.getTaskId()).singleResult();
+		if(ObjectUtil.isNull(currentTask)){
+			PubFun.returnFailJson(jsonObject,"任务不存在");
+			return jsonObject;
+		}
+		if("pass".equalsIgnoreCase(flowHandle.getHandleOpt())){
+			flowCoreService.cliamTaskToUser(flowHandle.getTaskId(),flowHandle.getCreator());
+			flowCoreService.createTaskComment(currentTask,flowHandle.getRemark());
+			flowCoreService.completeTask(flowHandle.getTaskId());
+			PubFun.returnSuccessJson(jsonObject);
+		}else if("reject".equalsIgnoreCase(flowHandle.getHandleOpt())){
+			flowCoreService.cliamTaskToUser(flowHandle.getTaskId(),flowHandle.getCreator());
+			flowCoreService.createTaskComment(currentTask,flowHandle.getRemark());
+			flowCoreService.rollBack(flowHandle.getpInstanceId(),flowHandle.getToTaskDefKey(),"-1");
+			PubFun.returnSuccessJson(jsonObject);
+		}else if("proxy".equalsIgnoreCase(flowHandle.getHandleOpt())){
+			flowCoreService.cliamTaskToUser(flowHandle.getTaskId(),flowHandle.getCreator());
+			flowCoreService.createTaskComment(currentTask,flowHandle.getRemark());
+			flowCoreService.createTaskAssignee(flowHandle.getTaskId(),flowHandle.getToHandler());
+			PubFun.returnSuccessJson(jsonObject);
+		}else{
+			PubFun.returnFailJson(jsonObject,"暂不支持"+flowHandle.getHandleOpt()+"方式");
+		}
+		return  jsonObject;
 	}
 }
