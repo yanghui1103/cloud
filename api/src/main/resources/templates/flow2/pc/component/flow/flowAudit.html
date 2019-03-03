@@ -70,12 +70,21 @@
 
     <div class="easyui-panel" id="handleInfo" title="办结信息" style="width:100%;height:auto;padding:10px;"
          data-options="iconCls:'icon-man',collapsible:true">
+        <form id="flowAuditFm">
+            <input name="handleOpt" type="hidden">
+            <input name="toTaskDefKey" type="hidden">
+            <input name="toHandler" type="hidden">
+            <input name="remark" type="hidden">
+            <input name="taskId" th:value="${taskId}" type="hidden">
+        </form>
+
+
         <table class="kv-table">
             <tbody>
             <tr>
                 <td class="kv-label"><span>办理意见：</span></td>
                 <td class="kv-content"><select class="easyui-combogrid" editable="false"
-                                               style="width: 300px;"  id="handleOpt" name="handleOpt"
+                                               style="width: 300px;"  id="handleOpt"
                                                data-options="limitToList:true,
 					idField: 'code',
 					textField: 'remark',
@@ -127,7 +136,7 @@
             <tr>
                 <td class="kv-label"><span>操作：</span></td>
                 <td class="kv-content"> <button class="easyui-linkbutton" type=button iconCls="icon-add"
-                        data-options="selected:true" onclick="zjRegister();"
+                        data-options="selected:true" onclick="handleFlow();"
                                              style="width: 150px">提交</button></td>
             </tr>
 
