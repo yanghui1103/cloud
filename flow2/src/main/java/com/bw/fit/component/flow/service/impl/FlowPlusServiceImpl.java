@@ -80,6 +80,7 @@ public class FlowPlusServiceImpl implements FlowPlusService {
 		}
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public JSONObject createHandleFlow(FlowHandle flowHandle) throws Exception {
 		JSONObject jsonObject = new JSONObject();
