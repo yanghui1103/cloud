@@ -19,7 +19,6 @@
         <module name="flow2" />
         <module name="job" />
         <module name="link" />
-        <module name="log" />
         <module name="report" />
         <module name="sys" />
       </profile>
@@ -30,6 +29,7 @@
       <module name="flow" target="1.8" />
       <module name="innerzuul" target="1.8" />
       <module name="innerzuul (1)" target="1.8" />
+      <module name="log" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
