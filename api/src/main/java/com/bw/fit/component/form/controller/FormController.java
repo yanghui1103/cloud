@@ -1,5 +1,6 @@
 package com.bw.fit.component.form.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
@@ -39,20 +40,17 @@ public class FormController {
     @GetMapping(value="openFormDetail/{formKey}",produces = "application/json; charset=utf-8")
     public String formDetail(@PathVariable String formKey, Model model){
         Session session = PubFun.getCurrentSession();
-
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
         map.add("sessionId", PubFun.getCurrentSessionId());
         String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
-        JSONObject jsonObject = JSONObject.parseObject(form);
-        if("2".equals(jsonObject.get("res").toString())){
-            JSONArray jsonArray = (JSONArray) jsonObject.get("data");
+        if(StrUtil.isNotEmpty(form)){
+            JSONObject jsonObject = JSONObject.parseObject(form);
             /****
              * 生成数据并最终有html渲染
              */
-            model.addAttribute("data",jsonArray);
-            model.addAttribute("formKey",formKey);
+            model.addAttribute("data",jsonObject);
         }else{
-            model.addAttribute("msg","抱歉，没有找到表单数据");
+            model.addAttribute("msg","没有找到对应表单数据");
         }
         return "flow2/pc/component/form/formDetail";
     }

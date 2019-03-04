@@ -13,5 +13,11 @@
 		select * from t_form a where a.formKey = #{formKey,jdbcType=VARCHAR} and isdeleted ='0'
 	</select>
 
+	<select id="getDistinctTabs" parameterType="String"  resultType="tForm">
+	    select distinct tabname ,min(taborder),attrtype  from t_form a where a.formkey = #{formKey,jdbcType=VARCHAR} and isdeleted ='0' group by tabname,attrtype
+	</select>
+
+
+
 
 </mapper>

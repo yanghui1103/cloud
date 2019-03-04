@@ -3,17 +3,12 @@ package com.bw.fit.component.form.model;
 /*****
  * 针对兼值对表单
  */
-public class KvForm extends BaseModel {
-    private String name;
+public class KvForm   {
+
     private String attr;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String tabType;
+    private String tabName;
+    private int    tabOrder;
 
     public String getAttr() {
         return attr;
@@ -21,5 +16,29 @@ public class KvForm extends BaseModel {
 
     public void setAttr(String attr) {
         this.attr = attr;
+    }
+
+    public String getTabType() {
+        return tabType;
+    }
+
+    public void setTabType(String tabType) {
+        this.tabType = tabType;
+    }
+
+    public String getTabName() {
+        return tabName;
+    }
+
+    public void setTabName(String tabName) {
+        this.tabName = tabName;
+    }
+
+    public int getTabOrder() {
+        return tabOrder;
+    }
+
+    public void setTabOrder(int tabOrder) {
+        this.tabOrder = tabOrder;
     }
 }

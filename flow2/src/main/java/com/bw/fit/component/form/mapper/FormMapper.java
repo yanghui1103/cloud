@@ -30,4 +30,11 @@ public interface FormMapper {
      * @return
      */
     List<TForm> getFormInfo(String formKey);
+
+    /****
+     * 单笔表单下有多少不同tab
+     * @param formkey
+     * @return
+     */
+    List<TForm> getDistinctTabs(String formkey);
 }

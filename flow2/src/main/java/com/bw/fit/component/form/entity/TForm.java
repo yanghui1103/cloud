@@ -13,10 +13,8 @@ import com.bw.fit.component.flow.entity.BaseEntity;
 public class TForm extends BaseEntity {
 
     private String formKey;
-    private String htmlName;
-    private String name ;
     private String attr;
-    private String attrType;
+    private String tabType;
     private String tabName;
     private int tabOrder;
 
@@ -29,22 +27,6 @@ public class TForm extends BaseEntity {
         this.formKey = formKey;
     }
 
-    public String getHtmlName() {
-        return htmlName;
-    }
-
-    public void setHtmlName(String htmlName) {
-        this.htmlName = htmlName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAttr() {
         return attr;
     }
@@ -53,12 +35,12 @@ public class TForm extends BaseEntity {
         this.attr = attr;
     }
 
-    public String getAttrType() {
-        return attrType;
+    public String getTabType() {
+        return tabType;
     }
 
-    public void setAttrType(String attrType) {
-        this.attrType = attrType;
+    public void setTabType(String tabType) {
+        this.tabType = tabType;
     }
 
     public String getTabName() {
