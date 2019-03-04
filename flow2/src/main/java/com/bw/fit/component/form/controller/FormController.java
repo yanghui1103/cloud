@@ -46,25 +46,21 @@ public class FormController {
     public JSONObject detail(@PathVariable(value = "formKey",required = true) String formKey){
         JSONObject jsonObject = new JSONObject();
         List<TForm> tFormList = formMapper.getFormInfo(formKey);
-        List<TForm> distinctTabs = formMapper.getDistinctTabs(formKey);
+        List<KvForm> kvForms = new ArrayList<>();
         Map<String,String> map = new LinkedHashMap<>();
         JSONArray jsonArray = new JSONArray();
         if(CollectionUtil.isNotEmpty(tFormList) || tFormList.size()>1){
-//            for(TForm tab:distinctTabs){
-//                JSONObject j = new JSONObject();
-//                List<Map<String,Object>> kvForms = new ArrayList<>();
-//                tFormList.parallelStream().filter(x->x.getTabName().equals(tab.getTabName())).forEach(x->{
-//                    Map<String,Object> data = new HashMap<>();
-//                    data.put(x.getName(),x.getAttr());
-//                    kvForms.add(data);
-//                });
-//                j.put("list",JSONArray.toJSON(kvForms));
-//                j.put("tabName",tab.getTabName());
-//                j.put("attrType",tab.getAttrType());
-//                jsonObject.put(tab.getTabName(),j);
-//            }
+            tFormList.stream().forEach(x->{
+                KvForm kvForm = new KvForm();
+                PubFun.copyProperties(kvForm,x);
+                kvForms.add(kvForm);
+            });
+
+            PubFun.returnSuccessJson(jsonObject);
+            JSONArray array = (JSONArray)JSONArray.toJSON(kvForms);
+            jsonObject.put("data",array);
         }else{
-            jsonObject = null;
+            PubFun.returnFailJson(jsonObject,"无数据");
         }
         return jsonObject;
     }

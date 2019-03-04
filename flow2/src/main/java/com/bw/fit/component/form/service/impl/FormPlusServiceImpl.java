@@ -47,6 +47,7 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setTabType(key.split(":")[0]);
                 tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
                 tForm.setFormKey(form.getId());
+                tForm.setTabName(key);
 
                  System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
@@ -64,11 +65,35 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setTabType(key.split(":")[0]);
                 tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
                 tForm.setFormKey(form.getId());
+                tForm.setTabName(key);
 
                 System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
             }
         }
+
+
+        Map<String,List<String>> map3 = form.getAttachmentForm();
+        if(CollectionUtil.isNotEmpty(map3)){
+            for(String key:map3.keySet()){
+                String value = map3.get(key).toString();
+                TForm tForm = new TForm();
+                tForm.setCreator(form.getCreator());
+                tForm.setId(PubFun.getUUID());
+                tForm.setAttr((value));
+                tForm.setTabType(key.split(":")[0]);
+                tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
+                tForm.setFormKey(form.getId());
+                tForm.setTabName(key);
+
+                System.out.println("key:"+key+" vlaue:"+value);
+                formMapper.insert(tForm);
+
+
+            }
+        }
+
+
 
         PubFun.returnSuccessJson(jsonObject);
         return jsonObject;

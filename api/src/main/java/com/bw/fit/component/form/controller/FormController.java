@@ -1,10 +1,12 @@
 package com.bw.fit.component.form.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.service.CommonService;
 import com.bw.fit.pc.sys.util.PubFun;
+import com.bw.fit.pc.sys.util.RestTemplateUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.session.Session;
@@ -17,6 +19,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,16 +39,33 @@ import java.util.Map;
 public class FormController {
     @Autowired
     private CommonService commonService;
+    @Resource
+    RestTemplateUtil restTemplateUtil;
 
     @ApiOperation("打开表单")
     @GetMapping(value="openFormDetail/{formKey}",produces = "application/json; charset=utf-8")
-    public String formDetail(@PathVariable String formKey, Model model){
+    public String formDetail(@PathVariable String formKey, Model model, HttpServletRequest request){
         Session session = PubFun.getCurrentSession();
+        StringBuffer htmlBuffer = new StringBuffer();
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
         map.add("sessionId", PubFun.getCurrentSessionId());
-        String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
+        //String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
+        String form = restTemplateUtil.getByForm(request,"http://flow2-proj/form/form/"+formKey, map);
         if(StrUtil.isNotEmpty(form)){
             JSONObject jsonObject = JSONObject.parseObject(form);
+            String string = jsonObject.getString("data");
+            JSONArray jsonArray = JSONArray.parseArray(string);
+            for(int i=0;i<jsonArray.size();i++){
+                JSONObject jj = (JSONObject)JSONObject.toJSON(jsonArray.get(i));
+                if("kvtab".equalsIgnoreCase(jj.getString("tabType"))){
+                    String ay = jj.getString("attr");
+                    ay = ay.replace("=",":");
+                    JSONArray jsonArray1 =JSONArray.parseArray(ay);
+                    System.out.println(jsonArray1.get(0));
+
+                }
+            }
+            System.out.println(jsonArray.toJSONString());
             /****
              * 生成数据并最终有html渲染
              */

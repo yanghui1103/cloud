@@ -16,19 +16,28 @@
     <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
 </head>
 <body>
-<span th:text="${data}"></span>
-    <div th:title="${data.get(tabName)}"   class="easyui-panel"  mapData-options="closable:false"  th:each="ea:${data}"
-        >
-        <span th:text="${ea}"></span>
-        <!--<table class="kv-table" th:case="string">-->
-            <!--<tbody>-->
-            <tr th:each="item:${ea.keySet()}">
-                <td class="kv-label"><span th:text="${item}"></span></td>
-                <td class="kv-content"><span th:text="${ea.getString(item)}"></span></td>
-            </tr>
-            <!--</tbody>-->
-        <!--</table>-->
-    </div>
+<span th:if="#{msg!=null}" th:text="${msg}"></span>
+<div th:title="表单信息" class="easyui-panel"  mapData-options="closable:false" th:each="ea:${data.data}" th:switch="${ea.tabType}">
 
+    <table class="kv-table" th:case="kvtab">
+        <tbody>
+        <tr th:each="item:${ea.attr}">
+            <td class="kv-label"><span th:text="${item}"></span></td>
+            <td class="kv-content"><span th:text="${item}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script th:inline="javascript">
+    var data = [[${data.data}]];
+    console.log(data);
+</script>
+<script type="text/javascript">
+    $(function () {
+
+    });
+    
+</script>
 </body>
 </html>

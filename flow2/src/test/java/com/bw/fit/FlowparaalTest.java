@@ -133,9 +133,9 @@ public class FlowparaalTest{
         List<Map<String,String>> kvs = new ArrayList<>();
         for(int i=0;i<10;i++){
             Map<String,String> map = new HashMap<>();
-            map.put("name","李"+i);
-            map.put("age",String.valueOf(23+i));
-            map.put("gender","男");
+            map.put("姓名","李"+i);
+            map.put("年龄",String.valueOf(23+i));
+            map.put("性别","男");
             kvs.add(map);
         }
         Map<String,List<Map<String,String>>> kv1 = new HashMap<>();
@@ -145,9 +145,9 @@ public class FlowparaalTest{
         kvs = new ArrayList<>();
         for(int i=0;i<10;i++){
             Map<String,String> map = new HashMap<>();
-            map.put("name","乔峰"+i);
-            map.put("age",String.valueOf(43+i));
-            map.put("gender","男");
+            map.put("姓名","乔峰"+i);
+            map.put("年龄",String.valueOf(43+i));
+            map.put("性别","男");
             kvs.add(map);
         }
         kv1.put("kvtab:2",kvs);
@@ -169,6 +169,14 @@ public class FlowparaalTest{
         }
         map2.put("listtab:2",lists);
         form.setListForm(map2);
+
+        Map<String,List<String>> map3 = new HashMap<>();
+        List<String> ss = new ArrayList<>();
+        ss.add("att001");
+        ss.add("att002");
+
+        map3.put("atttab:1",ss);
+        form.setAttachmentForm(map3);
 
         formPlusService.insert(form);
 
