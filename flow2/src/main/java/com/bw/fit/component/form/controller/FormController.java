@@ -40,35 +40,6 @@ public class FormController {
     private FormMapper formMapper;
 
 
-    /*****
-     * 单笔将一个表单JSONArray传入进来，如果成功则会返回formKey
-     * @param form
-     * @param request
-     * @return
-     * @throws RbackException
-     */
-    @PostMapping("form")
-    @ResponseBody
-    public String insert(@RequestParam(value="form" ,required = true) String form, HttpServletRequest request) throws RbackException {
-        JSONObject json = new JSONObject();
-        try{
-
-            json = commonService.checkSessionValid(request.getParameter("sessionId").toLowerCase());
-            if("1".equalsIgnoreCase(json.get("res").toString())){
-                json = new JSONObject();
-                PubFun.returnFailJson(json,"无效会话");
-                return json.toJSONString();
-            }
-            JSONObject jsonObject = formPlusService.insert(JSONArray.parseArray(form),json.get("id").toString());
-            return jsonObject.toJSONString();
-        }catch (RbackException ex){
-            ex.printStackTrace();
-            json = new JSONObject();
-            PubFun.returnFailJson(json,ex.getMsg());
-            return json.toJSONString();
-        }
-    }
-
 
     @GetMapping("form/{formKey}")
     @ResponseBody

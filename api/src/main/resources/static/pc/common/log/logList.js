@@ -9,7 +9,7 @@ function query(){
         pagination:true,
         method:"get",
         url: ctx+'getMicroServiceResult/v3/common-proj/log/log' ,
-        queryParams:  serializeFormToJSON($("#requestDgFm").serializeArray()),
+        queryParams:  serializeFormToJSON($("#logDgFm").serializeArray()),
         remoteSort: false,
         columns: [[
             { field: 'id', title: 'ID' ,hidden:true  },

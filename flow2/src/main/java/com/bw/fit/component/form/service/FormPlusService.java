@@ -3,6 +3,8 @@ package com.bw.fit.component.form.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.component.flow.model.RbackException;
+import com.bw.fit.component.form.entity.TForm;
+import com.bw.fit.component.form.model.Form;
 
 /**
  * @Description
@@ -18,5 +20,5 @@ public interface FormPlusService {
      * @return
      * @throws RbackException
      */
-    JSONObject insert(JSONArray form, String accountId) throws RbackException;
+    JSONObject insert(Form tForm) throws RbackException;
 }

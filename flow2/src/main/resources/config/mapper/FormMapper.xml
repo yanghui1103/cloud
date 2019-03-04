@@ -3,9 +3,9 @@
 <mapper namespace="com.bw.fit.component.form.mapper.FormMapper">
 
 	<insert id="insert" parameterType="tForm">
-		insert into t_form (id,formkey,htmlname,name,attr,attrtype,tabname,taborder,creator,createtime) values
-		(#{id,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR},#{htmlName,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},
-		#{attr,jdbcType=VARCHAR},#{attrType,jdbcType=VARCHAR},#{tabName,jdbcType=VARCHAR},#{tabOrder,jdbcType=INTEGER},
+		insert into t_form (id,formkey,attr,tabtype,tabname,taborder,creator,createtime) values
+		(#{id,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR},
+		#{attr,jdbcType=VARCHAR},#{tabType,jdbcType=VARCHAR},#{tabName,jdbcType=VARCHAR},#{tabOrder,jdbcType=INTEGER},
 		#{creator,jdbcType=VARCHAR},sysdate)
 	</insert>
 

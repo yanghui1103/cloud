@@ -51,3 +51,14 @@ flow:
         name: 驳回
       - code: proxy
         name: 转办
+
+#工作流系统支持表单格式类型
+form:
+  tabtypes:
+    listmap:
+      - code: kvtab
+        name: 键值表单
+      - code: listtab
+        name: 列数据表单
+      - code: atttab
+        name: 附件表单

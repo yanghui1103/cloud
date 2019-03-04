@@ -1,12 +1,16 @@
 package com.bw.fit;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.component.flow.conf.FlowHandleWays;
 import com.bw.fit.component.flow.model.RbackException;
 import com.bw.fit.component.flow.service.FlowCoreService;
+import com.bw.fit.component.form.conf.FlowTabTypesConf;
 import com.bw.fit.component.form.entity.TForm;
 import com.bw.fit.component.form.mapper.FormMapper;
+import com.bw.fit.component.form.model.BaseModel;
+import com.bw.fit.component.form.model.Form;
 import com.bw.fit.component.form.service.FormPlusService;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
@@ -21,6 +25,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +49,11 @@ public class FlowparaalTest{
     @Resource
     RepositoryService repositoryService;
     @Resource
-    FlowHandleWays flowHandleWays;
+    FlowHandleWays flowHandleWays;;
+    @Resource
+    FlowTabTypesConf formTabTypesConf;
+
+
 
     @Test
     public void processes() {
@@ -101,7 +110,7 @@ public class FlowparaalTest{
 
         array.add(json);
 
-        JSONObject jsonObject = formPlusService.insert(array,"qq1");
+        JSONObject jsonObject =null ; //formPlusService.insert(array,"qq1");
         System.out.println("res:"+jsonObject.toJSONString());
     }
 
@@ -113,6 +122,57 @@ public class FlowparaalTest{
     @Test
     public void gettest(){
         System.out.println(flowHandleWays.getListMap().get(1).keySet());
+    }
+
+    @Test
+    public void insert() throws RbackException {
+        Form form = new Form();
+        form.setCreator("qq1");
+        form.setId("002");
+
+        List<Map<String,String>> kvs = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            Map<String,String> map = new HashMap<>();
+            map.put("name","李"+i);
+            map.put("age",String.valueOf(23+i));
+            map.put("gender","男");
+            kvs.add(map);
+        }
+        Map<String,List<Map<String,String>>> kv1 = new HashMap<>();
+        kv1.put("kvtab:1",kvs);
+        form.setKvForm(kv1);
+
+        kvs = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            Map<String,String> map = new HashMap<>();
+            map.put("name","乔峰"+i);
+            map.put("age",String.valueOf(43+i));
+            map.put("gender","男");
+            kvs.add(map);
+        }
+        kv1.put("kvtab:2",kvs);
+        form.setKvForm(kv1);
+
+        //-------------------
+        Map<String,List<String>> map2 = new HashMap<>();
+        List<String> lists = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            String array = "QQ;"+"微信;"+"weibo"+i;
+            lists.add(array);
+        }
+        map2.put("listtab:1",lists);
+
+        lists = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            String array = "支付宝;"+"天猫;"+"dingding"+i;
+            lists.add(array);
+        }
+        map2.put("listtab:2",lists);
+        form.setListForm(map2);
+
+        formPlusService.insert(form);
+
+
     }
 
 }

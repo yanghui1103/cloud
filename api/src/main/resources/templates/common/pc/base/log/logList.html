@@ -19,7 +19,9 @@
     <script type="text/javascript" th:src="@{/pc/common/log/logList.js}"></script>
 </head>
 <body>
+<form id="logDgFm">
 <input type="hidden" th:value="${sessionId}" id="sessionId">
+</form>
 <table title="日志列表" id="logList"  class="easyui-datagrid" >
 </table>
 <div id="_loadDialog_loglist"></div>
