@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bw.fit.system.user.mapper.UserMapper">
-
-	<sql id="paginationSql">
-		<![CDATA[ and rn >#{start_num} and rn <= #{end_num} ]]>
-	</sql>
 	<!-- 获取组织信息 -->
 	<select id="getUsers" parameterType="tUser" resultType="tUser">
-		select * from (
-		select a.*,rownum rn from t_user a where name like  '%'||#{keyWords}||'%' and isdeleted='0' order by versionTime desc )
-		where 1=1
-		<if test="paginationEnable!='0'.toString()">
-			<include refid="paginationSql"></include>
-		</if>
+		select * from t_user where name like  '%'||#{keyWords}||'%' and isdeleted='0' order by versionTime desc
 	</select>
 
 	<select id="get" parameterType="String" resultType="tUser">

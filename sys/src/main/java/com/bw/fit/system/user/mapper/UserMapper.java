@@ -2,6 +2,7 @@ package com.bw.fit.system.user.mapper;
 
 import com.bw.fit.system.common.model.RbackException;
 import com.bw.fit.system.user.entity.TUser;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserMapper {
      * @param u
      * @return
      */
-    public List<TUser> getUsers(TUser u);
+    public Page<TUser> getUsers(TUser u);
     /***
      * 根据id获取用户资料
      * @param id

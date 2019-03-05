@@ -12,6 +12,7 @@ import com.bw.fit.system.user.entity.TUser;
 import com.bw.fit.system.user.mapper.UserMapper;
 import com.bw.fit.system.user.model.User;
 import com.bw.fit.system.user.service.UserService;
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.http.HttpMethod;
@@ -55,20 +56,11 @@ public class UserController  extends BaseController {
     @ResponseBody
     public JSONObject users(@ModelAttribute User user){
         JSONObject json = new JSONObject();
-        TUser u = new TUser();
-        PubFun.copyProperties(u, user);
-        u.setPaginationEnable("1");
-        List<TUser> list = userMapper.getUsers(u);
+        Page<TUser> list = userService.all(user);
         for(TUser tu:list){
             tu.setType(dictMapper.getDictByValue(tu.getType()).getDictName());
         }
-        u.setPaginationEnable("0");
-        List<TUser> listTotal = userMapper.getUsers(u);
-        if (listTotal != null && listTotal.size() > 0) {
-            json.put("total", listTotal.size());
-        } else {
-            json.put("total", 0);
-        }
+        json.put("total",list.getTotal());
         json.put("rows", JSONObject.toJSON(list));
         return json;
     }

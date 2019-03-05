@@ -19,6 +19,7 @@ import com.bw.fit.system.position.mapper.PositionMapper;
 import com.bw.fit.system.position.entity.TOrganization2Position;
 import com.bw.fit.system.position.model.Position;
 import com.bw.fit.system.position.service.PositionService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -28,6 +29,8 @@ public class PositionServiceImpl implements PositionService{
 	private PositionMapper positionMapper;
 	@Value("${cutFlag}")
 	private String cutFlag;
+
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject createPosition(Position position) throws RbackException {
 		JSONObject json = new JSONObject();		
@@ -53,6 +56,7 @@ public class PositionServiceImpl implements PositionService{
 		}
 	}
 
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject updatePosition(Position position) throws RbackException {
 		JSONObject json = new JSONObject();		
@@ -88,6 +92,7 @@ public class PositionServiceImpl implements PositionService{
 		}
 	}
 
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject deletePosition(String id,String orgId) throws RbackException {
 		JSONObject json = new JSONObject();		

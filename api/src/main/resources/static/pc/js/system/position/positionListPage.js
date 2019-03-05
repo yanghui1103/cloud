@@ -12,7 +12,7 @@ function positionlistquery(){
 	$('#positionLiDg').datagrid({ 
 		pagination:true,
 		method:"get",
-	    url:ctx+'getMicroServiceResult/v1/sys-proj/position/positions,'+orgId,
+	    url:ctx+'getMicroServiceResult/v3/sys-proj/position/positions,'+orgId,
 	    remoteSort: false,
         columns: [[
                    { field: 'id', title: 'ID' ,hidden:true  },

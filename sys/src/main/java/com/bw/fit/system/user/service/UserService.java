@@ -5,6 +5,7 @@ import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.common.model.RbackException;
 import com.bw.fit.system.user.entity.TUser;
 import com.bw.fit.system.user.model.User;
+import com.github.pagehelper.Page;
 
 public interface UserService {
 
@@ -28,6 +29,8 @@ public interface UserService {
      * @return
      */
     public User get(String id);
+
+    public Page<TUser> all(User user);
 
     public User getByCode(String code);
 

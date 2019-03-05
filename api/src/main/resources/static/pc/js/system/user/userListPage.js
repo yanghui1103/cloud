@@ -11,7 +11,7 @@ function userlistquery(){
 	$('#userLiDg').datagrid({ 
 		pagination:true,
 		method:"get",
-	    url:ctx+'user/users' ,   
+	    url:ctx+'getMicroServiceResult/v3/sys-proj/user/users' ,
         queryParams:   serializeFormToJSON($("#userlistFM").serializeArray()),
 	    remoteSort: false, 
         columns: [[
@@ -22,7 +22,7 @@ function userlistquery(){
                    { field: 'phone', title: '联系电话', width: '20%' }, 
                    { field: 'code', title: '编码', width: '20%'  }
                ]],
-             fit: false ,    
+             fit: true ,
              idField: "id",
              pagination: true,
              singleSelect:true,

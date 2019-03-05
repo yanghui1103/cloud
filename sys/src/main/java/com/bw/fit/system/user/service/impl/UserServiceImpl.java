@@ -9,6 +9,8 @@ import com.bw.fit.system.user.entity.TUser;
 import com.bw.fit.system.user.mapper.UserMapper;
 import com.bw.fit.system.user.model.User;
 import com.bw.fit.system.user.service.UserService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,16 @@ public class UserServiceImpl implements UserService {
             PubFun.copyProperties(user, tu);
         }
         return user ;
+    }
+
+    @Override
+    public Page<TUser> all(User user) {
+        TUser u = new TUser();
+        PubFun.copyProperties(u, user);
+        PageHelper.startPage(u.getPage(),u.getRows());
+        Page<TUser> pages = userMapper.getUsers(u);
+        pages.setTotal(pages.size());
+        return pages;
     }
 
     @Override
