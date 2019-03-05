@@ -66,12 +66,12 @@ function openUserDetail(id){
 function openAddUser(){
 	$('#_loadDialog_userList').dialog({    
 	    title: '新增用户',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'system/gotoIframePage/system/user/userAddPage/-9' ,
+	    href: ctx+'gotoIframePage/sys/pc/system/user/userAdd/-9' ,
 	    modal: true   
 	}); 		
 }
