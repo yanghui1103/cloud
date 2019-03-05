@@ -48,7 +48,7 @@ public class FlowController {
         Map<String,String> map = new HashMap<>();
         map.put("sessionId", PubFun.getCurrentSessionId());
 
-        model.addAttribute("formKey","001");
+        model.addAttribute("formKey","002");
         model.addAttribute("pdInstId",pdInstId);
         model.addAttribute("taskId",taskId);
         return "flow2/pc/component/flow/flowAudit";

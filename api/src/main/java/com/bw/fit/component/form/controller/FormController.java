@@ -51,21 +51,9 @@ public class FormController {
         map.add("sessionId", PubFun.getCurrentSessionId());
         //String form = commonService.getOtherAppReturnString("http://flow2-proj/form/form/"+formKey, map);
         String form = restTemplateUtil.getByForm(request,"http://flow2-proj/form/form/"+formKey, map);
-        if(StrUtil.isNotEmpty(form)){
+        if(StrUtil.isNotEmpty(form) && JSONObject.parseObject(form).get("res").toString().equals("2")){
             JSONObject jsonObject = JSONObject.parseObject(form);
-            String string = jsonObject.getString("data");
-            JSONArray jsonArray = JSONArray.parseArray(string);
-            for(int i=0;i<jsonArray.size();i++){
-                JSONObject jj = (JSONObject)JSONObject.toJSON(jsonArray.get(i));
-                if("kvtab".equalsIgnoreCase(jj.getString("tabType"))){
-                    String ay = jj.getString("attr");
-                    ay = ay.replace("=",":");
-                    JSONArray jsonArray1 =JSONArray.parseArray(ay);
-                    System.out.println(jsonArray1.get(0));
 
-                }
-            }
-            System.out.println(jsonArray.toJSONString());
             /****
              * 生成数据并最终有html渲染
              */
