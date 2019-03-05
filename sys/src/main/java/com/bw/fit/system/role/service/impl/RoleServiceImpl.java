@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
+import com.bw.fit.system.user.entity.TUser;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -55,6 +58,7 @@ public class RoleServiceImpl implements RoleService {
 			roleMapper.insert(t);
 			PubFun.returnSuccessJson(json);
 		}catch(RbackException ex){
+			ex.printStackTrace();
 			json = new JSONObject();
 			PubFun.returnFailJson(json, ex.getMsg());
 			throw ex;
@@ -193,6 +197,15 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Account> getAccountOfRole(String roleId) {
 		return roleMapper.getAccountOfRole(roleId);
+	}
+
+	@Override
+	public Page<TRole> selectAll(Role role) {
+		TRole tRole = new TRole();
+		PubFun.copyProperties(tRole,role);
+		PageHelper.startPage(tRole.getPage(),tRole.getRows());
+		Page<TRole> tLogs = roleMapper.getRoles(tRole);
+		return tLogs;
 	}
 
 }

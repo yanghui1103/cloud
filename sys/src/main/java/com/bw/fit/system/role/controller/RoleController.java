@@ -6,10 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
+import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.dict.mapper.DictMapper;
+import com.github.pagehelper.Page;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -51,6 +54,8 @@ import com.bw.fit.system.user.service.UserService;
 public class RoleController extends BaseController {
 
 	@Autowired
+	private CommonService commonService;
+	@Autowired
 	private UserService userService;
 	@Autowired
 	private AddressService addressService ;
@@ -68,20 +73,11 @@ public class RoleController extends BaseController {
 	@RequestMapping(value="roles",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject roles(@ModelAttribute Role role){
-		JSONObject json = new JSONObject(); 
-		TRole u = new TRole();
-		PubFun.copyProperties(u, role);
-		u.setPaginationEnable("1");
-		List<TRole> list = roleMapper.getRoles(u);
-		u.setPaginationEnable("0");
-		List<TRole> listTotal = roleMapper.getRoles(u);
-		if (listTotal != null && listTotal.size() > 0) {
-			json.put("total", listTotal.size());
-		} else {
-			json.put("total", 0);
-		}
-		json.put("rows", JSONObject.toJSON(list));
-		return json;
+		JSONObject js = new JSONObject();
+		Page<TRole> logs = roleService.selectAll(role);
+		js.put("total",((Page)logs).getTotal());
+		js.put("rows",  JSONObject.toJSON(logs));
+		return  js ;
 	}
 	
 	@RequestMapping(value="role/{id}",method=RequestMethod.DELETE,produces="application/json;charset=UTF-8")
@@ -101,9 +97,10 @@ public class RoleController extends BaseController {
 	
 	@RequestMapping(value="role",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject add(@Valid @ModelAttribute Role role){
+	public JSONObject add(@Valid @ModelAttribute Role role, HttpServletRequest httpServletRequest){
 		JSONObject json = new JSONObject();		
 		try {
+			commonService.fillCommonProptities(role,httpServletRequest,true);
 			json = roleService.insert(role);
 		} catch (RbackException e) {
 			e.printStackTrace();

@@ -26,14 +26,9 @@
 
 
 	<select id="getRoles" parameterType="tRole" resultType="tRole">
-		select * from (
-		select a.*,rownum rn from t_role a where 1=1 and a.isdeleted ='0'
+		select a.*  from t_role a where 1=1 and a.isdeleted ='0'
 		and ( a.name like '%'||#{keyWords,jdbcType=VARCHAR}||'%'
 		or a.desp like '%'||#{keyWords,jdbcType=VARCHAR}||'%' ) order by versionTime desc
-		) cc where 1=1
-		<if test="paginationEnable!='0'.toString()">
-			<include refid="paginationSql"></include>
-		</if>
 	</select>
 
 	<!-- 根据角色id查询正在使用有效账户总数 -->
@@ -48,8 +43,8 @@
 	</update>
 
 	<insert id="insert" parameterType="TRole" >
-		insert into t_role (id,name,desp,creator,createtime,versiontime,createorgid,isdeleted) values
-		(#{id},#{name,jdbcType=VARCHAR},#{desp,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},sysdate,sysdate,#{createOrgId,jdbcType=VARCHAR},'0')
+		insert into t_role (id,name,creator,createtime,versiontime,createorgid,isdeleted) values
+		(#{id},#{name,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},sysdate,sysdate,#{createOrgId,jdbcType=VARCHAR},'0')
 	</insert>
 
 	<select id="getAuthsOfThisRole"  parameterType="String" resultType="TAuthority">

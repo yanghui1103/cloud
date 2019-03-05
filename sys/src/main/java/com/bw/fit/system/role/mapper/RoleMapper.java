@@ -11,6 +11,7 @@ import com.bw.fit.system.menu.model.Menu;
 import com.bw.fit.system.role.entity.TRole;
 import com.bw.fit.system.role.entity.TRole2Authority;
 import com.bw.fit.system.role.entity.TRole2dataauthOrgs;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -33,7 +34,7 @@ public interface RoleMapper {
 	 * @param role
 	 * @return
 	 */
-	public List<TRole> getRoles(TRole role);
+	public Page<TRole> getRoles(TRole role);
 	/****
 	 * 删除角色与指定组织的关系
 	 * @param roleId

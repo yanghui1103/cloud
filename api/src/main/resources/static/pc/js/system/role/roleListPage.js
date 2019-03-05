@@ -12,7 +12,7 @@ function rolelistquery(){
 	$('#roleListDg').datagrid({ 
 		pagination:true,
 		method:"get",
-	    url:ctx+'role/roles' ,   
+	    url: ctx+'getMicroServiceResult/v3/sys-proj/role/roles' ,
         queryParams:   serializeFormToJSON($("#rolelistFM").serializeArray()),
 	    remoteSort: false, 
         columns: [[
@@ -22,14 +22,14 @@ function rolelistquery(){
                    { field: 'creator', title: '创建者', width: '20%' }, 
                    { field: 'createTime', title: '创建日期', width: '20%' } 
                ]],
-             fit: false ,    
+             fit: true ,
              idField: "id",
              pagination: true,
              singleSelect:true,
              rownumbers: true, 
              fitColumns:true,
              pageNumber: 1,
-             pageSize: 10,
+             pageSize: 20,
              pageList: [ 10,20, 30, 40, 50],
              striped: true //奇偶行是否区分      
 	});  
@@ -53,10 +53,10 @@ function deleteRole(){
 		return ;
 	}
 	if(row !=null){
-		promptMessageCallBack("3","是否确认删除该角色？",function(){					
+		promptMessageCallBack("3","是否确认删除该角色33？",function(){
 			$.ajax({
 				type : 'DELETE',
-				url : ctx + "role/role/"+row.id,
+				url : ctx + "deleteMicroServiceResult/v1/sys-proj/role/role,"+row.id,
 				data : {},
 				success : function(data) {
 					promptMessageCallBack(data.res, data.msg,function(){
@@ -89,12 +89,12 @@ function openRole2AuthPage(){
 function openAddRole(){
 	$('#_loadDialog_rolelist').dialog({    
 	    title: '分配权限',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'system/gotoIframePage/system/role/roleAddPage/-9',    
+	    href: ctx+'gotoIframePage/sys/pc/system/role/roleAdd/-9',
 	    modal: true   
 	});
 }
