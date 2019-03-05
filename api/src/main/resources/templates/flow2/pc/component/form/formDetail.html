@@ -17,7 +17,7 @@
 </head>
 <body>
 <span th:if="#{msg!=null}" th:text="${msg}"></span>
-<div th:title="表单信息" class="easyui-panel"  mapData-options="closable:false" th:each="ea:${data.data}" th:switch="${ea.tabType}">
+<div th:title="${ea.tabName}" class="easyui-panel"  mapData-options="closable:false" th:each="ea:${data.data}" th:switch="${ea.tabType}">
     <table class="kv-table" th:case="kvtab">
         <tbody>
         <tr th:each="item:${#strings.arraySplit(ea.attr,',')}">
@@ -34,16 +34,21 @@
             </tr>
         </thead>
     </table>
+
+    <table class="kv-table" th:case="atttab">
+        <input id="attIds" th:value="${ea.attr}" type="hidden" >
+        <div th:each="item,itemStat:${#strings.arraySplit(ea.attr,',')}"  >
+            <input  th:id="'ATT' + ${item}" th:value="${item }"  type="hidden" >
+            <td class="kv-label">相关附件：</td>
+            <ul id="fileLi" style="margin-top: 5px"></ul>
+        </div>
+    </table>
+
+
 </div>
 <script th:inline="javascript">
     var data = [[${data.data}]];
     console.log(data);
-</script>
-<script type="text/javascript">
-    $(function () {
-
-    });
-    
 </script>
 </body>
 </html>

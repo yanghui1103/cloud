@@ -126,59 +126,6 @@ public class FlowparaalTest{
 
     @Test
     public void insert() throws RbackException {
-        Form form = new Form();
-        form.setCreator("qq1");
-        form.setId("002");
-
-        List<Map<String,String>> kvs = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            Map<String,String> map = new HashMap<>();
-            map.put("姓名","李"+i);
-            map.put("年龄",String.valueOf(23+i));
-            map.put("性别","男");
-            kvs.add(map);
-        }
-        Map<String,List<Map<String,String>>> kv1 = new HashMap<>();
-        kv1.put("kvtab:1",kvs);
-        form.setKvForm(kv1);
-
-        kvs = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            Map<String,String> map = new HashMap<>();
-            map.put("姓名","乔峰"+i);
-            map.put("年龄",String.valueOf(43+i));
-            map.put("性别","男");
-            kvs.add(map);
-        }
-        kv1.put("kvtab:2",kvs);
-        form.setKvForm(kv1);
-
-        //-------------------
-        Map<String,List<String>> map2 = new HashMap<>();
-        List<String> lists = new ArrayList<>();
-        for(int i=0;i<5;i++){
-            String array = "QQ;"+"微信;"+"weibo"+i;
-            lists.add(array);
-        }
-        map2.put("listtab:1",lists);
-
-        lists = new ArrayList<>();
-        for(int i=0;i<5;i++){
-            String array = "支付宝;"+"天猫;"+"dingding"+i;
-            lists.add(array);
-        }
-        map2.put("listtab:2",lists);
-        form.setListForm(map2);
-
-        Map<String,List<String>> map3 = new HashMap<>();
-        List<String> ss = new ArrayList<>();
-        ss.add("att001");
-        ss.add("att002");
-
-        map3.put("atttab:1",ss);
-        form.setAttachmentForm(map3);
-
-        formPlusService.insert(form);
 
 
     }
