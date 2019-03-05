@@ -14,6 +14,7 @@ import com.bw.fit.component.flow.util.PubFun;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
@@ -579,6 +580,29 @@ public class FlowCoreServiceImpl implements FlowCoreService {
                 .orderByTaskCreateTime().asc()  
                 .list();  
 		return list ;		
+	}
+
+	@Override
+	public List<HistoricVariableInstance> findHistoryProcessVariables(String processInstanceId,String variableName) {
+		if(variableName !=null){ //采集这个实例所有绑定数据
+			List<HistoricVariableInstance> list = processEngine.getHistoryService()//
+					.createHistoricVariableInstanceQuery() // 创建一个历史的流程变量查询对象
+					.processInstanceId(processInstanceId)
+					.list();
+			return list;
+		}else{
+			List<HistoricVariableInstance> list = processEngine.getHistoryService()//
+					.createHistoricVariableInstanceQuery() // 创建一个历史的流程变量查询对象
+					.processInstanceId(processInstanceId)
+					.variableName(variableName)
+					.list();
+			if (null != list && list.size() > 0) {
+				for (HistoricVariableInstance hvi : list) {
+					System.out.println(hvi.getId() + " " + hvi.getProcessInstanceId() + " " + hvi.getVariableName() +  hvi.getVariableTypeName() + "  " + hvi.getValue());
+				}
+			}
+			return list;
+		}
 	}
 
 

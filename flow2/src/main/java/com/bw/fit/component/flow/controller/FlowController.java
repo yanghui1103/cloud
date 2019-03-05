@@ -21,6 +21,7 @@ import com.github.pagehelper.PageHelper;
 import com.sun.xml.internal.ws.resources.HttpserverMessages;
 import io.swagger.annotations.Api;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -349,6 +350,22 @@ public class FlowController {
 		}else{
 			jsonObject = new JSONObject();
 			returnFailJson(jsonObject,"启动失败");
+		}
+		return jsonObject;
+	}
+
+	@GetMapping("historyProcessVariables/{pInstanceId}/{variableName}")
+	@ResponseBody
+	public JSONObject historyProcessVariables(@PathVariable String pInstanceId,@PathVariable String variableName){
+		JSONObject jsonObject = new JSONObject();
+		List<HistoricVariableInstance> list = flowCoreService.findHistoryProcessVariables(pInstanceId,variableName);
+		if(CollectionUtil.isNotEmpty(list)){
+			PubFun.returnSuccessJson(jsonObject);
+			for (HistoricVariableInstance hvi : list) {
+				jsonObject.put(hvi.getVariableName(),hvi.getValue());
+			}
+		}else{
+			PubFun.returnFailJson(jsonObject,"未找到相关数据");
 		}
 		return jsonObject;
 	}

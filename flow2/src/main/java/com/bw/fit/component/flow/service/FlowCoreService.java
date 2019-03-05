@@ -5,6 +5,7 @@ import java.util.*;
 import com.alibaba.fastjson.JSONObject;
 import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.delegate.ActivityExecution;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
@@ -356,6 +357,15 @@ public interface FlowCoreService {
      * @return
      */
     public List<HistoricTaskInstance> getHistoryTaskInstance(String processInstanceId);
+
+    /*****
+     * 功能: 查询历史的流程变量
+     * @param processInstanceId
+     * @param  variableName
+     * @return
+     */
+    public List<HistoricVariableInstance> findHistoryProcessVariables(String processInstanceId,String variableName);
+
     /***
      * 根据流程定义ID,节点Code,查询出，这个节点上处理人们
      */
