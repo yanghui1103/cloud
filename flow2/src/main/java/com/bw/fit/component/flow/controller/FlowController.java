@@ -376,5 +376,4 @@ public class FlowController {
 		jsonObject = flowPlusService.createHandleFlow(flowHandle);
 		return  jsonObject;
 	}
-
 }

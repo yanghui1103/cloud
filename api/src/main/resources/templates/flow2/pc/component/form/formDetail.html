@@ -30,7 +30,8 @@
     <table class="easyui-datagrid" style="width:100%;height:auto;" th:case="listtab">
         <thead>
             <tr  th:each="item,itemStat:${#strings.arraySplit(ea.attr,',')}"  >
-                <th  th:each="item2,itemStat2:${#strings.arraySplit(item,':')}" th:field="${itemStat2.index}" width="20%" th:text="${item2}"></th>
+                <th  th:each="item2,itemStat2:${#strings.arraySplit(item,':')}" th:field="${itemStat2.index}" th:width="${100/#arrays.length(#strings.arraySplit(item,':')) + '%'}"
+                     th:text="${item2}"></th>
             </tr>
         </thead>
     </table>
