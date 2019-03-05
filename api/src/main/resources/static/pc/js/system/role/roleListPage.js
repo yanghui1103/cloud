@@ -140,12 +140,12 @@ function openAssignAccount(){
 	var row = getSingleTreeGridSelectData($("#roleListDg")); 
 	$('#_loadDialog_rolelist').dialog({    
 	    title: '分配账号',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'role/openAccountOfRole/'+  row.id  ,    
+	    href: ctx+'gotoIframePage/sys/pc/system/role/roleAdd/',
 	    modal: true   
 	});
 }
