@@ -203,12 +203,15 @@
      */
     function handleFlow(){
         $.ajax({url: ctx+"addMicroServiceResult/v1/flow2-proj/flow/handle/" +transferFormToString($("#handleFlowFm")) ,
-            type:'post',
-            data:serializeFormToJSON($("#handleFlowFm").serializeArray()),
-            async:false,
+            type: 'post',
+            data: serializeFormToJSON($("#handleFlowFm").serializeArray()),
+            async: false,
             dataType : "JSON",
             success:function(data){
-                menus = data ;
+                promptMessage(data.res,data.msg);
+            },
+            error:function(jqXHR, textStatus, errorThrown){
+                promptMessage("1",errorThrown);
             }
         });
     }

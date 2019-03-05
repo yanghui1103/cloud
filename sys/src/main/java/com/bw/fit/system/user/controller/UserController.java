@@ -69,10 +69,6 @@ public class UserController  extends BaseController {
     @ResponseBody
     public String openUserDetail(@PathVariable String id,@PathVariable String sessionId, Model model){
         JSONObject jsonObject = new JSONObject();
-        jsonObject = commonService.checkSessionValid(sessionId);
-        if("1".equals(jsonObject.get("res").toString())){
-            return jsonObject.toJSONString();
-        }
         User user = new User();
         TUser tu = userMapper.get(id);
         PubFun.copyProperties(user, tu);

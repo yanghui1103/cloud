@@ -33,7 +33,7 @@ function userlistquery(){
              pageList: [ 10,20, 30, 40, 50],
              striped: true, //奇偶行是否区分                 
              onDblClickRow: function (index, row) {  
-            	 openUserDetail(row.id); 
+            	 openUserDetail(row.id);
              }     
 	});  
 }
@@ -50,16 +50,16 @@ function userReloadgrid() {
 
 
 function openUserDetail(id){
-	$('#_loadDialog_userList').dialog({    
-	    title: '用户详情',    
-	    width: 800,    
-	    height: 500,    
-	    closed: false,    
-	    cache: false,    
-	    maximizable:true,
-	    href: ctx+'user/openUserDetail/'+id,    
-	    modal: true   
-	}); 	
+    $('#_loadDialog_userList').dialog({
+        title: '用户详情',
+        width: '98%',
+        height: 500,
+        closed: false,
+        cache: false,
+        maximizable:false,
+        href:   ctx + 'towardMicroServicePage/v1/sys-proj/user,user,' + id+","+ $("#sessionId").val() +"/"+"sys,pc,system,user,userDetail" ,
+        modal: true
+    });
 }
 
 
