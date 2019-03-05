@@ -145,7 +145,7 @@ function openAssignAccount(){
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'gotoIframePage/sys/pc/system/role/roleAdd/',
+	    href: ctx+'gotoIframePage/sys/pc/system/role/role2Account/-9',
 	    modal: true   
 	});
 }

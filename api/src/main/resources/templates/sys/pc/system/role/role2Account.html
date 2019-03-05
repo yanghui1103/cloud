@@ -26,7 +26,7 @@
         </div>
         <div class="easyui-panel"
              style="width: 100%; max-width: 900px; padding: 30px 60px;">
-            <ul><label>${role.name }	</label>
+            <ul><label th:text="${role.name }"></label>
             </ul>
         </div>
         <input name="roleId"  value=${role.id } type="hidden">
@@ -39,9 +39,9 @@
              style="width: 100%; max-width: 900px; padding: 30px 60px;">
             <div style="margin-bottom: 20px;margin-left: 90px">
                 <div>账号列表</div>
-                <input class="easyui-textbox address-select"  value='${accountNames }' style="width: 80%;paddding-right:2px"  editable=false
+                <input class="easyui-textbox address-select"  th:value='${accountNames }' style="width: 80%;paddding-right:2px"  editable=false
                        data-options="required:true">
-                <input type="hidden" name="accountIds" value='${accountIds }'>
+                <input type="hidden" name="accountIds" th:value='${accountIds }'>
             </div>
         </div>
     </div>
