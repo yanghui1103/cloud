@@ -26,15 +26,14 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -313,16 +312,28 @@ public class FlowController {
 	 * 启动流程
 	 * @param processDefinitionKey 定义key
 	 * @param title 主题
-	 * @param vars 键值对，格式是jsonstring
+	 * @param  formKey
 	 * @return 返回流程实例id：pInstanceId
 	 */
-	@PostMapping("start/processDefinitionKey/{processDefinitionKey}/{title}/{vars}")
+	@PostMapping("start/processDefinitionKey/{processDefinitionKey}/{title}/{formKey}")
 	@ResponseBody
-	public JSONObject startFlow(HttpServletRequest httpServletRequest, @PathVariable String title, @PathVariable String processDefinitionKey,@PathVariable String vars) throws RbackException {
+	public JSONObject startFlow(HttpServletRequest httpServletRequest, @PathVariable String title, @PathVariable String processDefinitionKey,@PathVariable String formKey) throws RbackException {
 		JSONObject jsonObject = new JSONObject();
 		JSONObject accountJson = commonService.getCurrentAccount(httpServletRequest);
-		Map map = JSONObject.toJavaObject((JSONObject)JSONObject.toJSON(vars),Map.class);
+		Map<String,?> paramterMap = httpServletRequest.getParameterMap();
+		Map map = new HashMap();
 		map.put("drafter",accountJson.getString("id"));
+		map.put("draftToward", "1");
+		map.put("formKey", formKey);
+		if(CollectionUtil.isNotEmpty(paramterMap)){
+			Set<String> keySet = paramterMap.keySet();
+			for (String key : keySet) {
+				String[] values = httpServletRequest.getParameterMap().get(key);
+				for(String value:values){
+					map.put(key,value);
+				}
+			}
+		}
 		ProcessInstance pInstance=processEngine.getRuntimeService()
 				.startProcessInstanceByKey(processDefinitionKey,map);
 
@@ -355,7 +366,7 @@ public class FlowController {
 		Page<TFlowRegister> tFlowRegisters = flowPlusMapper.getPInstanceOfDrafter(drafter);
 		jsonObject.put("total",tFlowRegisters.getTotal());
 		if(CollectionUtil.isNotEmpty(tFlowRegisters)){
-			jsonObject.put("rows",(JSONObject)JSONObject.toJSON(tFlowRegisters));
+			jsonObject.put("rows",JSONArray.toJSON(tFlowRegisters));
 		}
 		return jsonObject ;
 	}

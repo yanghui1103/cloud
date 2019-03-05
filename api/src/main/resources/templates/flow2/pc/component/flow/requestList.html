@@ -21,7 +21,10 @@
     <input type="hidden" th:value="${sessionId}" id="sessionId">
     <input type="hidden" name="tt" value="02022020" >
 </form>
-<table title="我的申请列表" id="requestDg"  class="easyui-datagrid" >
+<div id="tb">
+    <button type="button" onclick="startFlowTest();">测试start</button>
+</div>
+<table title="我的申请列表" id="requestDg"  class="easyui-datagrid" toolbar = "#tb">
 </table>
     <div id="_loadDialog_requestlist"></div>
 <script th:inline="javascript">

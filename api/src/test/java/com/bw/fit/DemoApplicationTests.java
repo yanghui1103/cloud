@@ -58,4 +58,10 @@ public class DemoApplicationTests {
         JSONObject jsonObject = restTemplate.getForObject("http://sys-proj/account/account/admin", JSONObject.class);
         System.out.println(jsonObject.toJSONString());
     }
+
+    @Test
+    public void startflow(){
+        JSONObject jsonObject = restTemplate.getForObject("http://flow2-proj/flow/start/processDefinitionKey/", JSONObject.class);
+        System.out.println(jsonObject.toJSONString());
+    }
 }

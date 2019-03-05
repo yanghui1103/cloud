@@ -18,3 +18,5 @@
             并累计这些处理人到目标节点上。
         9，form表单数据需要利用mq推入数据，然后flow2工程里提供了开启流程实例的方法，请在入参vars里绑定一个已经推入的表单id，key请使用formKey.
 
+        10，测试发起流程的方法，详见requestList.js里的startflowtest方法。
+

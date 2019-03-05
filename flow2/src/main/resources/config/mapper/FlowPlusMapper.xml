@@ -35,9 +35,9 @@
 	</select>
 
 	<insert id="createRegisterPInstance" parameterType="TFlowRegister">
-		insert into T_FLOWREGISTER (id,FLOWID,TITLE,DRAFTER,creator,CREATEORGID,CREATETIME,VERSIONTIME) values
+		insert into T_FLOWREGISTER (id,FLOWID,TITLE,DRAFTER,creator,operator,CREATEORGID,CREATETIME,VERSIONTIME) values
 		(#{id,jdbcType=VARCHAR},#{flowId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
-		#{drafter,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{createOrgId,jdbcType=VARCHAR},sysdate,sysdate)
+		#{drafter,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},#{createOrgId,jdbcType=VARCHAR},sysdate,sysdate)
 	</insert>
 
 	<select id="getPInstanceOfDrafter" parameterType="String" resultType="TFlowRegister">

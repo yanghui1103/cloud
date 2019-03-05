@@ -73,6 +73,7 @@ public class FlowPlusServiceImpl implements FlowPlusService {
 			flowPlusMapper.createRegisterPInstance(tFlowRegister);
 			PubFun.returnSuccessJson(jsonObject);
 		}catch (Exception e){
+			e.printStackTrace();
 			PubFun.returnFailJson(jsonObject,"流程登记异常");
 			throw  new RbackException("1","流程登记异常");
 		}finally {

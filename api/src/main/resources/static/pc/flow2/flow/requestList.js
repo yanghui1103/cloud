@@ -34,13 +34,19 @@ function query(){
 
 function openDetail(id) {
     $('#_loadDialog_requestlist').dialog({
-        title: '日志详情',
+        title: '流程详情',
         width: '99%',
         height: 500,
         closed: false,
         cache: false,
         maximizable:true,
-        href: ctx+'towardMicroServicePage/v1/common-proj/log,log,'+id+'/common,pc,base,log,logDetail' ,
+        href: ctx+'flowDetail/pdInstId/232501' ,
         modal: true
+    });
+}
+
+function startFlowTest(){ // 我的申请页里发起流程的测试案例，当然也可以使用ajax方法data里绑定键值对。
+    $.post(ctx+"addMicroServiceResult/v1/flow2-proj/flow/start,processDefinitionKey,test32,标题,002/-9",function(data){
+        console.log(data);
     });
 }
