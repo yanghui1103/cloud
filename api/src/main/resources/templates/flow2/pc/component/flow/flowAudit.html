@@ -146,9 +146,14 @@
 
 </div>
 <div id="_loadDialog_address" />
-<input type="hidden" th:value="${pdInstId}" id="pdInstId">
-<input type="hidden" th:value="${formKey}" id="formKey">
-<input type="hidden" th:value="${taskId}" id="taskId">
+<form id="handleFlowFm">
+    <input type="hidden" th:value="${pdInstId}" name="pInstanceId" id="pdInstId">
+    <input type="hidden" th:value="${formKey}" name="formKey" id="formKey">
+    <input type="hidden" th:value="${taskId}" name="taskId" id="taskId">
+    <input type="hidden" name="handleOpt" id="handleOpt2">
+    <input type="hidden" name="toTaskDefKey" id="toTaskDefKey">
+    <input type="hidden" name="toHandler" id="toHandler">
+</form>
 
 <script type="text/javascript">
     $(function () {
@@ -192,6 +197,22 @@
                     }]
                 });
     });
+
+    /*****
+     * 流程办理
+     */
+    function handleFlow(){
+        $.ajax({url: ctx+"addMicroServiceResult/v1/flow2-proj/flow/handle/" +transferFormToString($("#handleFlowFm")) ,
+            type:'post',
+            data:serializeFormToJSON($("#handleFlowFm").serializeArray()),
+            async:false,
+            dataType : "JSON",
+            success:function(data){
+                menus = data ;
+            }
+        });
+    }
+
 </script>
 
 </body>
