@@ -10,31 +10,31 @@ import java.util.Map;
  * @VERSION
  */
 public class Form extends BaseModel {
-    private Map<String,List<String>> attachmentForm;
-    private Map<String,List<Map<String,String>>> kvForm;
-    private Map<String,List<String>> listForm;
+    private Map<String,String> attachmentForm;  // key为tab类型:num:tab的名称
+    private Map<String,String> kvForm;       // key为tab类型:num:tab的名称
+    private Map<String,String> listForm; // key为tab类型:num:tab的名称
 
-    public Map<String, List<String>> getAttachmentForm() {
+    public Map<String, String> getAttachmentForm() {
         return attachmentForm;
     }
 
-    public void setAttachmentForm(Map<String, List<String>> attachmentForm) {
+    public void setAttachmentForm(Map<String, String> attachmentForm) {
         this.attachmentForm = attachmentForm;
     }
 
-    public Map<String, List<Map<String, String>>> getKvForm() {
+    public Map<String, String> getKvForm() {
         return kvForm;
     }
 
-    public void setKvForm(Map<String, List<Map<String, String>>> kvForm) {
+    public void setKvForm(Map<String, String> kvForm) {
         this.kvForm = kvForm;
     }
 
-    public Map<String, List<String>> getListForm() {
+    public Map<String, String> getListForm() {
         return listForm;
     }
 
-    public void setListForm(Map<String, List<String>> listForm) {
+    public void setListForm(Map<String, String> listForm) {
         this.listForm = listForm;
     }
 }

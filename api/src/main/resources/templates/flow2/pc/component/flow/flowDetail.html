@@ -76,7 +76,7 @@
     $(function () {
         var flowPath = getAjaxReturn(ctx+"getMicroServiceUrl/api-flow","get","","text");
         $('#formInfo').panel({
-            href:ctx+"openFormDetail/"+$("#formKey").val()
+            href:ctx+"openFormDetail/002"  // +$("#formKey").val()
         });
         $("#flowImage").attr("src", flowPath.responseText + "flow/getActivitiProccessImage/"+ $('#pdinstid').val());
     });

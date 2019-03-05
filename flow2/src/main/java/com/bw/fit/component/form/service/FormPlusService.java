@@ -17,8 +17,9 @@ import com.bw.fit.component.form.model.Form;
 public interface FormPlusService {
     /****
      *  增加一条表单记录数据
+     * @param form 表单现在支持list，kv，附件的；但是key必须是tab类型:num:tab的名称
      * @return
      * @throws RbackException
      */
-    JSONObject insert(Form tForm) throws RbackException;
+    JSONObject insert(Form form) throws RbackException;
 }

@@ -53,7 +53,6 @@ public class FormController {
         String form = restTemplateUtil.getByForm(request,"http://flow2-proj/form/form/"+formKey, map);
         if(StrUtil.isNotEmpty(form) && JSONObject.parseObject(form).get("res").toString().equals("2")){
             JSONObject jsonObject = JSONObject.parseObject(form);
-
             /****
              * 生成数据并最终有html渲染
              */

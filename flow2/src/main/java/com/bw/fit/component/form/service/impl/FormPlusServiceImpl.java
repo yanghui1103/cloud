@@ -36,7 +36,7 @@ public class FormPlusServiceImpl implements FormPlusService {
     @Override
     public JSONObject insert(Form form) throws RbackException {
         JSONObject jsonObject = new JSONObject();
-        Map<String, List<Map<String,String>>> map1 = form.getKvForm();
+        Map<String, String> map1 = form.getKvForm();
         if(CollectionUtil.isNotEmpty(map1)){
             for(String key:map1.keySet()){
                  String value = map1.get(key).toString();//
@@ -47,14 +47,14 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setTabType(key.split(":")[0]);
                 tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key);
+                tForm.setTabName(key.split(":")[2]);
 
                  System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
             }
         }
 
-        Map<String,List<String>> map2 = form.getListForm();
+        Map<String,String> map2 = form.getListForm();
         if(CollectionUtil.isNotEmpty(map2)){
             for(String key:map2.keySet()){
                 String value = map2.get(key).toString();//
@@ -65,7 +65,7 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setTabType(key.split(":")[0]);
                 tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key);
+                tForm.setTabName(key.split(":")[2]);
 
                 System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
@@ -73,7 +73,7 @@ public class FormPlusServiceImpl implements FormPlusService {
         }
 
 
-        Map<String,List<String>> map3 = form.getAttachmentForm();
+        Map<String,String> map3 = form.getAttachmentForm();
         if(CollectionUtil.isNotEmpty(map3)){
             for(String key:map3.keySet()){
                 String value = map3.get(key).toString();
@@ -84,7 +84,7 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setTabType(key.split(":")[0]);
                 tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key);
+                tForm.setTabName(key.split(":")[2]);
 
                 System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
