@@ -83,7 +83,7 @@ function deleteUser(){
 		promptMessageCallBack("3","是否确认删除该用户？",function(){					
 			$.ajax({
 				type : 'DELETE',
-				url : ctx + "user/user/"+row.id,
+				url : ctx + "deleteMicroServiceResult/v1/sys-proj/user/user,"+row.id,
 				data : {},
 				success : function(data) {
 					promptMessageCallBack(data.res, data.msg,function(){
