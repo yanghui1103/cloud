@@ -107,13 +107,13 @@ function openRole2DataAuthPage(){
 	var row = getSingleTreeGridSelectData($("#roleListDg")); 
 	$('#_loadDialog_rolelist').dialog({    
 	    title: '分配数据权限',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'role/dataAuthsOfRole/'+  row.id  ,    
-	    modal: true   
+	    href: ctx+ "towardMicroServicePage/v1/sys-proj/role,dataAuthsOfRole,"+row.id+"/sys,pc,system,role,role2DataAuth",
+	    modal: true
 	});
 }
 

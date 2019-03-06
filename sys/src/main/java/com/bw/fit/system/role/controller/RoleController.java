@@ -159,37 +159,42 @@ public class RoleController extends BaseController {
 	
 
 	@RequestMapping("dataAuthsOfRole/{roleId}")
-	public String dataAuthsOfRole(@PathVariable String roleId,Model model){
-		model.addAttribute("role", roleMapper.get(roleId));
+    @ResponseBody
+	public String dataAuthsOfRole(@PathVariable String roleId ){
+	    JSONObject jsonObject = new JSONObject();
+	    jsonObject.put("roleId",roleId);
+//		model.addAttribute("role", roleMapper.get(roleId));
 		Dict dd = dictService.getDictsByParentValue("dataAuth");
 		List<TdataDict> tds =  dictMapper.getDictsByPid(dd.getId());
 		TRole2dataauth my = roleMapper.getDataAuthoritysByRole(roleId);
-		for(TdataDict t:tds){
-			if(my!=null){
-				if(my.getAuthId().equalsIgnoreCase(t.getDict_value())){
-					t.setLogId("checked");
-				}
-			}
-		}
-		model.addAttribute("all", tds);
+		if(CollectionUtil.isNotEmpty(tds)){
+            for(TdataDict t:tds){
+                if(my!=null){
+                    if(my.getAuthId().equalsIgnoreCase(t.getDict_value())){
+                        t.setLogId("checked");
+                    }
+                }
+            }
+        }
+        jsonObject.put("data",JSONArray.toJSONString(tds));
+//		model.addAttribute("all", tds);
 		BaseModel b = roleMapper.getRoleDataAuthOrgs(roleId);
 		if(b!=null){
-			model.addAttribute("orgIds",b.getTempStr2());
 			String[] arr = addressService.getNames(b.getTempStr2().split(",")) ;
-			
-			model.addAttribute("orgNames", Arrays.stream(arr).collect(Collectors.joining(",")));
+            jsonObject.put("orgIds",b.getTempStr2());
+            jsonObject.put("orgNames",  Arrays.stream(arr).collect(Collectors.joining(",")));
 		}
 		
-		return "system/role/role2DataAuthPage";
+		return jsonObject.toJSONString() ;
 	}
 
 	
 	@RequestMapping(value="saveDataAuthsOfRole",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject saveAuthsOfRole(@RequestParam(value="rorgids") String rorgids,@RequestParam(value="temp_str1") String temp_str1,
-			@RequestParam(value="id") String id) throws RbackException{
+	public JSONObject saveAuthsOfRole(@RequestParam(value="rorgids") String rorgids,@RequestParam(value="tempStr1") String temp_str1,
+			@RequestParam(value="id") String authIds) throws RbackException{
 		JSONObject json = new JSONObject();		
-		json = roleService.saveDataAuthsOfRole(temp_str1,id,rorgids);
+		json = roleService.saveDataAuthsOfRole(temp_str1,authIds,rorgids);
 		return json ;	
 	}
 	
