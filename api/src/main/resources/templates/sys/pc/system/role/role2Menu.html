@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/providers.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="addRole2Menus();" style="width: 150px">保存</button>
+</div>
+<form id="role2dataAuthFm">
+    <div class="easyui-tabs1" style="width: 100%;">
+        <div class="column">
+            <span class="current">角色信息</span>
+        </div>
+        <div class="easyui-panel"
+             style="width: 100%; max-width: 900px; padding: 30px 60px;">
+            <ul><label th:text="${mapData['name']}"></label>
+            </ul>
+        </div>
+        <div class="column">
+            <span class="current">菜单信息</span>
+        </div>
+        <input name="temp_str1"  th:value="${mapData['id']}" type="hidden">
+
+        <div class="easyui-panel"
+             style="width: 100%; max-width: 900px; padding: 30px 60px;">
+            <div class="zTreeDemoBackground left">
+                <ul id="menuTree" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+</form>
+
+<link rel="stylesheet" th:href="@{/pc/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+<script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.core.js}"></script>
+<script type="text/javascript" th:src="@{/pc/ztree/js/jquery.ztree.excheck.js}"></script>
+<script type="text/javascript" th:src="@{/pc/js/system/menu/menuPage.js}"></script>
+
+</body>
+</html>

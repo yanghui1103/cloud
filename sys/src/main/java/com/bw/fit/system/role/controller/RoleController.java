@@ -202,9 +202,10 @@ public class RoleController extends BaseController {
 	}
 	
 	@RequestMapping("openMenusOfRole/{roleId}")
+	@ResponseBody
 	public String openMenusOfRole(@PathVariable String roleId,Model model){
-		model.addAttribute("role", roleMapper.get(roleId));
-		return "system/role/role2MenuPage";
+		JSONObject jsonObject = (JSONObject)JSONObject.toJSON(roleMapper.get(roleId));
+		return jsonObject.toJSONString() ;
 	}
 
 	@RequestMapping(value="role2Menu",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")

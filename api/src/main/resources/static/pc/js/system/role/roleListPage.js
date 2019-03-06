@@ -126,13 +126,13 @@ function openRole2MenuPage(){
 	var row = getSingleTreeGridSelectData($("#roleListDg")); 
 	$('#_loadDialog_rolelist').dialog({    
 	    title: '分配菜单权限',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'role/openMenusOfRole/'+  row.id  ,    
-	    modal: true   
+		href: ctx+ "towardMicroServicePage/v1/sys-proj/role,openMenusOfRole,"+row.id+"/sys,pc,system,role,role2Menu",
+	    modal: true
 	});
 }
 
