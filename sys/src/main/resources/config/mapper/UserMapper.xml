@@ -7,11 +7,11 @@
 	</select>
 
 	<select id="get" parameterType="String" resultType="tUser">
-		select * from t_user where id = #{id}
+		select * from t_user where id = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<select id="getByCode" parameterType="String" resultType="tUser">
-		select * from t_user where code = #{code}
+		select * from t_user where code = #{code,jdbcType=VARCHAR}
 	</select>
 	<insert id="insert"  parameterType="tUser">
 		insert into t_user (id,name,name_pinyin,code,gender,card,type,isvisible,email,phone,

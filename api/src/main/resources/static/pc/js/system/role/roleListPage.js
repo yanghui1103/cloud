@@ -145,8 +145,8 @@ function openAssignAccount(){
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'gotoIframePage/sys/pc/system/role/role2Account/-9',
-	    modal: true   
+		href: ctx + "towardMicroServicePage/v1/sys-proj/role,openAccountOfRole,"+row.id+"/sys,pc,system,role,role2Account",
+	    modal: true
 	});
 }
 

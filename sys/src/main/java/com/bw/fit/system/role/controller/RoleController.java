@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
 import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.dict.mapper.DictMapper;
@@ -210,20 +211,27 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("openAccountOfRole/{roleId}")
-	public String openAccountOfRole(@PathVariable String roleId,Model model){		
+	@ResponseBody
+	public String openAccountOfRole(@PathVariable String roleId,Model model){
+		JSONObject jsonObject = new JSONObject();
 		List<Account> as = roleService.getAccountOfRole(roleId);
-		if(as!=null && as.size()>0){
+		if(CollectionUtil.isNotEmpty(as)){
+			PubFun.returnSuccessJson(jsonObject);
 			for(Account a:as){
-				User u = userService.getByCode(a.getCode());
+				User u = userService.getByCode(a.getUserId());
 				a.setName(u.getName());
 			}
 
 			String s = as.stream().map(Account::getName).collect(Collectors.joining(",")) ;
 			model.addAttribute("accountNames", s);
 			model.addAttribute("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(",")));
+			jsonObject.put("accountNames",s);
+			jsonObject.put("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(",")));
+		}else{
+			PubFun.returnFailJson(jsonObject,"无关联账号信息");
 		}
-		model.addAttribute("role", roleMapper.get(roleId));
-		
-		return "system/role/role2AccountPage";
+
+		jsonObject.put("role",(JSONObject)JSONObject.toJSON(roleMapper.get(roleId)));
+		return  jsonObject.toJSONString() ;
 	}
 }
