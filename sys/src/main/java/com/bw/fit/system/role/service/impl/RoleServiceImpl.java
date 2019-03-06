@@ -63,32 +63,25 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public JSONObject grantAuthority2Role(TRole2Authority taa)
-			throws RbackException {
+	public JSONObject grantAuthority2Role(TRole2Authority taa) {
 		JSONObject json = new JSONObject();
-		try{
-			roleMapper.grantAuthority2Role(taa);
-			PubFun.returnSuccessJson(json);
-		}catch(RbackException ex){
-			json = new JSONObject();
-			PubFun.returnFailJson(json, ex.getMsg());
-			throw ex;
-		}finally{
-			return json;
-		}
+		roleMapper.createGrantAuthority2Role(taa);
+		PubFun.returnSuccessJson(json);
+		return json;
 	}
 
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
-	public JSONObject updateAuthsOfRole(String temp_str1, String[] id)
-			throws RbackException {
+	public JSONObject updateAuthsOfRole(String temp_str1, String[] authIds)
+			throws Exception {
 		try {
 			TRole2Authority ta2 = new TRole2Authority();
 			ta2.setRoleId(temp_str1);
 			List<TAuthority> lisa = roleMapper.getAuthority2Role(ta2);
-			if(lisa!=null && lisa.size()>0){
+			if(CollectionUtil.isNotEmpty(lisa)){
 				roleMapper.deleteAuthority2Role(ta2);
 			}
-			for(String s:id){
+			for(String s:authIds){
 				TRole2Authority ta = new TRole2Authority();
 				ta.setRoleId(temp_str1);
 				ta.setAuthorityId(s);

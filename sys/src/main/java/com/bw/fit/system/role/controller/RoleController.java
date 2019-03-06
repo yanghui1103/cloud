@@ -144,16 +144,16 @@ public class RoleController extends BaseController {
 	/*****
 	 * 分配功能权限
 	 * @param temp_str1
-	 * @param id
+	 * @param authIds
 	 * @return
 	 * @throws RbackException
 	 */
 	@RequestMapping(value="authsOfRole",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject update(@RequestParam(value="tempStr1") String temp_str1,
-			@RequestParam(value="id") String[] id) throws RbackException{
+			@RequestParam(value="id") String[] authIds) throws Exception {
 		JSONObject json = new JSONObject();		
-		json = roleService.updateAuthsOfRole(temp_str1,id);
+		json = roleService.updateAuthsOfRole(temp_str1,authIds);
 		return json ;	
 	}
 	

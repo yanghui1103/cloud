@@ -74,7 +74,7 @@ public interface RoleMapper {
 	 * @param ta
 	 * @throws RbackException
 	 */
-	public void grantAuthority2Role(TRole2Authority ta)  throws RbackException ;
+	public void createGrantAuthority2Role(TRole2Authority ta)  ;
 	/****
 	 * delete赋权
 	 * @param ta

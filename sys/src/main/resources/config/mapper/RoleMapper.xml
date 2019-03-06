@@ -117,4 +117,9 @@
 	 	insert into t_account2role(roleid,accountid) values (#{roleId,jdbcType=VARCHAR},#{accountId,jdbcType=VARCHAR})
 	 </insert>
 
+	<insert id="createGrantAuthority2Role" parameterType="TRole2Authority" >
+		insert into t_role2authority (roleid,authorityid) values
+    	(#{roleId,jdbcType=VARCHAR},#{authorityId,jdbcType=VARCHAR})
+	</insert>
+
 </mapper>
