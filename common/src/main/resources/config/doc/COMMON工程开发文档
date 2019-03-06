@@ -6,3 +6,4 @@
     TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
             transactionManager.commit(status);transactionManager.rollback(status);
 3,微服务返回数据统一位JSONObject或者JSONArray; (*)
+4,统一规范事务编辑方法：详见新增角色或者角色分配账号的功能实现。

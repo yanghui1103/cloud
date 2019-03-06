@@ -11,6 +11,7 @@
         如果需要手工事务:
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         transactionManager.commit(status);transactionManager.rollback(status);
+    5,统一规范事务编辑方法：详见新增角色或者角色分配账号的功能实现。
 
 二，SYS工程开发
     1，SessionCorrectInterceptor  是处理所有发起/××请求的会话id有效性验证，如果request里有名称为sessionId的数据就会拦截，如果没有这个参数就

@@ -103,10 +103,10 @@ public class RoleController extends BaseController {
 		try {
 			commonService.fillCommonProptities(role,httpServletRequest,true);
 			json = roleService.insert(role);
-		} catch (RbackException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			json = new JSONObject();
-			PubFun.returnFailJson(json, e.getMsg());
+			PubFun.returnFailJson(json, e.getLocalizedMessage());
 		}finally{
 			return json ;
 		}

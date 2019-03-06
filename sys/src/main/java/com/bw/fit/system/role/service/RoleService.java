@@ -27,7 +27,7 @@ public interface RoleService {
 	 * @return
 	 * @throws RbackException
 	 */
-	public JSONObject insert(Role role) throws RbackException;
+	public JSONObject insert(Role role) ;
 	/*****
 	 * 角色赋权
 	 * @param taa

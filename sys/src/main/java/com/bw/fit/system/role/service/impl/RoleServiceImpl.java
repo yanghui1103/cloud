@@ -23,6 +23,7 @@ import com.bw.fit.system.role.entity.TRole2Authority;
 import com.bw.fit.system.role.entity.TRole2dataauthOrgs;
 import com.bw.fit.system.role.model.Role;
 import com.bw.fit.system.role.service.RoleService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -49,22 +50,15 @@ public class RoleServiceImpl implements RoleService {
 		}
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public JSONObject insert(Role role) throws RbackException {
+	public JSONObject insert(Role role)  {
 		JSONObject json = new JSONObject();
-		try{
-			TRole t = new TRole();
-			PubFun.copyProperties(t, role);
-			roleMapper.insert(t);
-			PubFun.returnSuccessJson(json);
-		}catch(RbackException ex){
-			ex.printStackTrace();
-			json = new JSONObject();
-			PubFun.returnFailJson(json, ex.getMsg());
-			throw ex;
-		}finally{
-			return json;
-		}
+		TRole t = new TRole();
+		PubFun.copyProperties(t, role);
+		roleMapper.insert(t);
+		PubFun.returnSuccessJson(json);
+		return json;
 	}
 
 	@Override

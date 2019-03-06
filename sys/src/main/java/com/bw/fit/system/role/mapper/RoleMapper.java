@@ -56,7 +56,7 @@ public interface RoleMapper {
 	 * @param trole
 	 * @throws RbackException
 	 */
-	public void insert(TRole trole) throws RbackException ;
+	public void insert(TRole trole) ;
 	/****
 	 * 这个角色的功能权限
 	 * @param roleId
