@@ -137,8 +137,7 @@
         $.ajax({
             type : 'POST',
             url : ctx + "addMicroServiceResult/v1/sys-proj/user/user/" + transferFormToString($("#userAddFm")),
-            data : serializeFormToJSON($("#userAddFm")
-                .serializeArray()),
+            data : {},
             success : function(data) {
                 promptMessage(data.res, data.msg );
             },
