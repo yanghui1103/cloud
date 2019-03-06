@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -185,8 +187,12 @@ public class AddressServcieImpl implements AddressService{
 	}
 
 	@Override
-	public String[] getNames(String[] ids) {
-		return addressMapper.getNames(ids);
+	public String getNames(String[] ids) {
+		List<VAddress> vAddresses = addressMapper.getNames(ids);
+		if(CollectionUtil.isNotEmpty(vAddresses)){
+			return vAddresses.parallelStream().map(x->x.getName()).collect(Collectors.joining(",")).toString();
+		}
+		return null;
 	}
 
 }

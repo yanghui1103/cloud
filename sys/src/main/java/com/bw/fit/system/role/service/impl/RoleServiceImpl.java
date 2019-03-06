@@ -99,6 +99,7 @@ public class RoleServiceImpl implements RoleService {
 		return json ;
 	}
 
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject saveDataAuthsOfRole(String roleId, String authId,String rorgids)
 			throws RbackException {
@@ -106,10 +107,14 @@ public class RoleServiceImpl implements RoleService {
 		try {
 			BaseModel bm = new BaseModel();
 			bm.setId(roleId);
-			bm.setActionName(authId);
+			bm.setTempStr3(authId);
 			TRole2dataauth alis = roleMapper.getDataAuthoritysByRole(roleId);
 			if(alis!=null){
-				roleMapper.deleteDataAuthority2Role(roleId);
+				try{
+					roleMapper.deleteDataAuthority2Role(roleId);
+				}catch (Exception e){
+					e.printStackTrace();
+				}
 			}
 			roleMapper.grantDataAuthority2Role(bm);
 			
@@ -128,9 +133,9 @@ public class RoleServiceImpl implements RoleService {
 			}
 			
 			PubFun.returnSuccessJson(json);
-		} catch (RbackException e) {
+		} catch (Exception e) {
 			json = new JSONObject();
-			PubFun.returnFailJson(json, e.getMsg());
+			PubFun.returnFailJson(json, e.getLocalizedMessage());
 			e.printStackTrace();
 			throw e;
 		}finally{

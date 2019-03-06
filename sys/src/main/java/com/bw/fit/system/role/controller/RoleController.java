@@ -17,6 +17,7 @@ import com.bw.fit.system.dict.mapper.DictMapper;
 import com.github.pagehelper.Page;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,6 +72,8 @@ public class RoleController extends BaseController {
 	private AuthorityMapper authorityMapper;
 	@Resource
 	private DictMapper dictMapper;
+	@Value("${cutFlag}")
+	private String cutFlag;
 	
 	@RequestMapping(value="roles",method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	@ResponseBody
@@ -180,9 +183,9 @@ public class RoleController extends BaseController {
 //		model.addAttribute("all", tds);
 		BaseModel b = roleMapper.getRoleDataAuthOrgs(roleId);
 		if(b!=null){
-			String[] arr = addressService.getNames(b.getTempStr2().split(",")) ;
+			String arr = addressService.getNames(b.getTempStr2().split(cutFlag)) ;
             jsonObject.put("orgIds",b.getTempStr2());
-            jsonObject.put("orgNames",  Arrays.stream(arr).collect(Collectors.joining(",")));
+            jsonObject.put("orgNames",  arr);
 		}
 		
 		return jsonObject.toJSONString() ;
@@ -233,9 +236,9 @@ public class RoleController extends BaseController {
 
 			String s = as.stream().map(Account::getName).collect(Collectors.joining(",")) ;
 			model.addAttribute("accountNames", s);
-			model.addAttribute("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(",")));
+			model.addAttribute("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(cutFlag)));
 			jsonObject.put("accountNames",s);
-			jsonObject.put("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(",")));
+			jsonObject.put("accountIds", as.stream().map(Account::getId).collect(Collectors.joining(cutFlag)));
 		}else{
 			PubFun.returnFailJson(jsonObject,"无关联账号信息");
 		}

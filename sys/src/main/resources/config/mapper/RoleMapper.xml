@@ -76,7 +76,7 @@
 		delete from t_role2dataauth where roleid = #{roleId}
 	</delete>
 	<insert id="grantDataAuthority2Role" parameterType="baseModel">
-		insert into t_role2dataauth (roleid,authid) values (#{id},#{action_name})
+		insert into t_role2dataauth (roleid,authid) values (#{id},#{tempStr3})
 	</insert>
 
 	<delete id="deleteRole2Menus"  parameterType="string">
@@ -92,13 +92,13 @@
 	 </insert>
 
 	<select id="getRoleDataAuthOrgs" parameterType="String" resultType="baseModel">
-	 	select a.roleId ,orgids temp_str2 from t_role2dataauth_orgs a where roleid = #{roleId}
+	 	select a.roleId ,orgids tempStr2 from t_role2dataauth_orgs a where roleid = #{roleId}
 	 </select>
 	<delete id="deleteRoleDataAuthOrgs" parameterType="String">
 	  	delete from t_role2dataauth_orgs where roleid = #{roleId}
 	 </delete>
 	<insert id="insertRoleDataAuthOrgs" parameterType="baseModel" >
-	 	insert into t_role2dataauth_orgs(roleid,orgids) values (#{id},#{temp_str2})
+	 	insert into t_role2dataauth_orgs(roleid,orgids) values (#{id},#{tempStr2})
 	 </insert>
 	<select id="getTRole2dataauthOrgs" parameterType="String" resultType="TRole2dataauthOrgs">
 	 	select * from t_role2dataauth_orgs where roleid =#{roleId,jdbcType=VARCHAR}

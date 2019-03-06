@@ -98,8 +98,8 @@ public interface RoleMapper {
 	 * @param ta
 	 * @throws RbackException
 	 */
-	public  void grantDataAuthority2Role(BaseModel ta)  throws RbackException ; 
-	public  void deleteDataAuthority2Role(String roleId)  throws RbackException ; 
+	public  void grantDataAuthority2Role(BaseModel ta)    ;
+	public  void deleteDataAuthority2Role(String roleId)  ;
 	
 	/****
 	 * 删除角色下菜单权限

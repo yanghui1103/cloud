@@ -35,5 +35,5 @@ public interface AddressService {
 	 * @param ids 
 	 * @return
 	 */
-	public String[] getNames(String[] ids);
+	public String getNames(String[] ids);
 }

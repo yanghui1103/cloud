@@ -3,7 +3,9 @@ package com.bw.fit;
 import com.bw.fit.system.account.mapper.AccountMapper;
 import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.account.service.AccountService;
+import com.bw.fit.system.authority.entity.TRole2dataauth;
 import com.bw.fit.system.common.model.BaseModel;
+import com.bw.fit.system.role.mapper.RoleMapper;
 import com.netflix.discovery.converters.Auto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.*;
 
@@ -34,6 +37,8 @@ public class SysApplicationTest {
     private RestTemplate restTemplate;
     @Autowired
     private AccountService accountService;
+    @Resource
+    RoleMapper roleMapper;
 
     @Test
     public void load(){
@@ -73,7 +78,13 @@ public class SysApplicationTest {
 
     @Test
     public void pp(){
-        System.out.println("age:"+age);
+        TRole2dataauth alis = roleMapper.getDataAuthoritysByRole("r1");
+        System.out.println(alis.getRoleId());
+    }
+
+    @Test
+    public void mmsd(){
+        roleMapper.deleteDataAuthority2Role("r1");
     }
 
 }

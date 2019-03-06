@@ -1,6 +1,7 @@
 package com.bw.fit.system.account.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.entity.TAccount;
 import com.bw.fit.system.account.mapper.AccountMapper;
@@ -161,10 +162,13 @@ public class AccountServiceImpl implements AccountService {
         String levelname = "";
         for(TRole tr:roles){
             TRole2dataauth ta = roleMapper.getDataAuthoritysByRole(tr.getId());
-            if(level<dictService.getDictByValue(ta.getAuthId()).getSortNumber()){
-                level = dictService.getDictByValue(ta.getAuthId()).getSortNumber() ;
-                levelname = dictService.getDictByValue(ta.getAuthId()).getDictValue();
+            if(ObjectUtil.isNotNull(ta)){
+                if(level<dictService.getDictByValue(ta.getAuthId()).getSortNumber()){
+                    level = dictService.getDictByValue(ta.getAuthId()).getSortNumber() ;
+                    levelname = dictService.getDictByValue(ta.getAuthId()).getDictValue();
+                }
             }
+
 
             TRole2dataauthOrgs tt = roleService.getTRole2dataauthOrgs(tr.getId());
             if(tt!=null&&!"".equals(tt.getOrgIds())){

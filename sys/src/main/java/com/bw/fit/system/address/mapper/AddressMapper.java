@@ -33,5 +33,5 @@ public interface AddressMapper {
 	 * @param ids
 	 * @return
 	 */
-	public String[] getNames(String [] ids);
+	public List<VAddress> getNames(String [] ids);
 }
