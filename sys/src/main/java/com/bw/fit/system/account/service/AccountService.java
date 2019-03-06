@@ -82,7 +82,7 @@ public interface AccountService {
      * @return
      * @throws RbackException
      */
-    public JSONObject updateRole2Account(Role2Account ra) throws RbackException;
+    public JSONObject updateRole2Account(Role2Account ra)  ;
     /****
      * 某个账号拥有使用类型的权限
      * @param accountId

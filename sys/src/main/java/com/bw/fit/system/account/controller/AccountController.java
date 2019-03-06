@@ -260,10 +260,10 @@ public class AccountController extends BaseController {
         try {
             commonService.fillCommonProptities(ra,request, true );
             json = accountService.updateRole2Account(ra);
-        } catch (RbackException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             json = new JSONObject();
-            returnFailJson(json, e.getMsg());
+            returnFailJson(json, e.getLocalizedMessage());
         }finally{
             return json  ;
         }

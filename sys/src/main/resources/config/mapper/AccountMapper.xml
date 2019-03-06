@@ -57,8 +57,8 @@
 	<insert id="insertAccount2Org" parameterType="map">
 		insert into t_account2organization(accountId,orgId) values (#{accountId},#{orgId})
 	</insert>
-	<insert id="insertAccount2Role" parameterType="map">
-		insert into t_account2role(accountId,roleid) values (#{accountId},#{roleId})
+	<insert id="insertAccount2Role" parameterType="TRole2Account">
+		insert into t_account2role(accountId,roleid) values (#{accountId,jdbcType=VARCHAR},#{roleId,jdbcType=VARCHAR})
 	</insert>
 
 	<select id="getPositionsOfTheAccount"  parameterType="String" resultType="TPosition">

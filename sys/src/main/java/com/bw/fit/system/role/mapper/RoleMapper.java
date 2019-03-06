@@ -134,4 +134,10 @@ public interface RoleMapper {
 	 * @return
 	 */
 	public List<Account> getAccountOfRole(String roleId);
+
+	/*****
+	 * 删除角色下的账号
+	 * @param roleId
+	 */
+	void deleteRole2Account(String roleId);
 }

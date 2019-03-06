@@ -89,11 +89,9 @@ public interface AccountMapper {
     public void insertAccount2Org(String accountId,String orgId) throws RbackException ;
     /***
      * 账户与角色
-     * @param accountId
-     * @param roleId
      * @throws RbackException
      */
-    public void insertAccount2Role(String accountId,String roleId) throws RbackException ;
+    public void insertRole2Account(TRole2Account tRole2Account) ;
     /****
      * 获取此账号的岗位列表
      * @param accountId

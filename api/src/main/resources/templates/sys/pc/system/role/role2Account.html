@@ -29,7 +29,7 @@
             <ul><label th:text="${mapData['role'].name}"></label>
             </ul>
         </div>
-        <input name="roleId"    type="hidden">
+        <input name="roleId"  th:value="${mapData['role'].id}"  type="hidden">
 
         <div class="column">
             <span class="current">已选账号信息</span>
@@ -64,10 +64,9 @@
             return;
         }
         $.ajax({
-            type : 'POST',
-            url : ctx + "account/role2Account",
-            data : serializeFormToJSON($("#role2AccountFm")
-                .serializeArray()),
+            type : 'put',
+            url: ctx + "updateMicroServiceResult/v1/sys-proj/account/role2Account/"+transferFormToString($("#role2AccountFm")),
+            data : {},
             success : function(data) {
                 promptMessage(data.res, data.msg );
             },

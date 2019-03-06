@@ -1,5 +1,6 @@
 package com.bw.fit.system.account.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.system.account.entity.TAccount;
 import com.bw.fit.system.account.mapper.AccountMapper;
@@ -26,6 +27,7 @@ import com.bw.fit.system.role.model.Role2Account;
 import com.bw.fit.system.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -113,7 +115,10 @@ public class AccountServiceImpl implements AccountService {
             if(!"".equals(roles)){
                 String[] roless = roles.split(",");
                 for(String s :roless){
-                    accountMapper.insertAccount2Role(account.getId(), s);
+                    TRole2Account role2Account = new TRole2Account();
+                    role2Account.setRoleId(account.getId());
+                    role2Account.setAccountId(s);
+                    accountMapper.insertRole2Account(role2Account);
                 }
             }
             PubFun.returnSuccessJson(json);
@@ -215,30 +220,23 @@ public class AccountServiceImpl implements AccountService {
             return json ;
         }}
 
+    @Transactional(rollbackFor = {Exception.class,RbackException.class})
     @Override
-    public JSONObject updateRole2Account(Role2Account ra) throws RbackException {
+    public JSONObject updateRole2Account(Role2Account ra) {
         JSONObject json = new JSONObject();
-        try {
-//            List list = daoTemplete.getListData("roleSql.getRole2Account", ra);
-//            if(list!=null ){
-//                daoTemplete.insert("roleSql.deleteRole2Account", ra);
-//            }
-            String[] ss = ra.getAccountIds().split(",");
-            for(String s:ss){
-                TRole2Account raa  = new TRole2Account();
-                raa.setRoleId(ra.getRoleId());
-                raa.setAccountId(s);
-                accountMapper.updateRole2Account(raa);
-            }
-            PubFun.returnSuccessJson(json);
-        } catch (RbackException e) {
-            e.printStackTrace();
-            json = new JSONObject();
-            PubFun.returnFailJson(json, e.getMsg());
-            throw e;
-        }finally{
-            return json ;
+        List list = roleMapper.getAccountOfRole(ra.getRoleId());
+        if(CollectionUtil.isNotEmpty(list)){
+            roleMapper.deleteRole2Account(ra.getRoleId());
         }
+        String[] ss = ra.getAccountIds().split(",");
+        for(String s:ss){
+            TRole2Account raa  = new TRole2Account();
+            raa.setRoleId(ra.getRoleId());
+            raa.setAccountId(s);
+            accountMapper.insertRole2Account(raa);
+        }
+        PubFun.returnSuccessJson(json);
+        return json ;
     }
 
     @Override

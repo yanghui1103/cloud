@@ -110,7 +110,7 @@
 	<select id="getRole2Account" parameterType="TRole2Account" resultType="TRole2Account">
 	 	select * from t_account2role a where a.roleid = #{roleId,jdbcType=VARCHAR}
 	 </select>
-	<delete id="deleteRole2Account" parameterType="TRole2Account">
+	<delete id="deleteRole2Account" parameterType="String">
 	 	delete from t_account2role a where a.roleid = #{roleId,jdbcType=VARCHAR}
 	 </delete>
 	<insert id="insertRole2Account" parameterType="TRole2Account">
