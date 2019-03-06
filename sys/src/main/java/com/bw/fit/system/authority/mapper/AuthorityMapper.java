@@ -15,9 +15,9 @@ public interface AuthorityMapper {
 	 */
 	public TAuthority get(String code);
 	/*****
-	 * 查询权限列表
-	 * @param ta
+	 *  所有权限列表
+	 * @param roleId
 	 * @return
 	 */
-	public List<TAuthority> authoritys(TAuthority ta);
+	public List<TAuthority> getAuthoritys(String roleId);
 }

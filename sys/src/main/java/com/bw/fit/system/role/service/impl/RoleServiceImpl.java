@@ -3,6 +3,7 @@ package com.bw.fit.system.role.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
 import com.bw.fit.system.user.entity.TUser;
 import com.github.pagehelper.Page;
@@ -199,6 +200,11 @@ public class RoleServiceImpl implements RoleService {
 		PubFun.copyProperties(tRole,role);
 		PageHelper.startPage(tRole.getPage(),tRole.getRows());
 		Page<TRole> tLogs = roleMapper.getRoles(tRole);
+		if(CollectionUtil.isNotEmpty(tLogs)){
+			tLogs.stream().forEach(x->{
+				x.setTempStr1(String.valueOf(roleMapper.getAccountOfRole(x.getId()).size()));
+			});
+		}
 		return tLogs;
 	}
 

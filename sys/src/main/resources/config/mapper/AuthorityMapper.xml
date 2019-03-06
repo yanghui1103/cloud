@@ -5,4 +5,9 @@
     <select id="get"  parameterType="String" resultType="BaseModel">
 		select * from t_authority where code = #{code,jdbcType=VARCHAR} and isdeleted='1'
 	</select>
+
+	<select id="getAuthoritys" parameterType="String" resultType="TAuthority">
+		select * from t_authority a  where   a.isdeleted='0'
+	</select>
+
 </mapper>

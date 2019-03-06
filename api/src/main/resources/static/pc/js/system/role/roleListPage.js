@@ -18,7 +18,7 @@ function rolelistquery(){
         columns: [[
                    { field: 'id', title: 'ID' ,hidden:true  },
                    { field: 'name', title: '名称', width: '40%',fixed:true  },
-                   { field: 'temp_str1', title: '正在使用人数', width: '20%' },
+                   { field: 'tempStr1', title: '在用账户数', width: '20%' },
                    { field: 'creator', title: '创建者', width: '20%' }, 
                    { field: 'createTime', title: '创建日期', width: '20%' } 
                ]],
@@ -75,13 +75,13 @@ function openRole2AuthPage(){
 	var row = getSingleTreeGridSelectData($("#roleListDg")); 
 	$('#_loadDialog_rolelist').dialog({    
 	    title: '分配功能权限',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'role/authsOfRole/'+  row.id  ,    
-	    modal: true   
+        href: ctx + "towardMicroServicePage/v1/sys-proj/role,authsOfRole,"+row.id+"/sys,pc,system,role,role2Auth",
+	    modal: true
 	});
 }
 

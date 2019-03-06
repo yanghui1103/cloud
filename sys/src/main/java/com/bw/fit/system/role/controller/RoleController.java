@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
 import com.bw.fit.system.common.service.CommonService;
 import com.bw.fit.system.dict.mapper.DictMapper;
@@ -76,6 +77,7 @@ public class RoleController extends BaseController {
 	public JSONObject roles(@ModelAttribute Role role){
 		JSONObject js = new JSONObject();
 		Page<TRole> logs = roleService.selectAll(role);
+
 		js.put("total",((Page)logs).getTotal());
 		js.put("rows",  JSONObject.toJSON(logs));
 		return  js ;
@@ -122,10 +124,11 @@ public class RoleController extends BaseController {
 	
 	
 	@RequestMapping("authsOfRole/{roleId}")
-	public String authsOfRole(@PathVariable String roleId,Model model){
-		model.addAttribute("role", roleMapper.get(roleId));
+	@ResponseBody
+	public String authsOfRole(@PathVariable String roleId ){
+		JSONObject jsonObject = new JSONObject();
 		TAuthority ta = new TAuthority();
-		List<TAuthority> all = authorityMapper.authoritys(ta);
+		List<TAuthority> all = authorityMapper.getAuthoritys(null);
 		List<TAuthority> my = roleMapper.getAuthoritysByRole(roleId);
 		for(TAuthority t:all){
 			if(my!=null){
@@ -133,8 +136,9 @@ public class RoleController extends BaseController {
 				t.setDesp(ops.isPresent()?"checked":"false");
 			}
 		}
-		model.addAttribute("all", all);
-		return "system/role/role2AuthPage";
+		jsonObject.put("roleId",roleId);
+		jsonObject.put("list",JSONArray.toJSONString(all));
+		return jsonObject.toJSONString();
 	}
 
 	/*****
@@ -146,7 +150,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping(value="authsOfRole",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject update(@RequestParam(value="temp_str1") String temp_str1,
+	public JSONObject update(@RequestParam(value="tempStr1") String temp_str1,
 			@RequestParam(value="id") String[] id) throws RbackException{
 		JSONObject json = new JSONObject();		
 		json = roleService.updateAuthsOfRole(temp_str1,id);

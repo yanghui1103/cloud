@@ -468,3 +468,13 @@ function addExternalTab(title, url) {
 							}});
 		return objValue ;
 	}
+
+	function getCheckedboxValues(elementName){
+        var  obj = document.getElementsByName(elementName);
+        check_val = [];
+        for(k in obj){
+            if(obj[k].checked)
+                check_val.push(obj[k].value);
+        }
+        alert(check_val);
+	}

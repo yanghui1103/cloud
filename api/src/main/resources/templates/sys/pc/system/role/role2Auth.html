@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/providers.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="addRole2Auths();" style="width: 150px">保存</button>
+</div>
+<form id="role2AuthFm">
+    <div class="easyui-tabs1" style="width: 100%;">
+        <input name="tempStr1"   type="hidden">
+
+        <div class="column">
+            <span class="current">功能权限信息</span>
+        </div>
+        <div class="easyui-panel"
+             style="width: 100%; max-width: 900px; padding: 30px 60px;">
+            <ul id="auths">
+            </ul>
+        </div>
+    </div>
+</form>
+<script th:inline="javascript">
+    var roleId  = [[${mapData['roleId']}]];
+    $("input[name='tempStr1']").val(roleId);
+
+    var single = [[${mapData['list']}]];
+    var  data = JSON.parse(single);
+
+    for(var i=0;i<data.length;i++){
+        var $input = "<li><input name='id' value='"+data[i].code+"' checked='"+data[i].desp+"' type='checkbox'  /><label>"+data[i].name+"</label></li>";
+        $("#auths").append($input);
+    }
+</script>
+
+<script type="text/javascript">
+    function addRole2Auths(){
+        promptMessageCallBack("3","是否该角色修改功能权限？",function(){
+            $.ajax({
+                type : 'put',
+                url: ctx +"updateMicroServiceResult/v1/sys-proj/role/authsOfRole/"+transferFormToString($("#role2AuthFm")),
+                data :  {} ,
+                success : function(data) {
+                    promptMessage(data.res, data.msg );
+                },
+                dataType : "JSON"
+            });
+        });
+    }
+</script>
+</body>
+</html>

@@ -87,24 +87,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUserBySAP(TUser user, Account account, String accountId, String positionId, String orgId)
             throws RbackException {
-
-        if(userMapper.get(user.getId())!=null) {
-            if("C".equals(user.getTemp_str1())) {
-                userMapper.delete(user.getId());
-                accountMapper.delete(user.getId());
-            }else if("A".equals(user.getTemp_str1())) {
-                userMapper.update(user);
-                accountMapper.update(account);
-            }
-        }else {
-            if("A".equals(user.getTemp_str1())) {
-                userMapper.insert(user);
-                accountMapper.insert(account);
-                accountMapper.insertAccount2Org(accountId, orgId);
-                accountMapper.insertAccount2Position(accountId, positionId);
-            }
-        }
-
     }
 
 }
