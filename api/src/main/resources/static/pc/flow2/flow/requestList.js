@@ -32,6 +32,14 @@ function query(){
     });
 }
 
+
+//增加查询参数，在页面加载时运行
+function myRequestReloadgrid() {
+    $('#requestDg').datagrid('loadData',{total:0,rows:[]}); //清空DataGrid行数据
+    $('#requestDg').datagrid('options').queryParams= serializeFormToJSON($("#requestDgFm").serializeArray());
+    $("#requestDg").datagrid('reload');
+}
+
 function openDetail(id) {
     $('#_loadDialog_requestlist').dialog({
         title: '流程详情',
@@ -48,5 +56,6 @@ function openDetail(id) {
 function startFlowTest(){ // 我的申请页里发起流程的测试案例，当然也可以使用ajax方法data里绑定键值对。
     $.post(ctx+"addMicroServiceResult/v1/flow2-proj/flow/start,processDefinitionKey,test32,标题,002/-9",function(data){
         console.log(data);
+        myRequestReloadgrid();
     });
 }
