@@ -9,6 +9,7 @@ import com.bw.fit.system.menu.model.Menu;
 import com.bw.fit.system.organization.model.Organization;
 import com.bw.fit.system.position.entity.TPosition;
 import com.bw.fit.system.role.model.Role2Account;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
@@ -89,5 +90,12 @@ public interface AccountService {
      * @return
      */
     public List<TAuthority> getOwnAuths(String accountId);
+
+    /****
+     * 查询出符合条件的账户列表
+     * @param account
+     * @return
+     */
+    public Page<Account> all(Account account);
 
 }

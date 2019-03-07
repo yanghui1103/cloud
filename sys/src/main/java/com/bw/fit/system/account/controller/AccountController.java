@@ -163,14 +163,10 @@ public class AccountController extends BaseController {
     @ResponseBody
     public JSONObject accounts(@ModelAttribute Account account){
         JSONObject js = new JSONObject();
-        PageHelper.startPage(account.getPage(),account.getRows());
-        Page<Account> list = accountMapper.getAccounts(account);
-        for(Account a:list){
-            a.setIsDeleted("0".equals(a.getTempStr1())?"正常":"已作废");
-        }
-        js.put("total",((Page)(list)).getTotal());
-        js.put("rows",  JSONObject.toJSON(list));
-        return js ;
+        List<Account> accounts = accountService.all(account);
+        js.put("total",((Page)accounts).getTotal());
+        js.put("rows",  JSONObject.toJSON(accounts));
+        return  js ;
     }
 
     @GetMapping(value="account/id/{id}",produces="application/json;charset=UTF-8")

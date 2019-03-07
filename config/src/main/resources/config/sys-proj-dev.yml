@@ -34,9 +34,6 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-#系统统一字符串的分隔符
-cutFlag: CUTFLAG
-
 #pagehelper
 pagehelper:
   helperDialect: oracle
@@ -63,3 +60,6 @@ custom:
       password: pm123456
 
 
+
+#系统统一字符串的分隔符
+cutFlag: CUTFLAG

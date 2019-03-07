@@ -1,7 +1,7 @@
 package com.bw.fit.system.organization.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotEmpty;
 import com.bw.fit.system.common.model.BaseModel;
 /****
  * 组织模型

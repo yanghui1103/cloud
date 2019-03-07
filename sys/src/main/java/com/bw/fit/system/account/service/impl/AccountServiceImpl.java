@@ -26,6 +26,8 @@ import com.bw.fit.system.role.entity.TRole2dataauthOrgs;
 import com.bw.fit.system.role.mapper.RoleMapper;
 import com.bw.fit.system.role.model.Role2Account;
 import com.bw.fit.system.role.service.RoleService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -246,6 +248,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<TAuthority> getOwnAuths(String accountId) {
         return accountMapper.getOwnAuths(accountId);
+    }
+
+    @Override
+    public Page<Account> all(Account account) {
+        PageHelper.startPage(account.getPage(),account.getRows());
+        Page<Account> tLogs = accountMapper.getAccounts(account);
+        return tLogs;
     }
 
 

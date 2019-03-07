@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService {
         PubFun.copyProperties(u, user);
         PageHelper.startPage(u.getPage(),u.getRows());
         Page<TUser> pages = userMapper.getUsers(u);
-        pages.setTotal(pages.size());
         return pages;
     }
 

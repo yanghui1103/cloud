@@ -2,7 +2,7 @@ package com.bw.fit.system.dict.model;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import com.bw.fit.system.common.util.treeHandler.DDictChildren;
 import com.bw.fit.system.common.model.BaseModel;

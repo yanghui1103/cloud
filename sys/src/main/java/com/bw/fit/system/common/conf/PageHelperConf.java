@@ -15,12 +15,12 @@ import java.util.Properties;
 @Configuration
 public class PageHelperConf {
     @Bean
-    public PageHelper getPageHelper(){
+    public PageHelper getPageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();
-        properties.setProperty("pageSizeZero","true");
-        properties.setProperty("rowBoundsWithCount","true");
-        properties.setProperty("reasonable","true");
+        properties.setProperty("pageSizeZero", "true");
+        properties.setProperty("rowBoundsWithCount", "true");
+        properties.setProperty("reasonable", "true");
         pageHelper.setProperties(properties);
         return pageHelper;
     }
