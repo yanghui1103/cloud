@@ -11,6 +11,7 @@ import com.bw.fit.system.user.model.User;
 import com.bw.fit.system.user.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

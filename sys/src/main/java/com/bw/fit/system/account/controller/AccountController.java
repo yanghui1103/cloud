@@ -1,5 +1,6 @@
 package com.bw.fit.system.account.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -38,6 +39,7 @@ import com.github.pagehelper.Page;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +127,22 @@ public class AccountController extends BaseController {
         return  jsonObject;
     }
 
+    @GetMapping("roles/{accountId}")
+    @ResponseBody
+    public JSONObject getRoles(@PathVariable String accountId){
+        JSONObject jsonObject = new JSONObject();
+        Account account = accountService.get(accountId);
+        List<TRole> tRoles = accountMapper.getRolesByAccount(account.getLogName());
+        if(CollectionUtil.isNotEmpty(tRoles)){
+            PubFun.returnSuccessJson(jsonObject);
+            JSONArray jsonArray = (JSONArray)JSONArray.toJSON(tRoles);
+            jsonObject.put("data",jsonArray);
+        }else{
+            PubFun.returnFailJson(jsonObject,"无数据");
+        }
+        return jsonObject;
+    }
+
     @GetMapping(value="menus2/{sessionId}")
     @ResponseBody
     public JSONArray menus(@PathVariable String sessionId){
@@ -163,8 +181,8 @@ public class AccountController extends BaseController {
     @ResponseBody
     public JSONObject accounts(@ModelAttribute Account account){
         JSONObject js = new JSONObject();
-        List<Account> accounts = accountService.all(account);
-        js.put("total",((Page)accounts).getTotal());
+        Page<Account> accounts = accountService.all(account);
+        js.put("total",(accounts).getTotal());
         js.put("rows",  JSONObject.toJSON(accounts));
         return  js ;
     }

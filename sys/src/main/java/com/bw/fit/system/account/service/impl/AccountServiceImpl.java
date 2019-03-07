@@ -82,16 +82,17 @@ public class AccountServiceImpl implements AccountService {
         return menus2 ;
     }
 
+    @Transactional(rollbackFor = {Exception.class,RbackException.class})
     @Override
     public JSONObject delete(String id) throws RbackException {
         JSONObject json = new JSONObject();
         try {
             accountMapper.delete(id);
             PubFun.returnSuccessJson(json);
-        } catch (RbackException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             json = new JSONObject();
-            PubFun.returnFailJson(json, e.getMsg());
+            PubFun.returnFailJson(json, e.getLocalizedMessage());
             throw e;
         }finally{
             return json ;
@@ -131,7 +132,6 @@ public class AccountServiceImpl implements AccountService {
             e.printStackTrace();
             throw e;
         }
-
         return json ;
     }
 

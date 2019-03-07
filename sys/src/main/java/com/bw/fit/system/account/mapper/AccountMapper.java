@@ -61,7 +61,7 @@ public interface AccountMapper {
      * @param id
      * @throws RbackException
      */
-    public void delete(String id) throws RbackException ;
+    public void delete(String id)  ;
     /*****
      * 恢复帐户
      * @param account

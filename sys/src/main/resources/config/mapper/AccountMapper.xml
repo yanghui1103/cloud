@@ -32,7 +32,7 @@
 	</select>
 
 	<select id="getAccounts" parameterType="account" resultType="account">
-		select * from (select u.*,a.id temp_str2,a.create_time temp_str3 ,a.isdeleted temp_str1,a.logname,rownum rn
+		select * from (select u.*,a.id tempStr2,a.create_time tempStr3 ,a.isdeleted tempStr1,a.logname
 		from t_account a,t_user u
 		where u.code = a.userid  and u.isdeleted='0'
 		and  a.logname like '%'||#{logName,jdbcType=VARCHAR}||'%' and  u.name like '%'||#{name,jdbcType=VARCHAR}||'%'
@@ -43,7 +43,7 @@
 		logname=#{logName,jdbcType=VARCHAR},logpwd=#{logPwd,jdbcType=VARCHAR} where userid = #{userId}
 	</update>
 	<update id="delete"  parameterType="String">
-		update t_account set isdeleted='1' where userid = #{id}
+		update t_account set isdeleted='1',version_time=sysdate where id = #{id}
 	</update>
 	<insert id="insert" parameterType="account">
 		insert into t_account(id,userid,logname,logpwd,creator,create_time,version_time,isdeleted,createorgid)

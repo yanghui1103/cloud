@@ -15,15 +15,16 @@ function accountlistquery(){
         queryParams:   serializeFormToJSON($("#accountlistFM").serializeArray()),
 	    remoteSort: false, 
         columns: [[
-                   { field: 'tempStr2', title: 'ID' ,hidden:true  },
+                   { field: 'code'  ,hidden:true  },
+                   { field: 'tempStr2'  ,hidden:true  },
                    { field: 'id', hidden:true  },
                    { field: 'name', title: '用户姓名', width: '30%',fixed:true  },
                    { field: 'logName', title: '账号', width: '30%',sortable:true },
-                   { field: 'isdeleted', title: '状态', width: '20%' } ,
-                   { field: 'temp_str3', title: '创建时间', width: '20%' ,sortable:true}
+                   { field: 'tempStr1', title: '状态', width: '20%' } ,
+                   { field: 'createTime', title: '创建时间', width: '20%' ,sortable:true}
                ]],
              fit: true ,
-             idField: "tempStr1",
+             idField: "id",
              pagination: true,
              singleSelect:true,
              rownumbers: true, 
@@ -32,8 +33,8 @@ function accountlistquery(){
              pageSize: 20,
              pageList: [ 10,20, 30, 40, 50],
              striped: true, //奇偶行是否区分                 
-             onDblClickRow: function (index, row) {  
-            	 openUserDetail(row.id); 
+             onDblClickRow: function (index, row) {
+            	 openUserDetail(row.id);
              }     
 	});  
 }
@@ -50,15 +51,15 @@ function accountReloadgrid() {
 
 
 function openUserDetail(id){
-	$('#_loadDialog_accountlist').dialog({    
-	    title: '用户详情',    
-	    width: 800,    
-	    height: 500,    
-	    closed: false,    
-	    cache: false,    
-	    maximizable:true,
-	    href: ctx+'user/openUserDetail/'+id,    
-	    modal: true   
+    $('#_loadDialog_accountlist').dialog({
+    	title: '用户详情',
+        width: '99%',
+        height: 500,
+        closed: false,
+        cache: false,
+        maximizable:false,
+        href:  ctx+  'towardMicroServicePage/v1/sys-proj/user,user,' + id+","+ $("#sessionId").val() +"/"+"sys,pc,system,user,userDetail" ,
+        modal: true
 	}); 	
 }
 
@@ -71,7 +72,7 @@ function deleteAccount(){
 		promptMessageCallBack("3","是否确认作废该账户？",function(){					
 			$.ajax({
 				type : 'DELETE',
-				url : ctx + "account/account/"+row.temp_str2,
+				url: ctx + "deleteMicroServiceResult/v1/sys-proj/account/account,"+row.tempStr2 ,
 				data : {},
 				success : function(data) {
 					promptMessageCallBack(data.res, data.msg,function(){
@@ -86,15 +87,16 @@ function deleteAccount(){
 
 
 function openAddAccount(){
-	$('#_loadDialog_accountlist').dialog({    
+    var cuurentAccount = JSON.parse($("#currentUser").val()) ;
+	$('#_loadDialog_accountlist').dialog({
 	    title: '账户新增',    
-	    width: 800,    
+	    width: '99%',
 	    height: 500,    
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'system/gotoIframePage/system/account/accountAddPage/-9',    
-	    modal: true   
+        href:  ctx+  'towardMicroServicePage/v1/sys-proj/account,roles,' + cuurentAccount.id +"/"+"sys,pc,system,account,accountAdd" ,
+        modal: true
 	}); 	
 }
 

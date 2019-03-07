@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/providers.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="addAccount();" style="width: 150px">保存</button>
+</div>
+
+<div style="margin:30px 0px;"></div>
+<form id="accountAddFm"  class="easyui-form" method="post"
+      data-options="novalidate:false">
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>账号</div>
+        <input class="easyui-textbox"  name="logName" style="width: 80%;paddding-right:2px"
+               data-options="required:true,validType:['length[4,10]']">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>用户编码</div>
+        <input class="easyui-textbox"  name="userId" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>岗位</div>
+        <input class="easyui-textbox address-select-position"  editable=false  name="postionNames" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+        <input type="hidden"  name="positionIds"
+               data-options="required:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>组织</div>
+        <input class="easyui-textbox address-select-org"  editable=false   style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+        <input type="hidden"  name="currentOrgId"
+               data-options="required:true">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>角色</div>
+
+        <select class="easyui-combobox" name="roleIds" id="roleIds" multiple="true" multiline="true"  editable=false
+                data-options="required:true"   style="width: 80%;paddding-right:2px"  >
+
+        </select>
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>排序号</div>
+        <input class="easyui-numberbox" name="sortNumber" style="width: 80%;paddding-right:2px"
+               data-options="required:true" >
+    </div>
+
+</form>
+<script type="text/javascript" th:src="@{/pc/js/system/address/addressPage.js}"></script>
+<script type="text/javascript" th:src="@{/pc/js/system/account/accountAddPage.js}"></script>
+
+<script th:inline="javascript">
+    var data  = [[${mapData['data']}]];
+    for(var i=0;i<data.length;i++){
+        $("#roleIds").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>")
+    }
+</script>
+</body>
+</html>

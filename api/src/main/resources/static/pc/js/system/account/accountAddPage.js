@@ -33,8 +33,8 @@ function addAccount(){
 	}
 	$.ajax({
 		type : 'POST',
-		url : ctx + "account/account",
-		data :  $("#accountAddFm").serialize(),
+		url : ctx + "addMicroServiceResult/v1/sys-proj/account/account/"+transferFormToString($("#accountAddFm")),
+		data : {} ,
 		success : function(data) {
 			promptMessageCallBack(data.res, data.msg,function(){
 				accountReloadgrid();

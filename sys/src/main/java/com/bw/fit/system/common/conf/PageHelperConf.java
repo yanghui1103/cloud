@@ -1,5 +1,7 @@
 package com.bw.fit.system.common.conf;
 
+import org.apache.ibatis.plugin.Interceptor;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +24,7 @@ public class PageHelperConf {
         properties.setProperty("rowBoundsWithCount", "true");
         properties.setProperty("reasonable", "true");
         pageHelper.setProperties(properties);
+        
         return pageHelper;
     }
 }
