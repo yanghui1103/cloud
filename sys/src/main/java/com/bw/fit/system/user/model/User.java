@@ -15,7 +15,7 @@ public class User extends BaseModel {
     private String gender;
     @NotEmpty(message="身份证号码不得为空")
     private String card;
-    @NotEmpty(message="人员类型不得为空")
+    @NotEmpty(message="Exception不得为空")
     private String type;
     private String isVisible;
     private String email;

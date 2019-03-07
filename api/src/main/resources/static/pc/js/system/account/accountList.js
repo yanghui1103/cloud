@@ -109,7 +109,7 @@ function openTransferAccount(){
 	    closed: false,    
 	    cache: false,    
 	    maximizable:true,
-	    href: ctx+'account/openAccountTransferPage/'+row.temp_str2,    
-	    modal: true   
+        href:  ctx+  'towardMicroServicePage/v1/sys-proj/account,openAccountTransferPage,' + row.tempStr2 +"/"+"sys,pc,system,account,accountTransfer" ,
+        modal: true
 	}); 	
 }

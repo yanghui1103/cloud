@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/easyui.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/providers.css}" rel="stylesheet">
+    <link th:href="@{/pc/cloud/v1/static/lightblue/css/base.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/pc/cloud/v1/custom/lightblue/uimaker/icon.css}">
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/common/common.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/cloud/v1/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{/pc/js/system/account/accountList.js}"></script>
+
+</head>
+<body>
+<div style="float: right;margin-right:30px;margin-top:5px" >
+    <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
+            onclick="transferAccount();" style="width: 150px">保存</button>
+</div>
+
+<div style="margin:30px 0px;"></div>
+<form id="accountTransferFm"  class="easyui-form" method="post"
+      data-options="novalidate:false">
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>账号</div>
+        <input class="easyui-textbox"  th:value="${mapData['logName'] }" style="width: 80%;paddding-right:2px"
+               readonly="readonly">
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>原用户姓名</div>
+        <input class="easyui-textbox"  th:value="${mapData['name']  }" style="width: 80%;paddding-right:2px"
+        >
+    </div>
+
+    <div style="margin-bottom: 20px;margin-left: 90px">
+        <div>新用户编码</div>
+        <input class="easyui-textbox"  name="userId" style="width: 80%;paddding-right:2px"
+               data-options="required:true">
+    </div>
+    <input name="id" th:value="${mapData['id'] }" type="hidden">
+    <input name="_method" value="PUT" type="hidden">
+</form>
+
+<script type="text/javascript" th:src="@{/pc/js/system/address/addressPage.js}"></script>
+<script type="text/javascript">
+    function transferAccount(){
+        if (!$("#accountTransferFm").form('enableValidation')
+            .form('validate')) {
+            return;
+        }
+        $.ajax({
+            type : 'PUT',
+            url: ctx +"updateMicroServiceResult/v1/sys-proj/account/account/"+transferFormToString($("#accountTransferFm")),
+            data :  {} ,
+            success : function(data) {
+                promptMessageCallBack(data.res, data.msg,function(){
+                    accountReloadgrid();
+                } );
+            },
+            dataType : "JSON"
+        });
+    }
+</script>
+</body>
+</html>

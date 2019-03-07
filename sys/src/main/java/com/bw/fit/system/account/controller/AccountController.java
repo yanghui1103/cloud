@@ -244,14 +244,8 @@ public class AccountController extends BaseController {
     @ResponseBody
     public JSONObject update(@Valid @ModelAttribute Account account,BindingResult result,HttpServletRequest request){
         JSONObject json = new JSONObject();
-        if (result.hasErrors()) {
-            FieldError error = result.getFieldError();
-            json.put("res", "1");
-            returnFailJson(json, error.getDefaultMessage());
-            return json ;
-        }
         try {
-            commonService.fillCommonProptities(account,request, true );
+            commonService.fillCommonProptities(account,request, false );
             json = accountService.updateTransferAccount(account);
         } catch (RbackException e) {
             e.printStackTrace();
@@ -263,10 +257,10 @@ public class AccountController extends BaseController {
     }
 
     @RequestMapping("openAccountTransferPage/{accountId}")
+    @ResponseBody
     public String openAccountTransferPage(@PathVariable String accountId, Model model){
         Account ac = accountService.get(accountId);
-        model.addAttribute("account", ac);
-        return "system/account/accountTransferPage";
+        return  JSONObject.toJSONString(ac);
     }
 
     @RequestMapping(value="role2Account",method=RequestMethod.PUT,produces="application/json;charset=UTF-8")

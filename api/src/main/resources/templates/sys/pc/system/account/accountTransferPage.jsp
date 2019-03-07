@@ -23,13 +23,13 @@
 		
 		<div style="margin-bottom: 20px;margin-left: 90px">  
 			<div>账号</div>
-			<input class="easyui-textbox"  value="${account.logName }" style="width: 80%;paddding-right:2px"  
+			<input class="easyui-textbox"  th:value="${mapData['logName'] }" style="width: 80%;paddding-right:2px"
 				readonly="readonly">
 		</div>
 				
 		<div style="margin-bottom: 20px;margin-left: 90px">  
 			<div>原用户姓名</div>
-			<input class="easyui-textbox"  value="${account.name }" style="width: 80%;paddding-right:2px"  
+			<input class="easyui-textbox"  th:value="${mapData['name'] }" style="width: 80%;paddding-right:2px"
 				>
 		</div>		
 		
@@ -38,7 +38,7 @@
 			<input class="easyui-textbox"  name="userId" style="width: 80%;paddding-right:2px"  
 				data-options="required:true">
 		</div>		
-		<input name="id" value="${account.id }" type="hidden">
+		<input name="id" th:value="mapData['id'] " type="hidden">
 		<input name="_method" value="PUT" type="hidden">
 	</form>	
 	
