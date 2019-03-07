@@ -29,6 +29,14 @@ spring:
 #      - **.bpmn
 #      - **.bpmn20.xml
 
+  #RabbitMQ相关配置
+  rabbitmq:
+    host: 39.104.161.196
+    port: 5672
+    username: cloud_common
+    password: cloud_common
+    vhost: /cloud_common_vhost
+
 mybatis:
   mapper-locations: classpath:config/mapper/*Mapper.xml
   type-aliases-package: com.bw.fit
@@ -62,3 +70,6 @@ form:
         name: 列数据表单
       - code: atttab
         name: 附件表单
+
+
+
