@@ -23,6 +23,7 @@ import com.bw.fit.system.role.mapper.RoleMapper;
 import com.bw.fit.system.role.model.Role2Account;
 import com.bw.fit.system.user.entity.TUser;
 import com.bw.fit.system.user.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,11 +163,12 @@ public class AccountController extends BaseController {
     @ResponseBody
     public JSONObject accounts(@ModelAttribute Account account){
         JSONObject js = new JSONObject();
-        List<Account> list = accountMapper.getAccounts(account);
+        PageHelper.startPage(account.getPage(),account.getRows());
+        Page<Account> list = accountMapper.getAccounts(account);
         for(Account a:list){
             a.setIsDeleted("0".equals(a.getTempStr1())?"正常":"已作废");
         }
-        js.put("total",((Page)list).getTotal());
+        js.put("total",((Page)(list)).getTotal());
         js.put("rows",  JSONObject.toJSON(list));
         return js ;
     }

@@ -8,6 +8,7 @@ import com.bw.fit.system.organization.entity.TOrganization;
 import com.bw.fit.system.position.entity.TPosition;
 import com.bw.fit.system.role.entity.TRole;
 import com.bw.fit.system.role.entity.TRole2Account;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public interface AccountMapper {
      * @param account
      * @return
      */
-    public List<Account> getAccounts(Account account);
+    public Page<Account> getAccounts(Account account);
     /*****
      * 删除帐户
      * @param id

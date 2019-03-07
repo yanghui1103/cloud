@@ -2,7 +2,6 @@ package com.bw.fit.pc.sys.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -29,9 +28,11 @@ public class RestTemplateUtil {
         try {
             rss = requestv2(req, url, HttpMethod.POST, params);
             return rss.getBody();
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
         }
     }
 
@@ -47,9 +48,11 @@ public class RestTemplateUtil {
         try {
             rss = request(req, url, HttpMethod.GET, params);
             return rss.getBody();
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
         }
     }
 
@@ -65,9 +68,11 @@ public class RestTemplateUtil {
         try {
             rss = requestv2(req, url, HttpMethod.GET, params);
             return rss.getBody();
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
         }
     }
 
@@ -76,9 +81,11 @@ public class RestTemplateUtil {
         try {
             rss = request(req, url, HttpMethod.DELETE, params);
             return rss.getBody();
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
         }
     }
 
@@ -87,9 +94,11 @@ public class RestTemplateUtil {
         try {
             rss = request(req, url, HttpMethod.PUT, params);
             return rss.getBody();
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
         }
     }
 
@@ -100,7 +109,7 @@ public class RestTemplateUtil {
      * @param params maybe null
      * @return
      */
-    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) throws JsonProcessingException {
+    private ResponseEntity<String> request(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> params) throws Exception {
         HttpServletRequest request = (HttpServletRequest) req;
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -143,7 +152,7 @@ public class RestTemplateUtil {
      * @auther: yangh
      * @date: 2019-3-1 9:48
      */
-    private ResponseEntity<String> requestv2(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> paramsStart) throws JsonProcessingException {
+    private ResponseEntity<String> requestv2(ServletRequest req, String url, HttpMethod method, MultiValueMap<String, ?> paramsStart) throws Exception {
         HttpServletRequest request = (HttpServletRequest) req;
         MultiValueMap<String, ?> params = new LinkedMultiValueMap<>();
         //获取header信息
