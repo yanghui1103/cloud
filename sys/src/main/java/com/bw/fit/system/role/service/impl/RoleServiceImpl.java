@@ -143,6 +143,7 @@ public class RoleServiceImpl implements RoleService {
 		}
 	}
 
+	@Transactional(rollbackFor = {Exception.class,RbackException.class})
 	@Override
 	public JSONObject saverole2Menu(String roleId, String menuIds)
 			throws RbackException {
@@ -154,6 +155,13 @@ public class RoleServiceImpl implements RoleService {
 			if(ms!=null){
 				roleMapper.deleteRole2Menus(roleId);
 			}
+			if(false){
+				throw  new RbackException("1","测试异常，测试事务");
+			}
+			if(false){
+				int ip=10/0;
+			}
+
 			String[] array = menuIds.split(",");
 			for(String s:array){
 				bm.setLogId(s);

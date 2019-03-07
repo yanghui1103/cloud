@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bw.fit.system.common.interceptor.SessionCorrectInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +21,7 @@ import com.bw.fit.system.common.model.RbackException;
  * @author yangh
  *
  */
+@Component
 @ControllerAdvice 
 public class GlobalExceptionHandler {
 

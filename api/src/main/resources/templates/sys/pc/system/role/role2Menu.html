@@ -19,7 +19,7 @@
     <button class="easyui-linkbutton" type=button iconCls="icon-add" data-options="selected:true"
             onclick="addRole2Menus();" style="width: 150px">保存</button>
 </div>
-<form id="role2dataAuthFm">
+<form id="role2menuFm">
     <div class="easyui-tabs1" style="width: 100%;">
         <div class="column">
             <span class="current">角色信息</span>
@@ -33,6 +33,8 @@
             <span class="current">菜单信息</span>
         </div>
         <input name="temp_str1"  th:value="${mapData['id']}" type="hidden">
+        <input name="roleId"  th:value="${mapData['id']}" type="hidden">
+        <input name="menus"  type="hidden">
 
         <div class="easyui-panel"
              style="width: 100%; max-width: 900px; padding: 30px 60px;">

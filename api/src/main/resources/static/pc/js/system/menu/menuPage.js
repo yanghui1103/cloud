@@ -15,21 +15,7 @@
 		};
 		
 
-		var zNodes =[
-			{ id:1, pId:0, name:"随意勾选 1", open:true},
-			{ id:11, pId:1, name:"随意勾选 1-1", open:true},
-			{ id:111, pId:11, name:"随意勾选 1-1-1"},
-			{ id:112, pId:11, name:"随意勾选 1-1-2"},
-			{ id:12, pId:1, name:"随意勾选 1-2", open:true},
-			{ id:121, pId:12, name:"随意勾选 1-2-1"},
-			{ id:122, pId:12, name:"随意勾选 1-2-2"},
-			{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
-			{ id:21, pId:2, name:"随意勾选 2-1"},
-			{ id:22, pId:2, name:"随意勾选 2-2", open:true},
-			{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
-			{ id:222, pId:22, name:"随意勾选 2-2-2"},
-			{ id:23, pId:2, name:"随意勾选 2-3"}
-		];
+		var zNodes = null ;
 
 		function focusKey(e) {
 			if (key.hasClass("empty")) {
@@ -112,8 +98,8 @@
 		
 		var key;
 		$(document).ready(function(){					
-					$.get(ctx+"menu/menus/"+$("input[name='temp_str1']").val() ,function(data){  
-							zNodes = data  ; 			 					
+					$.get(ctx+"getMicroServiceResult/v2/sys-proj/menu/menus,"+$("input[name='temp_str1']").val() ,function(data){
+							zNodes = data  ;
 							$.fn.zTree.init($("#menuTree"), setting, zNodes);
 							setCheck(); 
 					});
@@ -129,10 +115,11 @@
 					ids = ids +nodes[i].id ;
 					ids = ids + ",";
 				}
+				$("input[name='menus']").val(ids);
 				$.ajax({
-					url:ctx + "role/role2Menu",
-					data:{roleId:$("input[name='temp_str1']").val(),menus:ids,_method:'PUT'},
-					type:'post',
+					url: ctx + "updateMicroServiceResult/v1/sys-proj/role/role2Menu/" + transferFormToString($("#role2menuFm")),
+					data: {},
+					type:'put',
 					success:function(data){
 						promptMessage(data.res,data.msg);
 					}
