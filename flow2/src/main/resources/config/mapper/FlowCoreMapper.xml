@@ -21,5 +21,17 @@
 		sysdate,#{handleOpt,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{nextTaskDefKey,jdbcType=VARCHAR},#{formKey,jdbcType=VARCHAR})
 	</insert>
 
+	<select id="getFlowHandleHistorys" parameterType="TCoFlowExecuteDefinition" resultType="TCoFlowExecuteDefinition">
+		select a.id,a.TASKDEFKEY,a.HANDLER,a.HANDLEOPT,a.remark,a.HANDLETIME,a.NEXTTASKDEFKEY,fd.HANDLERS
+		from Coflowexecutedefinition a,FLOWEXECUTEDEFINITION fd
+		where fd.taskdefkey = a.NEXTTASKDEFKEY and a.PROCESSDEFKEY = fd.PROCESSDEFKEY
+		<if test="processDefKey!=''.toString() and processDefKey !=null">
+			and a.PROCESSDEFKEY   = #{processDefKey,jdbcType=VARCHAR}
+		</if>
+		<if test="processId!=''.toString() and processId !=null">
+			and a.processId = #{processId,jdbcType=VARCHAR}
+		</if>
+	  	order by a.HANDLETIME desc
+	</select>
 
 </mapper>

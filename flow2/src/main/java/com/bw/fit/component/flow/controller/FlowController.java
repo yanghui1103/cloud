@@ -5,8 +5,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.bw.fit.component.flow.conf.FlowHandleWays;
 import com.bw.fit.component.flow.entity.BaseEntity;
+import com.bw.fit.component.flow.entity.TCoFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowExecuteDefinition;
 import com.bw.fit.component.flow.entity.TFlowRegister;
+import com.bw.fit.component.flow.mapper.FlowCoreMapper;
 import com.bw.fit.component.flow.mapper.FlowPlusMapper;
 import com.bw.fit.component.flow.model.FlowHandle;
 import com.bw.fit.component.flow.model.RbackException;
@@ -84,6 +86,8 @@ public class FlowController {
 	private FlowPlusService flowPlusService;
 	@Resource
 	private FlowPlusMapper flowPlusMapper;
+	@Resource
+	private FlowCoreMapper flowCoreMapper;
 	@Autowired
 	private FlowCoreService flowCoreService;
 	@Autowired
@@ -404,4 +408,21 @@ public class FlowController {
 		jsonObject = flowPlusService.createHandleFlow(flowHandle);
 		return  jsonObject;
 	}
+
+	/****
+	 * 获取流程实例所有审核历史，前提保证实例id合法否则会报错
+	 * @param processId
+	 * @return
+	 */
+	@GetMapping("handleHistorys/{processId}")
+	@ResponseBody
+	public String handleHistorys(@PathVariable String processId){
+		TCoFlowExecuteDefinition tco = new TCoFlowExecuteDefinition();
+		tco.setProcessDefKey(processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(processId).singleResult().getProcessDefinitionKey());
+		tco.setProcessId(processId);
+		List<TCoFlowExecuteDefinition> list = flowCoreMapper.getFlowHandleHistorys(tco);
+		String s = JSONArray.toJSONString(list);
+		return s;
+	}
+
 }

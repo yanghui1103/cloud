@@ -44,6 +44,11 @@ public class FlowController {
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
         String returnJson = restTemplateUtil.get(request,"http://flow2-proj/flow/historyProcessVariables/"+pdinstId+"/"+"formKey",param);
 
+        String handleHis = restTemplateUtil.get(request,"http://flow2-proj/flow/handleHistorys/"+pdinstId,param);
+        if(StrUtil.isNotEmpty(handleHis)){
+            model.addAttribute("handleHis",handleHis);
+        }
+
         JSONObject jsonObject = JSONObject.parseObject(returnJson);
         if("2".equals(jsonObject.getString("res"))){
             model.addAttribute("formKey",jsonObject.getString("formKey"));
@@ -63,6 +68,10 @@ public class FlowController {
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
         String returnJson = restTemplateUtil.get(request,"http://flow2-proj/flow/historyProcessVariables/"+pdInstId+"/"+"formKey",param);
 
+        String handleHis = restTemplateUtil.get(request,"http://flow2-proj/flow/handleHistorys/"+pdInstId,param);
+        if(StrUtil.isNotEmpty(handleHis)){
+            model.addAttribute("handleHis",handleHis);
+        }
         JSONObject jsonObject = JSONObject.parseObject(returnJson);
         if("2".equals(jsonObject.getString("res"))){
             model.addAttribute("formKey",jsonObject.getString("formKey"));

@@ -26,7 +26,7 @@
     <div class="easyui-panel" title="流程与审核信息" style="width:100%;height:auto;padding:10px;"
          data-options="iconCls:'icon-tip',collapsible:true">
         <img id="flowImage" />
-        <table class="easyui-datagrid" style="width:100%;height:auto;" data-options="nowrap:false" >
+        <table id="flowHandleList" class="easyui-datagrid" style="width:100%;height:auto;" data-options="nowrap:false" >
             <thead>
             <tr>
                 <th field="name1" width="10%">节点名称</th>
@@ -64,6 +64,9 @@
         });
         $("#flowImage").attr("src", flowPath.responseText + "flow/getActivitiProccessImage/"+ $('#pdinstid').val());
     });
+
+
+
 </script>
 </body>
 </html>

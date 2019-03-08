@@ -20,17 +20,4 @@
 
         10，测试发起流程的方法，详见requestList.js里的startflowtest方法。
 
-        11,MQ推入动态表单数据，具体方法mqDyncFormSender.sendDyncForm(s);
-                Form form = new Form();
-                Map<String,String> map = new HashMap<>();
-                map.put("listtab;1;测试list","支付宝:天猫:dingd234, 支付宝:天猫:dingd23433, 支付宝:天猫:dingding2, 支付宝:;天猫:dingding3, 支付宝:天猫:dingding4");
-                form.setListForm(map);
-                map = new HashMap<>();
-                map.put("kvtab;2;测试tab","姓名:张三,年龄:23,性别:男,毕业院校:清华大学计算机学3344");
-                form.setKvForm(map);
-                form.setId("003");
-                form.setCreator("qq1");
-                String s = JSONObject.toJSONString(form);
-                mqDyncFormSender.sendDyncForm(s);
-
-        12,MQ将流程结果推出请参考MqFlowResultSender.sendResult方法
+        11,

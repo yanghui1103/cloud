@@ -19,6 +19,7 @@ public class TCoFlowExecuteDefinition extends BaseEntity {
     private String handleOpt;
     private String nextTaskKey;
     private String formKey;
+    private String handlers;
 
     public String getProcessDefKey() {
         return processDefKey;
@@ -90,5 +91,13 @@ public class TCoFlowExecuteDefinition extends BaseEntity {
 
     public void setFormKey(String formKey) {
         this.formKey = formKey;
+    }
+
+    public String getHandlers() {
+        return handlers;
+    }
+
+    public void setHandlers(String handlers) {
+        this.handlers = handlers;
     }
 }

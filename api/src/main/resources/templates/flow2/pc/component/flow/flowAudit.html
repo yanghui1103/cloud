@@ -26,7 +26,7 @@
     <div class="easyui-panel" title="流程与审核信息" style="width:100%;height:auto;padding:10px;"
          data-options="iconCls:'icon-tip',collapsible:true">
         <img id="flowImage"/>
-        <table class="easyui-datagrid" style="width:100%;height:auto;" data-options="nowrap:false">
+        <table id="flowHandleList" class="easyui-datagrid" style="width:100%;height:auto;" data-options="nowrap:false">
             <thead>
             <tr>
                 <th field="name1" width="10%">节点名称</th>
@@ -39,29 +39,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-                <td>这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，
-                    这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，这个合同需要和各个煤矿及发运站的主任，先进行核实，
-                <td>Data 5</td>
-                <td>Data 5</td>
-            </tr>
-            <tr>
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 5</td>
-            </tr>
-            <tr>
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 5</td>
+                <td><span th:text="${handleHis}"></span>起草</td>
+                <td>管理员</td>
+                <td>通过</td>
+                <td></td>
+                <td>2019-03-01 12:34:22</td>
+                <td>张三</td>
             </tr>
             </tbody>
         </table>

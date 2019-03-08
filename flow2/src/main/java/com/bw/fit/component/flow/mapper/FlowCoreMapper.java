@@ -37,4 +37,11 @@ public interface FlowCoreMapper {
      * @param tCoFlowExecuteDefinition
      */
     void handledCurrentTask(TCoFlowExecuteDefinition tCoFlowExecuteDefinition) throws RbackException;
+
+    /*****
+     * 根据流程定义key，流程实例id查询所有审核历史,及下一个节点处理的人
+     * @param tCoFlowExecuteDefinition
+     * @return
+     */
+    public List<TCoFlowExecuteDefinition> getFlowHandleHistorys(TCoFlowExecuteDefinition tCoFlowExecuteDefinition);
 }
