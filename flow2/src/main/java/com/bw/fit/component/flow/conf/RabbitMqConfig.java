@@ -1,6 +1,5 @@
 package com.bw.fit.component.flow.conf;
 
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,15 +31,4 @@ public class RabbitMqConfig {
     public static final String formRoutingKey = "cloud_flow2_createForm";
 
 
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses(host+":"+port);
-        connectionFactory.setUsername(username);
-        connectionFactory.setPassword(password);
-        connectionFactory.setVirtualHost(vhost);
-        connectionFactory.setPublisherConfirms(true);//消息确认
-        connectionFactory.setPublisherReturns(true);
-        return connectionFactory;
-    }
 }
