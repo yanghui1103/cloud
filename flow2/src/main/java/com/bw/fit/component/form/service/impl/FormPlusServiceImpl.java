@@ -11,6 +11,7 @@ import com.bw.fit.component.form.mapper.FormMapper;
 import com.bw.fit.component.form.model.Form;
 import com.bw.fit.component.form.service.FormPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 @Service
 public class FormPlusServiceImpl implements FormPlusService {
+    private final String cutFlag  = ";";
     @Resource
     private FormMapper formMapper;
     @Autowired
@@ -44,10 +46,10 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setCreator(form.getCreator());
                 tForm.setId(PubFun.getUUID());
                 tForm.setAttr((value));
-                tForm.setTabType(key.split(":")[0]);
-                tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
+                tForm.setTabType(key.split(cutFlag)[0]);
+                tForm.setTabOrder(Integer.valueOf(key.split(cutFlag)[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key.split(":")[2]);
+                tForm.setTabName(key.split(cutFlag)[2]);
 
                  System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
@@ -62,10 +64,10 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setCreator(form.getCreator());
                 tForm.setId(PubFun.getUUID());
                 tForm.setAttr((value));
-                tForm.setTabType(key.split(":")[0]);
-                tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
+                tForm.setTabType(key.split(cutFlag)[0]);
+                tForm.setTabOrder(Integer.valueOf(key.split(cutFlag)[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key.split(":")[2]);
+                tForm.setTabName(key.split(cutFlag)[2]);
 
                 System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);
@@ -81,10 +83,10 @@ public class FormPlusServiceImpl implements FormPlusService {
                 tForm.setCreator(form.getCreator());
                 tForm.setId(PubFun.getUUID());
                 tForm.setAttr((value));
-                tForm.setTabType(key.split(":")[0]);
-                tForm.setTabOrder(Integer.valueOf(key.split(":")[1]));
+                tForm.setTabType(key.split(cutFlag)[0]);
+                tForm.setTabOrder(Integer.valueOf(key.split(cutFlag)[1]));
                 tForm.setFormKey(form.getId());
-                tForm.setTabName(key.split(":")[2]);
+                tForm.setTabName(key.split(cutFlag)[2]);
 
                 System.out.println("key:"+key+" vlaue:"+value);
                 formMapper.insert(tForm);

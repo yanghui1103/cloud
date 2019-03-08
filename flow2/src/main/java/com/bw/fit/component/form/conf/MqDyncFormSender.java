@@ -1,52 +1,43 @@
-package com.bw.fit.component.flow.util;
+package com.bw.fit.component.form.conf;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.component.flow.conf.RabbitMqConfig;
+import com.bw.fit.component.flow.util.PubFun;
 import com.bw.fit.component.form.util.MqConnectionUtils;
-import org.springframework.stereotype.Component;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.Connection;
-
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.concurrent.TimeoutException;
-
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 /**
- * @Description   负责将流程结束时候发送结果
+ * @Description
  * @Author yangh
- * @Date 2019-3-8 11:08
+ * @Date 2019-3-8 17:31
  * @Param ${PARAM}
  * @Return ${RETURN}
  * @VERSION
  */
 @Component
-public class MqFlowResultSender {
+public class MqDyncFormSender {
     @Resource
     MqConnectionUtils connectionUtils;
 
 
     /****
-     * 发送流程结果
+     * 发送动态表单数据到Flow2工程
      * @param message
-     * @param flowRestRecvRoutingKey 到结果接收routingKey
      * @return
      * @throws Exception
      */
-    public JSONObject sendResult(String message,String flowRestRecvRoutingKey) throws Exception {
+    public JSONObject sendDyncForm(String message) throws Exception {
         JSONObject jsonObject = new JSONObject();
         Connection connection = connectionUtils.getConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(RabbitMqConfig.cloudCommonExchange, "direct");
         //生产者调用confirmSelect 将channel设置为confirm模式 注意
         channel.confirmSelect();
-        channel.basicPublish(RabbitMqConfig.cloudCommonExchange, flowRestRecvRoutingKey, null, message.getBytes());
+        channel.basicPublish(RabbitMqConfig.cloudCommonExchange, RabbitMqConfig.formRoutingKey, null, message.getBytes());
 
         if (!channel.waitForConfirms()) {
             System.out.println("message send failed");
@@ -61,5 +52,6 @@ public class MqFlowResultSender {
 
         return jsonObject;
     }
+
 
 }

@@ -10,9 +10,9 @@ import java.util.Map;
  * @VERSION
  */
 public class Form extends BaseModel {
-    private Map<String,String> attachmentForm;  // key为tab类型:num:tab的名称
-    private Map<String,String> kvForm;       // key为tab类型:num:tab的名称
-    private Map<String,String> listForm; // key为tab类型:num:tab的名称
+    private Map<String,String> attachmentForm;  // key为tab类型:num:tab的名称,value例如att001, att002
+    private Map<String,String> kvForm;       // key为tab类型:num:tab的名称,value例如姓名:张w,年龄:45,性别:女
+    private Map<String,String> listForm; // key为tab类型:num:tab的名称,value例如支付宝:天猫:dingding0, 支付宝:天猫:dingding1, 支付宝:天猫:dingding2, 支付宝:;天猫:dingding3, 支付宝:天猫:dingding4
 
     public Map<String, String> getAttachmentForm() {
         return attachmentForm;
