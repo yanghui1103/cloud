@@ -44,6 +44,7 @@ import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import static com.bw.fit.system.common.util.PubFun.returnFailJson;
@@ -111,7 +112,7 @@ public class AccountController extends BaseController {
         List<TRole> tRoles = accountMapper.getRolesByAccount(logName);
         if(ObjectUtil.isNotNull(tRoles)){
             account.setRoleIds(tRoles.stream().map(TRole::getId).collect(Collectors.joining(",")));
-            List<TAuthority> rs = new ArrayList<>();
+            List<TAuthority> rs = new CopyOnWriteArrayList<>();
             for(TRole tRole:tRoles){
                 List<TAuthority> as = roleMapper.getAuthsOfThisRole(tRole.getId());
                 rs.addAll(as);

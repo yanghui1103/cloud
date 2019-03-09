@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @Description
@@ -46,7 +47,7 @@ public class FormController {
     public JSONObject detail(@PathVariable(value = "formKey",required = true) String formKey){
         JSONObject jsonObject = new JSONObject();
         List<TForm> tFormList = formMapper.getFormInfo(formKey);
-        List<KvForm> kvForms = new ArrayList<>();
+        List<KvForm> kvForms = new CopyOnWriteArrayList<>();
         Map<String,String> map = new LinkedHashMap<>();
         JSONArray jsonArray = new JSONArray();
         if(CollectionUtil.isNotEmpty(tFormList) || tFormList.size()>1){

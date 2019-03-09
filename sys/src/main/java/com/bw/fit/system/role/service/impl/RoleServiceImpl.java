@@ -2,6 +2,7 @@ package com.bw.fit.system.role.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.bw.fit.system.authority.mapper.AuthorityMapper;
@@ -179,7 +180,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> getAllRoles(String keyWords) {
 		List<TRole> rs = roleMapper.getAllRoles(keyWords);
-		List<Role> list = new ArrayList<>();
+		List<Role> list = new CopyOnWriteArrayList<>();
 		if(rs == null)
 			return null ;
 		for(TRole t:rs){
