@@ -26,6 +26,7 @@
     <bytecodeTargetLevel target="8">
       <module name="base" target="1.8" />
       <module name="base2" target="1.8" />
+      <module name="demo" target="1.8" />
       <module name="flow" target="1.8" />
       <module name="innerzuul" target="1.8" />
       <module name="innerzuul (1)" target="1.8" />
@@ -43,9 +44,10 @@
       <module name="calls" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="config" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="flow" options="-parameters" />
-      <module name="flow2" options="" />
+      <module name="flow2" options="-parameters" />
       <module name="job" options="-parameters" />
       <module name="link" options="-parameters" />
       <module name="log" options="-parameters" />
