@@ -13,6 +13,7 @@ import com.bw.fit.component.form.service.FormPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -35,9 +36,14 @@ public class FormPlusServiceImpl implements FormPlusService {
     @Autowired
     private CommonService commonService;
 
+    @Transactional(rollbackFor = {Exception.class,RbackException.class})
     @Override
-    public JSONObject insert(Form form) throws RbackException {
+    public JSONObject insert(Form form) throws Exception {
         JSONObject jsonObject = new JSONObject();
+        List<TForm> tForms = formMapper.getFormInfo(form.getId());
+        if(CollectionUtil.isNotEmpty(tForms)){
+            formMapper.deleteForm(form.getId());  // 删除之前的表单信息
+        }
         Map<String, String> map1 = form.getKvForm();
         if(CollectionUtil.isNotEmpty(map1)){
             for(String key:map1.keySet()){

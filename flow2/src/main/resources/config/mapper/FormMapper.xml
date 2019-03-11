@@ -13,6 +13,10 @@
 		select * from t_form a where a.formKey = #{formKey,jdbcType=VARCHAR} and isdeleted ='0' order by taborder asc
 	</select>
 
+	<delete id="deleteForm" parameterType="String">
+		delete from t_form a where a.formKey = #{formKey,jdbcType=VARCHAR}
+	</delete>
+
 
 
 

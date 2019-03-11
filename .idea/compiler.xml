@@ -40,7 +40,7 @@
       <module name="base" options="-parameters" />
       <module name="base2" options="-parameters" />
       <module name="bounty" options="-parameters" />
-      <module name="cache" options="-parameters" />
+      <module name="cache" options="" />
       <module name="calls" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="config" options="-parameters" />

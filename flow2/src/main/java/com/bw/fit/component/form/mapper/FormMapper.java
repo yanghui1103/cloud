@@ -30,4 +30,10 @@ public interface FormMapper {
      * @return
      */
     List<TForm> getFormInfo(String formKey);
+
+    /*****
+     * 删除表单信息
+     * @param formKey
+     */
+    void deleteForm(String formKey);
 }

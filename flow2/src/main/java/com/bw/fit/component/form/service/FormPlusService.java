@@ -21,5 +21,5 @@ public interface FormPlusService {
      * @return
      * @throws RbackException
      */
-    JSONObject insert(Form form) throws RbackException;
+    JSONObject insert(Form form) throws Exception;
 }
