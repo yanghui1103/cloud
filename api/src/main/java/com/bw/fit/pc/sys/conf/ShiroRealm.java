@@ -40,24 +40,6 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private CommonService commonService;
 
-    /**
-     * 密码校验规则HashedCredentialsMatcher
-     * 这个类是为了对密码进行编码的 ,
-     * 防止密码在数据库里明码保存 , 当然在登陆认证的时候 ,
-     * 这个类也负责对form里输入的密码进行编码
-     * 处理认证匹配处理器：如果自定义需要实现继承HashedCredentialsMatcher
-     */
-    @Bean("credentialsMatcher")
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-        //指定加密方式为MD5
-        credentialsMatcher.setHashAlgorithmName("MD5");
-        //加密次数
-        credentialsMatcher.setHashIterations(10);
-        // credentialsMatcher.setStoredCredentialsHexEncoded(true);
-        return credentialsMatcher;
-    }
-
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authcToken) throws AuthenticationException {
@@ -99,5 +81,5 @@ public class ShiroRealm extends AuthorizingRealm {
         System.out.println("经试验：并不是每次调用接口就会执行，而是调用需要操作码（permission）的接口就会执行");
         return simpleAuthorInfo;
     }
-
+            ///  https://github.com/gaohanghang/springboot-shiro/  测试案例
 }

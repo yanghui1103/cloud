@@ -281,4 +281,22 @@ public class AccountController extends BaseController {
 
     }
 
+    @GetMapping("auths/{logName}")
+    @ResponseBody
+    public JSONObject getAuths(@PathVariable String logName,HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        List<TAuthority> myAuths = new CopyOnWriteArrayList<>();
+        List<TRole> tRoles = accountMapper.getRolesByAccount(logName);
+        if(CollectionUtil.isNotEmpty(tRoles)){
+            tRoles.parallelStream().forEach(x->{
+                List<TAuthority> my = roleMapper.getAuthoritysByRole(x.getId());
+                myAuths.addAll(my);
+            });
+            PubFun.returnSuccessJson(jsonObject);
+            jsonObject.put("data",myAuths.stream().map(x->x.getCode()).reduce(",", String::concat));
+        }else{
+            PubFun.returnFailJson(jsonObject,"无数据");
+        }
+        return jsonObject;
+    }
 }
