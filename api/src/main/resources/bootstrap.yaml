@@ -18,3 +18,4 @@ spring:
         enabled: true
         service-id: config-proj
       profile: dev
+
