@@ -93,6 +93,11 @@ public class LoginController {
             token.setRememberMe(true);
 
             currentUser.login(token);
+            if (!currentUser.isAuthenticated()) {
+                logger.info("=================认证失败==============");
+                model.addAttribute("errorMsg", "登录验证失败");
+                return loginPage;
+            }
             session = currentUser.getSession();
         } catch (AuthenticationException e) {
             e.printStackTrace();
