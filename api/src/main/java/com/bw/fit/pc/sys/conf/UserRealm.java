@@ -1,5 +1,6 @@
 package com.bw.fit.pc.sys.conf;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bw.fit.pc.sys.util.PropertiesUtil;
@@ -68,7 +69,7 @@ public class UserRealm extends AuthorizingRealm {
         //获取基于用户名和密码的令牌
         //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        if(token == null){
+        if(token==null || StrUtil.isEmpty(token.getUsername())){
             throw new AuthenticationException("认证失败，请重新登录");
         }
         String account = token.getUsername();
