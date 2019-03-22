@@ -20,4 +20,6 @@ API工程：
     3，API工程里如果页面或者后端调用sessio里的当前账户信息currentUser信息；
         一）可以直接调用会话里的currentUser，这个里的数据是Json格式。
         二）可以调用会话里的currentUserMap，这个是Map格式的。
+    4，此工程里增加RestTempletUtil里增加新的请求方式，实现form表单提交(只支持post方式)。【现实存在1：form提交，2：payLoad提交】，如果前端Ajax使用form提交，
+        请确保contentType是'application/x-www-form-urlencoded; charset=UTF-8'。
 
