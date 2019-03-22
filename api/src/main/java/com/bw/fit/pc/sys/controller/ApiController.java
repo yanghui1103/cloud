@@ -233,7 +233,45 @@ public class ApiController {
             String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
             logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),formReqString,string);
         }else{
-            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供无参数方法");
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供此方法");
+        }
+        return jsonObject;
+    }
+
+
+    @ApiOperation(value = "远程调用微服务的接口，form提交方式的请求" )
+    @PutMapping(value="postMicroServiceResult/v1/{serviceName}/{controllerName}/{mappingNames}")
+    @ResponseBody
+    public JSONObject postMicroServiceResult(@PathVariable String serviceName,@PathVariable String controllerName,
+                                               @PathVariable String mappingNames ,HttpServletRequest httpServletRequest  ){
+        JSONObject jsonObject = new JSONObject();
+        String[] paramArray = mappingNames.split(",");
+        StringBuffer stringBuffer = new StringBuffer();
+        if(paramArray !=null ){
+            for(int i=0;i<paramArray.length;i++){
+                stringBuffer.append(paramArray[i]);
+                if(i!=paramArray.length-1){
+                    stringBuffer.append("/");
+                }
+            }
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+            map.add("sessionId", PubFun.getCurrentSessionId());
+            Set<String> keySet = httpServletRequest.getParameterMap().keySet();
+            for (String key : keySet) {
+                String[] values = httpServletRequest.getParameterMap().get(key);
+                for(String value:values){
+                    map.add(key,value);
+                }
+            }
+            String string = restTemplateUtil.post("V3",httpServletRequest,"http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ,map);
+            jsonObject = JSONObject.parseObject(string);
+            /****
+             * 增加日志采集
+             */
+            String targetMsUrl = "http://"+serviceName+"/"+controllerName+"/"+stringBuffer.toString() ;
+            logPickUtil.collect(httpServletRequest,targetMsUrl,controllerName+"/"+stringBuffer.toString(),stringBuffer.toString(),JSONObject.toJSONString(map),string);
+        }else{
+            PubFun.returnFailJson(jsonObject,"抱歉，系统尚未提供此方法");
         }
         return jsonObject;
     }
