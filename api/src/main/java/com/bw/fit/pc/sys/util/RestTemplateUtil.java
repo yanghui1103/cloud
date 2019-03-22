@@ -36,6 +36,29 @@ public class RestTemplateUtil {
         }
     }
 
+
+    public String post(String version,ServletRequest req, String url, MultiValueMap<String, ?> params) {
+        ResponseEntity<String> rss = null;
+        try {
+            if("V2".equalsIgnoreCase(version)){
+                rss = requestv2(req, url, HttpMethod.POST, params);
+                return rss.getBody();
+            }else if("V3".equalsIgnoreCase(version)){
+                rss = requestV3(req, url, params);
+                return rss.getBody();
+            }else{
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("1","系统暂不支持此版本请求方式" );
+                return jsonObject.toJSONString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("1","异常"+e.getLocalizedMessage());
+            return jsonObject.toJSONString();
+        }
+    }
+
     /*****
      * 通过url远程调用微服务的查询接口
      * @param req
@@ -113,6 +136,7 @@ public class RestTemplateUtil {
         HttpServletRequest request = (HttpServletRequest) req;
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();
@@ -144,6 +168,7 @@ public class RestTemplateUtil {
         return rss;
     }
 
+
     /**
      * 功能描述: 前端传入form表单，后端使用model接收的查询条件方式进行远程查询
      *
@@ -157,6 +182,8 @@ public class RestTemplateUtil {
         MultiValueMap<String, ?> params = new LinkedMultiValueMap<>();
         //获取header信息
         HttpHeaders requestHeaders = new HttpHeaders();
+        //  请勿轻易改变此提交方式，大部分的情况下，提交方式都是表单提交
+        requestHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();
@@ -188,6 +215,47 @@ public class RestTemplateUtil {
         url = (!"".equals(formBuffer.toString()))?url+"?"+formBuffer.substring(1,formBuffer.length()):url;
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, method, requestEntity, String.class, params);
+        return rss;
+    }
+
+    /******
+     * 使用Form提交方式（有的可以用payload方式）;此方式仅支持post请求
+     * @param req
+     * @param url
+     * @param method
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    private ResponseEntity<String> requestV3(ServletRequest req, String url, MultiValueMap<String, ?> params) throws Exception {
+        HttpServletRequest request = (HttpServletRequest) req;
+        //获取header信息
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            requestHeaders.add(key, value);
+        }
+        //获取parameter信息
+        if(params == null) {
+            params = new LinkedMultiValueMap<>();
+            Set<String> keySet = request.getParameterMap().keySet();
+            for (String key : keySet) {
+                String[] values = request.getParameterMap().get(key);
+                for(String value:values){
+                    ((LinkedMultiValueMap)params).add(key,value);
+                }
+            }
+        }
+        Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
+        if(!ops.isPresent()){
+            List<String> sessions = (List<String>) params.get("sessionId");
+            requestHeaders.add("sessionId", sessions==null?"":sessions.get(0).toString());
+        }
+        HttpEntity<MultiValueMap<String, ?>> requestEntity = new HttpEntity<MultiValueMap<String, ?>>(params, requestHeaders);
+        ResponseEntity<String> rss = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         return rss;
     }
 

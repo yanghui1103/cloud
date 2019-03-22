@@ -26,7 +26,7 @@ public class InterceptorConf extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getSessionCorrectInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/tttt/**");
         super.addInterceptors(registry);
     }
 }

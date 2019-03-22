@@ -116,8 +116,8 @@ public class RoleController extends BaseController {
 			return json ;
 		}
 	}
-	
-	
+
+
 	@RequestMapping("openAddRole/{id}/{name}")
 	public String openAddRole(@PathVariable(value="id") String id,@PathVariable(value="name") String name,Model model){
 		model.addAttribute("roleName", name);

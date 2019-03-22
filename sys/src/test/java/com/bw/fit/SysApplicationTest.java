@@ -5,6 +5,7 @@ import com.bw.fit.system.account.model.Account;
 import com.bw.fit.system.account.service.AccountService;
 import com.bw.fit.system.authority.entity.TRole2dataauth;
 import com.bw.fit.system.common.model.BaseModel;
+import com.bw.fit.system.common.util.RestTemplateUtil;
 import com.bw.fit.system.role.mapper.RoleMapper;
 import com.netflix.discovery.converters.Auto;
 import org.junit.Test;
@@ -12,9 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -27,6 +27,7 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SysApplicationTest {
+    private MockHttpServletRequest request;
 
     @Value("${server.port}")
     String age;
@@ -39,6 +40,8 @@ public class SysApplicationTest {
     private AccountService accountService;
     @Resource
     RoleMapper roleMapper;
+    @Resource
+    RestTemplateUtil restTemplateUtil;
 
     @Test
     public void load(){
@@ -84,7 +87,6 @@ public class SysApplicationTest {
 
     @Test
     public void mmsd(){
-        roleMapper.deleteDataAuthority2Role("r1");
     }
 
 }
