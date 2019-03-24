@@ -9,7 +9,7 @@ API工程：
         一）towardMicroServicePage方法，可以指定具体哪个微服务去调用哪个方法，然后将该方法返回的JSON数据转为map格式，返回给
     后面指定的page。
         二）gotoIframePage去往指定的页面，但是不会调用微服务的任何接口，model里会返回sessionId和arg以备扩展使用。
-    2，调用微服务的增删改查四大接口解释：
+    2，调用微服务的增删改查四大接口解释(优先使用接口五，如果是form提交)：
         一）getMicroServiceResult/v1是调用其他微服务的查询接口，返回的JSONObject格式字符串。
            getMicroServiceResult/v2是调用其他微服务的查询接口，返回的JSONArray格式字符串；
            getMicroServiceResult/v3是调用其他微服务的查询接口，传入参数为表单序列化为json键值对，返回的JSONObject格式字符串；
