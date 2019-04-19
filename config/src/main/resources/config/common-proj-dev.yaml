@@ -11,7 +11,7 @@ spring:
     name: common_db
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@10.1.9.160:1521/pm
+    url: ENC(uVkoTjga4RvFzNw+koWGOxg9k9Z3CUBlf9KjFKiYAol5mcPm32nit6I5Te9gnlYr)
     username: fit4
     password: fit4123456
     #配置初始化大小/最小/最大
@@ -25,6 +25,12 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
+
+
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxNMG
 
 
 mybatis:

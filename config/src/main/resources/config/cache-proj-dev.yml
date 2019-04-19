@@ -7,9 +7,14 @@ spring:
   application:
     name: cache-proj
   redis:
-    host: 10.1.20.87
+    host: ENC(jtbRjV1iwUXdJIRcKHFkqdd2z4yAlX6J)
     port: 6379
     password: 123456
     database: 0
 
+
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxNMG
 

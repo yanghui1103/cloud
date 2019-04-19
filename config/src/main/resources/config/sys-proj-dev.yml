@@ -12,7 +12,7 @@ spring:
     name: sys_db
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@10.1.9.160:1521/pm
+    url: ENC(uVkoTjga4RvFzNw+koWGOxg9k9Z3CUBlf9KjFKiYAol5mcPm32nit6I5Te9gnlYr)
     username: zjk
     password: zjk2018
     #配置初始化大小/最小/最大
@@ -49,17 +49,21 @@ custom:
     tenantcm001:
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: oracle.jdbc.driver.OracleDriver
-      url: jdbc:oracle:thin:@10.1.9.160:1521/pm
+      url: ENC(uVkoTjga4RvFzNw+koWGOxg9k9Z3CUBlf9KjFKiYAol5mcPm32nit6I5Te9gnlYr)
       username: fit4
       password: fit4123456
     tenantcm002:
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: oracle.jdbc.driver.OracleDriver
-      url: jdbc:oracle:thin:@10.1.9.160:1521/pm
+      url: ENC(uVkoTjga4RvFzNw+koWGOxg9k9Z3CUBlf9KjFKiYAol5mcPm32nit6I5Te9gnlYr)
       username: pm
       password: pm123456
 
-
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxNMG
 
 #系统统一字符串的分隔符
 cutFlag: CUTFLAG
+

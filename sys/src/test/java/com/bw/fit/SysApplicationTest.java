@@ -8,6 +8,7 @@ import com.bw.fit.system.common.model.BaseModel;
 import com.bw.fit.system.common.util.RestTemplateUtil;
 import com.bw.fit.system.role.mapper.RoleMapper;
 import com.netflix.discovery.converters.Auto;
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class SysApplicationTest {
     RoleMapper roleMapper;
     @Resource
     RestTemplateUtil restTemplateUtil;
+    @Autowired
+    StringEncryptor encryptor;
 
     @Test
     public void load(){
@@ -87,6 +90,8 @@ public class SysApplicationTest {
 
     @Test
     public void mmsd(){
+        String url = encryptor.encrypt("39.104.161.196");
+        System.out.println(url+"----------------");
     }
 
 }

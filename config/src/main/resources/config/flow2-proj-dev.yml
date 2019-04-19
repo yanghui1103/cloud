@@ -10,7 +10,7 @@ spring:
     name: flow2_db
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@10.1.9.160:1521/pm
+    url: ENC(uVkoTjga4RvFzNw+koWGOxg9k9Z3CUBlf9KjFKiYAol5mcPm32nit6I5Te9gnlYr)
     username: fit4
     password: fit4123456
     #配置初始化大小/最小/最大
@@ -31,7 +31,7 @@ spring:
 
   #RabbitMQ相关配置
   rabbitmq:
-    host: 39.104.161.196
+    host: ENC(2JzEmMvLxBgEXGtEOQ57AizBW2CBOPZL)
     port: 5672
     username: cloud_common
     password: cloud_common
@@ -42,6 +42,12 @@ mybatis:
   type-aliases-package: com.bw.fit
   configuration:
     map-underscore-to-camel-case: true
+
+
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxNMG
 
 
 
