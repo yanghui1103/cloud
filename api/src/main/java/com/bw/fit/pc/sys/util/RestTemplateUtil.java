@@ -14,6 +14,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+import static org.springframework.http.ResponseEntity.status;
+
 /*****
  * 通用的rest工具类
  */
@@ -157,7 +159,9 @@ public class RestTemplateUtil {
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){
             List<String> sessions = (List<String>) params.get("sessionId");
-            requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
+            if(CollectionUtil.isNotEmpty(sessions)){
+                requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
+            }
         }
 
         //  最好通过bean注入的方式获取ObjectMapper
@@ -171,7 +175,7 @@ public class RestTemplateUtil {
 
     /**
      * 功能描述: 前端传入form表单，后端使用model接收的查询条件方式进行远程查询
-     *
+     *         注意：
      * @param:
      * @return:
      * @auther: yangh
@@ -210,7 +214,9 @@ public class RestTemplateUtil {
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){
             List<String> sessions = (List<String>) params.get("sessionId");
-            requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
+            if(CollectionUtil.isNotEmpty(sessions)){
+                requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
+            }
         }
         url = (!"".equals(formBuffer.toString()))?url+"?"+formBuffer.substring(1,formBuffer.length()):url;
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
@@ -222,7 +228,6 @@ public class RestTemplateUtil {
      * 使用Form提交方式（有的可以用payload方式）;此方式仅支持post请求
      * @param req
      * @param url
-     * @param method
      * @param params
      * @return
      * @throws Exception
@@ -252,7 +257,9 @@ public class RestTemplateUtil {
         Optional ops = requestHeaders.keySet().stream().filter(x->"sessionId".equalsIgnoreCase(x)).findAny();
         if(!ops.isPresent()){
             List<String> sessions = (List<String>) params.get("sessionId");
-            requestHeaders.add("sessionId", sessions==null?"":sessions.get(0).toString());
+            if(CollectionUtil.isNotEmpty(sessions)){
+                requestHeaders.add("sessionId", sessions==null?"":sessions.get(0));
+            }
         }
         HttpEntity<MultiValueMap<String, ?>> requestEntity = new HttpEntity<MultiValueMap<String, ?>>(params, requestHeaders);
         ResponseEntity<String> rss = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
